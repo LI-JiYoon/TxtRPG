@@ -7,19 +7,32 @@ using System.Threading.Tasks;
 namespace rtanRPG
 {
     internal class dungeon
-    {   bool Isclear = false;
-     
+    {
+        bool Isclear = false;
+
         Random rand = new Random();
 
         private Player player;
-      
 
+        int numberOfDraws;
+        int minValue = 1; // 몬스터 뽑기 최소값
+        int maxValue = 4; // 몬스터 뽑기 최대값
 
+        Monster[] Monsters = new Monster[]
+       {
 
-        public dungeon(Player player) 
-        { 
+           new Monster1(),
+           new Monster2(),
+           new Monster3()
+       };
+
+        Monster[] MonstersQueue = new Monster[4];
+        int queueIndex = 0;
+
+        public dungeon(Player player)
+        {
             this.player = player;
-            
+
         }
         public void Displaying()
         {
@@ -27,7 +40,7 @@ namespace rtanRPG
 
                 "                                  |>>>\r\n                                  |\r\n                    |>>>      _  _|_  _         |>>>\r\n                    |        |;| |;| |;|        |\r\n                _  _|_  _    \\\\.    .  /    _  _|_  _\r\n               |;|_|;|_|;|    \\\\:. ,  /    |;|_|;|_|;|\r\n               \\\\..      /    ||;   . |    \\\\.    .  /\r\n                \\\\.  ,  /     ||:  .  |     \\\\:  .  /\r\n                 ||:   |_   _ ||_ . _ | _   _||:   |\r\n                 ||:  .|||_|;|_|;|_|;|_|;|_|;||:.  |\r\n                 ||:   ||.    .     .      . ||:  .|\r\n                 ||: . || .     . .   .  ,   ||:   |       \\,/\r\n                 ||:   ||:  ,  _______   .   ||: , |            /`\\\r\n                 ||:   || .   /+++++++\\    . ||:   |\r\n                 ||:   ||.    |+++++++| .    ||: . |\r\n              __ ||: . ||: ,  |+++++++|.  . _||_   |\r\n     ____--`~    '--~~__|.    |+++++__|----~    ~`---,              ___\r\n-~--~                   ~---__|,--~'                  ~~----_____-~'   `~----~~"
 
-                + "\r\n\r\n" + 
+                + "\r\n\r\n" +
                 "1. 쉬운 던전     | 방어력 5 이상 권장\r\n" +
                 "2. 일반 던전     | 방어력 11 이상 권장\r\n" +
                 "3. 어려운 던전    | 방어력 17 이상 권장\r\n" +
@@ -37,7 +50,7 @@ namespace rtanRPG
                 ">>";
 
             Console.WriteLine(text);
-         
+
             // 0이 아니면 무한히 질문!
             while (true)
 
@@ -84,19 +97,38 @@ namespace rtanRPG
 
         public void EnterDungeon(Difficulty difficulty)//던전입장
         {
+            numberOfDraws = rand.Next(minValue, maxValue); // 뽑고 싶은 몬스터의 수를 설정 (1~4사이)
+
+
+            for (int i = 0; i < numberOfDraws; i++)
+            {
+                // MonstersQueue 배열의 다음 빈 공간에 Monsters 배열의 요소를 추가
+                if (queueIndex < MonstersQueue.Length)
+                {
+                    MonstersQueue[queueIndex] = Monsters[i];
+                    queueIndex++; // MonstersQueue의 인덱스 증가
+                }
+            }
+
+            for (int i = 0; i < queueIndex; i++)
+            {
+                MonstersQueue[i].Attack();
+            
+            }
+
             int recommendedDEF = GetRecommendedDEF(difficulty);
             int baseReward = GetBaseReward(difficulty);
 
             if (player.DEF < recommendedDEF)
             {
-         
+
                 // 40% 확률로 던전 실패
                 if (rand.Next(100) < 40)
                 {
                     Console.WriteLine(
                         "__  __                __                       \r\n\\ \\/ /___  __  __    / /   ____  ________      \r\n \\  / __ \\/ / / /   / /   / __ \\/ ___/ _ \\     \r\n / / /_/ / /_/ /   / /___/ /_/ (__  )  __/ _ _ \r\n/_/\\____/\\__,_/   /_____/\\____/____/\\___(_|_|_)"
 
-                        + "\r\n" + 
+                        + "\r\n" +
                         "던전 도전에 실패하셨습니다.");
                     player.HP /= 2; // 체력 절반 감소
                     Console.WriteLine($"현재 체력: {player.HP}");
@@ -108,7 +140,7 @@ namespace rtanRPG
             Console.WriteLine(" _____                                _____ \r\n( ___ )------------------------------( ___ )\r\n |   |                                |   | \r\n |   |                                |   | \r\n |   |                                |   | \r\n |   |  ,--.   ,--.                   |   | \r\n |   |   \\  `.'  /,---. ,--.,--.      |   | \r\n |   |    '.    /| .-. ||  ||  |      |   | \r\n |   |      |  | ' '-' ''  ''  '      |   | \r\n |   |      `--'  `---'  `----',---.  |   | \r\n |   |  ,--.   ,--.,--.        |   |  |   | \r\n |   |  |  |   |  |`--',--,--, |  .'  |   | \r\n |   |  |  |.'.|  |,--.|      \\|  |   |   | \r\n |   |  |   ,'.   ||  ||  ||  |`--'   |   | \r\n |   |  '--'   '--'`--'`--''--'.--.   |   | \r\n |   |                         '--'   |   | \r\n |   |                                |   | \r\n |   |                                |   | \r\n |___|                                |___| \r\n(_____)------------------------------(_____)"
 
 
-                + "\r\n\r\n" 
+                + "\r\n\r\n"
 
                 + "축하합니다!!\r\n"
 
@@ -118,7 +150,7 @@ namespace rtanRPG
                 );
             int hpReduction = CalculateHPReduction(player.DEF, recommendedDEF);
             player.HP -= hpReduction;
-            
+
 
             if (player.HP <= 0)
             {
@@ -132,7 +164,7 @@ namespace rtanRPG
             // 보상 계산
             int reward = CalculateReward(player.ATK, baseReward);
             player.gold += reward;
-            Console.WriteLine($"Gold {player.gold-reward} G -> {player.gold} G");
+            Console.WriteLine($"Gold {player.gold - reward} G -> {player.gold} G");
             player.dungeonClearCount++;
             player.checkLevelUp();
         }
@@ -193,6 +225,8 @@ namespace rtanRPG
         }
 
     }
-       
-    
+
+
 }
+
+
