@@ -11,7 +11,7 @@ namespace rtanRPG
     {
 
 
-        private Player player; // 플레이어 객체를 저장할 필드
+        private Player player;
         float price = 500;
 
         public breaktime(Player player)
