@@ -1,0 +1,14 @@
+C:\Users\2gueu\source\repos\rtanRPG\rtanRPG\obj\Debug\net8.0\rtanRPG.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\2gueu\source\repos\rtanRPG\rtanRPG\obj\Debug\net8.0\rtanRPG.AssemblyInfoInputs.cache
+C:\Users\2gueu\source\repos\rtanRPG\rtanRPG\obj\Debug\net8.0\rtanRPG.AssemblyInfo.cs
+C:\Users\2gueu\source\repos\rtanRPG\rtanRPG\obj\Debug\net8.0\rtanRPG.csproj.CoreCompileInputs.cache
+C:\Users\2gueu\source\repos\rtanRPG\rtanRPG\bin\Debug\net8.0\rtanRPG.exe
+C:\Users\2gueu\source\repos\rtanRPG\rtanRPG\bin\Debug\net8.0\rtanRPG.deps.json
+C:\Users\2gueu\source\repos\rtanRPG\rtanRPG\bin\Debug\net8.0\rtanRPG.runtimeconfig.json
+C:\Users\2gueu\source\repos\rtanRPG\rtanRPG\bin\Debug\net8.0\rtanRPG.dll
+C:\Users\2gueu\source\repos\rtanRPG\rtanRPG\bin\Debug\net8.0\rtanRPG.pdb
+C:\Users\2gueu\source\repos\rtanRPG\rtanRPG\obj\Debug\net8.0\rtanRPG.dll
+C:\Users\2gueu\source\repos\rtanRPG\rtanRPG\obj\Debug\net8.0\refint\rtanRPG.dll
+C:\Users\2gueu\source\repos\rtanRPG\rtanRPG\obj\Debug\net8.0\rtanRPG.pdb
+C:\Users\2gueu\source\repos\rtanRPG\rtanRPG\obj\Debug\net8.0\rtanRPG.genruntimeconfig.cache
+C:\Users\2gueu\source\repos\rtanRPG\rtanRPG\obj\Debug\net8.0\ref\rtanRPG.dll
