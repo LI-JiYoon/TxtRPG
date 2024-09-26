@@ -155,7 +155,6 @@ namespace rtanRPG
             }
         }
 
-        
     }
 }
 
