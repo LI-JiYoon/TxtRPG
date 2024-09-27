@@ -18,6 +18,8 @@ namespace rtanRPG
         int minValue = 1; // 몬스터 뽑기 최소값
         int maxValue = 4; // 몬스터 뽑기 최대값
 
+
+        bool IsYourTurn = true;
         Monster[] Monsters = new Monster[]
        {
 
@@ -110,56 +112,14 @@ namespace rtanRPG
                 }
             }
 
-            for (int i = 0; i < queueIndex; i++)
-            {
-                MonstersQueue[i].Attack();
-            
-            }
+            ShowBattleUI(MonstersQueue, player);
 
-            int recommendedDEF = GetRecommendedDEF(difficulty);
+
+
+
+
+
             int baseReward = GetBaseReward(difficulty);
-
-            if (player.DEF < recommendedDEF)
-            {
-
-                // 40% 확률로 던전 실패
-                if (rand.Next(100) < 40)
-                {
-                    Console.WriteLine(
-                        "__  __                __                       \r\n\\ \\/ /___  __  __    / /   ____  ________      \r\n \\  / __ \\/ / / /   / /   / __ \\/ ___/ _ \\     \r\n / / /_/ / /_/ /   / /___/ /_/ (__  )  __/ _ _ \r\n/_/\\____/\\__,_/   /_____/\\____/____/\\___(_|_|_)"
-
-                        + "\r\n" +
-                        "던전 도전에 실패하셨습니다.");
-                    player.HP /= 2; // 체력 절반 감소
-                    Console.WriteLine($"현재 체력: {player.HP}");
-                    return;
-                }
-            }
-
-            // 던전 클리어
-            Console.WriteLine(" _____                                _____ \r\n( ___ )------------------------------( ___ )\r\n |   |                                |   | \r\n |   |                                |   | \r\n |   |                                |   | \r\n |   |  ,--.   ,--.                   |   | \r\n |   |   \\  `.'  /,---. ,--.,--.      |   | \r\n |   |    '.    /| .-. ||  ||  |      |   | \r\n |   |      |  | ' '-' ''  ''  '      |   | \r\n |   |      `--'  `---'  `----',---.  |   | \r\n |   |  ,--.   ,--.,--.        |   |  |   | \r\n |   |  |  |   |  |`--',--,--, |  .'  |   | \r\n |   |  |  |.'.|  |,--.|      \\|  |   |   | \r\n |   |  |   ,'.   ||  ||  ||  |`--'   |   | \r\n |   |  '--'   '--'`--'`--''--'.--.   |   | \r\n |   |                         '--'   |   | \r\n |   |                                |   | \r\n |   |                                |   | \r\n |___|                                |___| \r\n(_____)------------------------------(_____)"
-
-
-                + "\r\n\r\n"
-
-                + "축하합니다!!\r\n"
-
-                + "던전을 클리어 하였습니다.\r\n\r\n"
-
-                + "[탐험 결과]"
-                );
-            int hpReduction = CalculateHPReduction(player.DEF, recommendedDEF);
-            player.HP -= hpReduction;
-
-
-            if (player.HP <= 0)
-            {
-                player.HP = 0;
-                Console.WriteLine("던전 클리어는 했지만 체력이 0이 되었습니다.");
-                return;
-            }
-
-            Console.WriteLine($"체력 {player.HP + hpReduction} -> {player.HP}");
 
             // 보상 계산
             int reward = CalculateReward(player.ATK, baseReward);
@@ -198,23 +158,7 @@ namespace rtanRPG
                     return 0;
             }
         }
-        // 체력 감소량 계산
-        private int CalculateHPReduction(float playerDEF, int recommendedDEF)
-        {
-            int baseMin = 20;
-            int baseMax = 35;
-            int difference = (int)(recommendedDEF - playerDEF);
 
-            // 체력 감소량 계산
-            int minReduction = baseMin + difference;
-            int maxReduction = baseMax + difference;
-
-            // 최소 체력 감소량은 1로 고정
-            minReduction = Math.Max(minReduction, 1);
-            maxReduction = Math.Max(maxReduction, minReduction);
-
-            return rand.Next(minReduction, maxReduction + 1);
-        }
 
         // 보상 계산
         private int CalculateReward(float playerATK, int baseReward)//
@@ -224,9 +168,149 @@ namespace rtanRPG
             return baseReward + bonusReward;
         }
 
+
+        public void ShowBattleUI(Monster[] MonsterQueue, Player player)
+        {
+            Console.Clear();
+            Console.WriteLine("Battle!!");
+            Console.WriteLine();
+            for (int i = 0; i < MonsterQueue.Length; i++)
+
+            {
+                if (MonsterQueue[i] != null)
+                {
+                    Console.WriteLine($"Lv.{MonsterQueue[i].level} {MonsterQueue[i].Name}  HP {MonsterQueue[i].HP}");
+
+                }
+            }
+            Console.WriteLine("\n");
+            Console.WriteLine($"[내정보]]\r\nLv.{player.level}  {player.name} ({player.role})");
+            Console.WriteLine($"HP 100/{player.HP}");
+
+            Console.WriteLine($"\n1. 공격\n\n원하시는 행동을 입력해주세요.");
+
+            Console.Write(">>");
+
+            while (true)
+            {
+                string input = Console.ReadLine();
+                if (!int.TryParse(input, out int inputIDX))
+                { Console.WriteLine("잘못된 입력입니다."); continue; }
+
+
+                if (input == "1")
+                {
+                    ShowAttackUI(MonsterQueue, player);
+                    //Attack함수
+                    break;
+                }
+                else { Console.WriteLine("잘못된 입력입니다."); }
+
+            }
+        }
+
+
+        public void ShowAttackUI(Monster[] MonsterQueue, Player player)
+        {
+            Console.Clear();
+            Console.WriteLine("Battle!!");
+            Console.WriteLine();
+            for (int i = 0; i < MonsterQueue.Length; i++)
+            {
+                if (MonsterQueue[i] != null)
+                {
+
+                    bool isDead = MonsterQueue[i].HP <= 0;
+                    string monsterHp = isDead ? "Dead" : MonsterQueue[i].HP.ToString();
+
+                    if (isDead) // 회색으로 
+                    {
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                    }
+
+                    Console.WriteLine($"{i + 1} Lv. {MonsterQueue[i].level} {MonsterQueue[i].Name}  HP {monsterHp}");
+                }
+
+            }
+            Console.WriteLine("\n");
+            Console.WriteLine($"[내정보]\nLv.{player.level}  {player.name} ({player.role})");
+            Console.WriteLine($"HP 100/{player.HP}");
+            Console.WriteLine($"\n0. 취소\n\n대상을 선택해주세요.");
+            Console.Write(">>");
+
+            while (true)
+            {
+                string input = Console.ReadLine();
+
+                if (!int.TryParse(input, out int inputIDX)) { Console.WriteLine("잘못된 입력입니다."); continue; }
+                if (inputIDX > MonstersQueue.Length) { Console.WriteLine("잘못된 입력입니다."); continue; }
+                if (MonstersQueue[inputIDX].isdead) { Console.WriteLine("이미 처치한 몬스터입니다."); continue; }
+
+
+                if (input == "0")
+                {
+                    // ShowBattleUI();
+                    break;
+                }
+
+                // 선택한 몬스터에 공격 함수 실행
+                else
+                {
+                    if (IsYourTurn)//플레이어턴
+                    {
+                        Console.Clear();
+
+                        MonstersQueue[inputIDX].TakeDamage((int)player.Attack(MonstersQueue[inputIDX].Name, MonstersQueue[inputIDX].level));//공격
+
+
+                    }
+                    else//몬스터턴
+                    {
+                        for (int i = 0; i <= MonstersQueue.Length; i++)
+                        {
+                            if (MonstersQueue[i] != null)
+                            {
+                                Console.Clear();
+                                player.TakeDamage(MonstersQueue[i].Attack(player.name));
+                                if (player.isDead) break;
+                            }
+                        }
+
+                    }
+
+
+
+                };
+                Console.WriteLine($"\n0. 다음\n\n");
+                Console.Write(">>");
+
+                while (true)
+                {
+
+                    input = Console.ReadLine();
+
+                    if (!int.TryParse(input, out inputIDX))
+                    { Console.WriteLine("잘못된 입력입니다."); continue; }
+
+                    if (input == "0")
+                    {
+                        if (IsYourTurn)
+                        {
+                            IsYourTurn = false;
+                        }
+                        else { IsYourTurn = true; }
+                        // 몬스터 공격 로직();
+                        break;
+
+                    }
+
+                    else { Console.WriteLine("잘못된 입력입니다."); }
+
+                }
+            }
+        }
+
     }
 
 
 }
-
-

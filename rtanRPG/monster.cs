@@ -12,34 +12,68 @@ namespace rtanRPG
     public class Monster
     {
         // 몬스터의 기본 속성
-        public string Name { get; set; }m
+        public string Name { get; set; }
         public int HP { get; set; }
         public int AtkPower { get; set; }
         public int level { get; set; }
 
+        public bool isdead = false;
 
         // 몬스터의 기본 생성자
-        public Monster(string name, int hp, int attackPower, int level)
+        public Monster(string name, int hp, int attackPower, int LV)
         {
             Name = name;
             HP = hp;
             AtkPower = attackPower;
+            level = LV;
         }
 
-        // 몬스터의 기본 공격 메서드
-        public virtual void Attack()
+        // 몬스터 공격 메서드
+        public virtual int Attack(string Playername)
         {
-            Console.WriteLine($"{Name}이(가) 공격합니다! 공격력: {AtkPower}");
+
+            Console.WriteLine($"Lv.{level} {Name}의 공격!\r\n" +
+
+                $"{Playername} 을 맞췄습니다  [데미지 : {AtkPower}]\r\n\r\n");
+
+            return AtkPower;
         }
 
-        // 몬스터가 피해를 입는 메서드
+        // 몬스터 피해 메서드
         public void TakeDamage(int damage)
         {
             HP -= damage;
-            Console.WriteLine($"{Name}이(가) {damage}의 피해를 입었습니다. 남은 체력: {HP}");
+
+            if (HP < 0) { HP = 0; }
+            if (HP <= 0)
+            {
+                Console.WriteLine($"Lv.{level} {Name}\r\n" + $"HP {HP + damage} -> Dead\r\n");
+
+            }
+            else
+            {
+                Console.WriteLine($"Lv.{level} {Name}\r\n" + $"HP {HP + damage} -> {HP}\r\n");
+            }
+        }
+
+        // 몬스터 죽음 판별 메서드
+
+        public void IsDead(int hp)
+        {
+            if (hp <= 0)
+            {
+                isdead = true;
+            }
 
         }
 
+        // 몬스터 정보 메서드
+
+        public string MonsterInfo(int idx)
+        {
+
+            return ($"{idx + 1} Lv.{level} {Name}  HP {HP}\\r\\n");
+        }
 
     }
 
@@ -51,9 +85,13 @@ namespace rtanRPG
 
         }
 
-        public override void Attack()
+        public override int Attack(string Playername)
         {
-            Console.WriteLine($"{Name}이(가) 화염 공격을 사용합니다! 공격력: {AtkPower}");
+
+            Console.WriteLine($"Lv.{level} {Name}의 공격!\r\n" +
+
+                $"{Playername} 을 맞췄습니다  [데미지 : {AtkPower}]");
+            return AtkPower;
         }
     }
 
@@ -64,9 +102,13 @@ namespace rtanRPG
         {
         }
 
-        public override void Attack()
+        public override int Attack(string Playername)
         {
-            Console.WriteLine($"{Name}이(가) 얼음 공격을 사용합니다! 공격력: {AtkPower}");
+
+            Console.WriteLine($"Lv.{level} {Name}의 공격!\r\n" +
+
+                $"{Playername} 을 맞췄습니다  [데미지 : {AtkPower}]");
+            return AtkPower;
         }
     }
 
@@ -77,14 +119,17 @@ namespace rtanRPG
         {
         }
 
-        public override void Attack()
+        public override int Attack(string Playername)
         {
-            Console.WriteLine($"{Name}이(가) 번개 공격을 사용합니다! 공격력: {AtkPower}");
+
+            Console.WriteLine($"Lv.{level} {Name}의 공격!\r\n" +
+
+                $"{Playername} 을 맞췄습니다  [데미지 : {AtkPower}]");
+            return AtkPower;
+
         }
+
     }
 
 
 }
-
-
-

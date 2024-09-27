@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace rtanRPG
 {
     public class Player
     {
+        Random rand = new Random();
         public int level = 1;
         public string name = "";
         public string role = "전사";
@@ -18,11 +20,10 @@ namespace rtanRPG
         public float gold = 1500;
         public float dungeonClearCount = 0;
 
-        public float EXP = 0;  // ? 나중에 던전도 만들면 레벨업 시스템 구현하려구 웅!
-
+        public float EXP = 0;
         public bool weapon = false;
         public bool armor = false;
-
+        public bool isDead = false;
         public Inventory inventory;
 
 
@@ -72,28 +73,100 @@ namespace rtanRPG
                 }
             }
 
-            }
+        }
         public void checkLevelUp()
         {
-            // 레벨업에 필요한 던전 클리어 횟수
-            int requiredClearCount = level;
 
             // 던전 클리어 횟수가 현재 레벨에서 필요한 횟수를 초과할 경우 레벨업
-            if (dungeonClearCount >= requiredClearCount)
+            if (EXP >= NeededEXP(level))
             {
+
                 levelUp();
             }
         }
         public void levelUp()
         {
-            
-                level += 1;
-                ATK += 0.5f;
-                DEF += 1;
-                dungeonClearCount = 0; // 클리어 횟수 초기화
+
+            level += 1;
+            ATK += 0.5f;
+            DEF += 1;
+            EXP = 0; // 클리어 횟수 초기화
 
 
 
+        }
+        public int NeededEXP(int level)   // 레벨업에 필요한 경험치
+        {
+
+            if (level == 1) { return 10; }
+            else if (level == 2) { return 35; }
+            else if (level == 3) { return 65; }
+            else if (level == 4) { return 100; }
+            else return 0;
+        }
+
+        public float Attack(string MonsterName, int Monsterlevel)
+        {
+
+
+            Console.WriteLine($"{name}의 공격!");
+            // 회피 기능 (10% 확률로 회피)
+            if (rand.Next(0, 101) <= 10)
+            {
+                Console.WriteLine($"Lv.{Monsterlevel} {MonsterName} 을(를) 공격했지만 아무일도 일어나지 않았습니다.");
+                return 0;
+            }
+            else
+            {
+                // 치명타 기능 (15% 확률로 160% 데미지)
+                float damage = ATK;
+
+                if (rand.Next(0, 101) <= 15)
+                {
+                    damage = (int)(damage * 1.6);
+                    Console.WriteLine($"Lv.{Monsterlevel} {MonsterName} 을(를) 맞췄습니다. [데미지 : {damage}] - 치명타 공격!!");
+                    return damage;
+
+                }
+                else
+                {
+                    // 공격력의 10% 계산
+                    damage = (int)ATK * 0.1f;
+                    // 소수점 올림 처리
+                    float damgeError = (float)Math.Ceiling(damage);
+                    // 최소 및 최대 공격력 계산
+                    float minDamage = ATK - damgeError;
+                    float maxDamage = ATK + damgeError;
+
+                    // 랜덤 공격력 생성
+
+                    int finalDamage = rand.Next((int)minDamage, (int)(maxDamage + 1));
+                    Console.WriteLine($"Lv.{Monsterlevel} {MonsterName} 을(를) 맞췄습니다. [데미지 : {damage}]");
+                    return damage;
+                }
+
+                // 몬스터에게 데미지 입히기
+
+
+            }
+        }
+
+        // 플레이어ㅏ 피해 메서드
+        public void TakeDamage(int damage)
+        {
+            HP -= damage;
+
+            if (HP <= 0) { HP = 0; IsDead(HP); }
+            else
+            {
+                Console.WriteLine($"Lv.{level} {name}\r\n" + $"HP {HP + damage} -> {HP}\r\n");
+            }
+        }
+
+        public bool IsDead(float hp)
+        {
+            if (hp <= 0) { return isDead = true; }
+            else return isDead;
         }
 
     }
