@@ -12,7 +12,7 @@ namespace rtanRPG
     public class Monster
     {
         // 몬스터의 기본 속성
-        public string Name { get; set; }
+        public string Name { get; set; }m
         public int HP { get; set; }
         public int AtkPower { get; set; }
         public int level { get; set; }
