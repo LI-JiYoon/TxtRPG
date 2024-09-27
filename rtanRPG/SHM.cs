@@ -26,50 +26,104 @@ namespace rtanRPG
         Monster[] MonstersQueue = new Monster[4];
         int queueIndex = 0;
 
-        public void EnterDungeon(Difficulty difficulty)//던전입장
+        public interface Item
         {
-            numberOfDraws = rand.Next(minValue, maxValue); // 뽑고 싶은 몬스터의 수를 설정 (1~4사이)
+            public string name { get; set; }
+            public string description { get; set; }
+            public float ability { get; }
+            public float price { get; set; }
+            public bool alreadyHave { get; set; }
+            public string type { get; }
 
 
-            for (int i = 0; i < numberOfDraws; i++)
-            {
-                // MonstersQueue 배열의 다음 빈 공간에 Monsters 배열의 요소를 추가
-                if (queueIndex < MonstersQueue.Length)
-                {
-                    MonstersQueue[queueIndex] = Monsters[i];
-                    queueIndex++; // MonstersQueue의 인덱스 증가
-                }
-            }
+            public string isSoldout { get; set; }
 
-            ShowBattleUI(MonstersQueue, player);
-
-
-            for (int i = 0; i < queueIndex; i++)
-            {
-                MonstersQueue[i].Attack();
-
-            }
+            public string Label();
 
         }
 
+        //포션 클래스
+        //클래스를 상속받는 체력포션.
+        //Item.cs에 있어야하는
 
 
 
 
+
+
+        public class Potion : Item
+        {
+            List<string> potionEffect = new List<string>()
+            {
+                "체력"
+            };
+
+            public string name { get; set; }
+            public string description { get; set; }
+            public float effect;
+            public float ability { get { return effect; } }
+            public float price { get; set; }
+            public bool alreadyHave { get; set; }
+            public int potionType;       //포션타입0은 체력포션, 1 ~는 다른타입의 포션
+            public string type { get { return potionEffect[potionType]; } }
+            public string isSoldout { get; set; }
+
+
+            public Potion(string name, string description, float effect, float price, int potiontype)
+            {
+                this.name = name;
+                this.effect = effect;
+                this.description = description;
+                this.price = price;
+                potionType = potiontype;
+            }
+
+
+            public string Label()
+            {
+                return $" {name,-15}| {potionEffect[potionType]} +{(int)ability,-15}| {description,-15}|";     //왜 -15? 정렬을 위해서
+            }
+
+            public virtual void UsePotion(Player player) { }
+
+        }
+        public class HealthPotion : Potion 
+        {
+            public string name { get; set; }
+            public string description { get; set; }
+            public float ability { get; }
+            public float price { get; set; }
+
+            //하급체력포션, 중급체력포션등으로 나눌수도?
+            public HealthPotion(string name, string description, float effect, float price) : base(name, description, effect, price, 0)
+            {
+
+            }
+            //public override void UsePotion (Player player)
+            //{
+            //    player.HP += ability;
+            //    RemoveItem(items[6])        // 인벤토리의 items배열에 추가하면 체력포션은 6번이니까
+            //    Console.WriteLine($"{name}사용!\n플레이어의 체력을 {(int)ability} 회복했습니다");
+            //}
+        }
+
+        // Dungeon.cs의 112번째 줄에 적용하면 될 것 같습니다.
         //플레이어의 MaxHP와 현재HP를 구분하면 좋을것 같습니다.
         //레벨업이나 아이템을 통해 MaxHP를 늘릴 수 있게
-        public void ShowBattleUI(Monster[] MonsterQueue, Player player)
+        public void ShowBattleUI(Monster[] monsterQueue, Player player)
         {
+            Console.Clear();
             Console.WriteLine("Battle!!");
             Console.WriteLine();
-            for(int i =0; i < MonsterQueue.Length; i++)
+            for (int i = 0; i < monsterQueue.Length; i++)
             {
-                Console.WriteLine($"Lv.{MonsterQueue[i].level} {MonsterQueue[i].Name}  HP {MonsterQueue[i].HP}" );
+                Console.WriteLine($"Lv.{monsterQueue[i].level} {monsterQueue[i].Name}  HP {monsterQueue[i].HP}");
             }
             Console.WriteLine("\n");
             Console.WriteLine($"[내정보]\nLv.{player.level}  {player.name} ({player.role})");
             Console.WriteLine($"HP 100/{player.HP}");
-            Console.WriteLine($"\n1. 공격\n\n원하시는 행동을 입력해주세요.");
+            Console.WriteLine();
+            Console.WriteLine($"1. 공격\n\n원하시는 행동을 입력해주세요.");
             Console.Write(">>");
 
             while (true)
@@ -77,7 +131,7 @@ namespace rtanRPG
                 string input = Console.ReadLine();
                 if (!int.TryParse(input, out int inputIDX))
                 { Console.WriteLine("잘못된 입력입니다."); continue; }
-                inputIDX -= 1;      
+                inputIDX -= 1;
 
                 if (input == "1")
                 {
@@ -85,31 +139,68 @@ namespace rtanRPG
                     break;
                 }
                 else { Console.WriteLine("잘못된 입력입니다."); }
-
             }
         }
+
+        //일단 체력 100 -> 현재체력으로 했지만 2번째부턴 전투 시작전에 전투전HP에 해당하는 변수를 지정해야..?
+        public void BattleEnd(Monster[] monsterQueue, Player player)
+        {
+            Console.Clear();
+            Console.WriteLine("Battle!! - Result");
+            Console.WriteLine();
+            if (player.isDead == false)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Vicotry!");
+                Console.WriteLine();
+                Console.ResetColor();
+            }
+            else if (player.isDead == true)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("You Lose!!");
+                Console.WriteLine();
+                Console.ResetColor();
+            }
+            Console.WriteLine();
+            if(player.isDead == false)
+            {
+                Console.WriteLine("던전에서 몬스터 {0}마리를 잡았습니다.", monsterQueue.Length);
+                Console.WriteLine();
+            }
+            Console.WriteLine($"Lv.{player.level} {player.name}\nHP 100 -> {player.HP}");           //데미지 계산에서 HP가 음수가되면 0이되게하던가 여기서 분기를 나눠도 OK
+            Console.WriteLine();
+            Console.WriteLine("0. 다음");
+            Console.WriteLine();
+            Console.Write(">> ");
+
+            //전투 보상(경험치, 골드, 아이템)
+
+            while (true)
+            {
+                string input = Console.ReadLine();
+                if (!int.TryParse(input, out int inputIDX))
+                { Console.WriteLine("잘못된 입력입니다."); continue; }
+                inputIDX -= 1;
+
+                if (input == "0")
+                {
+                    Displaying();       //던전선택창
+                    break;
+                }
+                else { Console.WriteLine("잘못된 입력입니다."); }
+            }
+            //전투대기열의 모든 몬스터의 isDead가 true가 될 때, 이 함수를 호출합니다.
+            //if((monsterQueue.All(x => monsterQueue[x].isDead == true) || player.isDead == true)
+            //{
+            //      BattleEnd(monsterQueue, player)
+            //}
+        }
     }
-    /*Battle!!
-
-Lv.2 미니언  HP 15
-Lv.5 대포미니언 HP 25
-LV.3 공허충 HP 10
 
 
-[내정보]
-Lv.1  Chad (전사) 
-HP 100/100 
-
-1. 공격
-
-원하시는 행동을 입력해주세요.
->>
-     * 1입력시 공격할 몬스터의 번호가 표시
-     * 숫자 입력시 선택한 몬스터를 대상으로 공격메서드
-     * 
-     * 
-     */
 
 
+    //회피 = 숫자 랜덤으로 뽑아서 DEF수치보다 낮은숫자면 공격실패
 
 }
