@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|solutionrelative:rtanrpg\\shm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|d:\\zzondy\\git\\txtrpg\\rtanrpg\\monster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|solutionrelative:rtanrpg\\monster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|d:\\zzondy\\git\\txtrpg\\rtanrpg\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|solutionrelative:rtanrpg\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -15,16 +19,16 @@
       "RelativeMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|solutionrelative:rtanrpg\\dungeon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|d:\\zzondy\\git\\txtrpg\\rtanrpg\\monster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|solutionrelative:rtanrpg\\monster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|d:\\zzondy\\git\\txtrpg\\rtanrpg\\shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|solutionrelative:rtanrpg\\shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|d:\\zzondy\\git\\txtrpg\\rtanrpg\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|solutionrelative:rtanrpg\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|d:\\zzondy\\git\\txtrpg\\rtanrpg\\shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|solutionrelative:rtanrpg\\shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|d:\\zzondy\\git\\txtrpg\\rtanrpg\\inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|solutionrelative:rtanrpg\\inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D17CE36F-7C87-4684-B81F-7EB9388B177D}|rtanRPG\\rtanRPG.csproj|d:\\zzondy\\git\\txtrpg\\rtanrpg\\breaktime.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -42,43 +46,56 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
+              "Title": "inventory.cs",
+              "DocumentMoniker": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\inventory.cs",
+              "RelativeDocumentMoniker": "rtanRPG\\inventory.cs",
+              "ToolTip": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\inventory.cs",
+              "RelativeToolTip": "rtanRPG\\inventory.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAFIAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-27T02:23:43.864Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Shop.cs",
               "DocumentMoniker": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\Shop.cs",
               "RelativeDocumentMoniker": "rtanRPG\\Shop.cs",
               "ToolTip": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\Shop.cs",
               "RelativeToolTip": "rtanRPG\\Shop.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAYwEEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACIAAAAAAAAAAAAQwBYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-26T10:29:49.039Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\Program.cs",
               "RelativeDocumentMoniker": "rtanRPG\\Program.cs",
               "ToolTip": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\Program.cs",
               "RelativeToolTip": "rtanRPG\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAQwKEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-26T10:21:21.345Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "player.cs",
               "DocumentMoniker": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\player.cs",
               "RelativeDocumentMoniker": "rtanRPG\\player.cs",
               "ToolTip": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\player.cs",
               "RelativeToolTip": "rtanRPG\\player.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAAAwA4AAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-26T08:56:36.983Z",
               "EditorCaption": ""
@@ -91,52 +108,53 @@
               "RelativeDocumentMoniker": "rtanRPG\\SHM.cs",
               "ToolTip": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\SHM.cs",
               "RelativeToolTip": "rtanRPG\\SHM.cs",
-              "ViewState": "AgIAAFcAAAAAAAAAAAAwwFwAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAADAAAAAAAAAAAAAQwMYAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-26T08:36:44.257Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "monster.cs",
               "DocumentMoniker": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\monster.cs",
               "RelativeDocumentMoniker": "rtanRPG\\monster.cs",
               "ToolTip": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\monster.cs",
               "RelativeToolTip": "rtanRPG\\monster.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAABEAAAAAAAAAAAAgwCIAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-26T08:33:45.719Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "dungeon.cs",
               "DocumentMoniker": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\dungeon.cs",
               "RelativeDocumentMoniker": "rtanRPG\\dungeon.cs",
               "ToolTip": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\dungeon.cs",
               "RelativeToolTip": "rtanRPG\\dungeon.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAxwCQAAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAFkAAAAAAAAAAAA+wOIAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-26T08:31:49.092Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "breaktime.cs",
               "DocumentMoniker": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\breaktime.cs",
               "RelativeDocumentMoniker": "rtanRPG\\breaktime.cs",
               "ToolTip": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\breaktime.cs",
               "RelativeToolTip": "rtanRPG\\breaktime.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAYwEcAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwEcAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T02:21:00.944Z"
+              "WhenOpened": "2024-09-26T02:21:00.944Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "rtanRPG.csproj",
               "DocumentMoniker": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\rtanRPG.csproj",
               "RelativeDocumentMoniker": "rtanRPG\\rtanRPG.csproj",
