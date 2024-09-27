@@ -215,7 +215,6 @@ namespace rtanRPG
         public void ShowAttackUI(Monster[] MonsterQueue, Player player)
         {
 
-
             while (true)
             {
                 if (IsYourTurn)
