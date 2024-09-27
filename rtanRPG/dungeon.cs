@@ -98,7 +98,9 @@ namespace rtanRPG
 
 
         public void EnterDungeon(Difficulty difficulty)//던전입장
+
         {
+
             numberOfDraws = rand.Next(minValue, maxValue); // 뽑고 싶은 몬스터의 수를 설정 (1~4사이)
 
 
@@ -212,102 +214,123 @@ namespace rtanRPG
 
         public void ShowAttackUI(Monster[] MonsterQueue, Player player)
         {
-            Console.Clear();
-            Console.WriteLine("Battle!!");
-            Console.WriteLine();
-            for (int i = 0; i < MonsterQueue.Length; i++)
-            {
-                if (MonsterQueue[i] != null)
-                {
 
-                    bool isDead = MonsterQueue[i].HP <= 0;
-                    string monsterHp = isDead ? "Dead" : MonsterQueue[i].HP.ToString();
-
-                    if (isDead) // 회색으로 
-                    {
-                        Console.ForegroundColor = ConsoleColor.Gray;
-                    }
-
-                    Console.WriteLine($"{i + 1} Lv. {MonsterQueue[i].level} {MonsterQueue[i].Name}  HP {monsterHp}");
-                }
-
-            }
-            Console.WriteLine("\n");
-            Console.WriteLine($"[내정보]\nLv.{player.level}  {player.name} ({player.role})");
-            Console.WriteLine($"HP 100/{player.HP}");
-            Console.WriteLine($"\n0. 취소\n\n대상을 선택해주세요.");
-            Console.Write(">>");
 
             while (true)
             {
-                string input = Console.ReadLine();
-
-                if (!int.TryParse(input, out int inputIDX)) { Console.WriteLine("잘못된 입력입니다."); continue; }
-                if (inputIDX > MonstersQueue.Length) { Console.WriteLine("잘못된 입력입니다."); continue; }
-                if (MonstersQueue[inputIDX].isdead) { Console.WriteLine("이미 처치한 몬스터입니다."); continue; }
-
-
-                if (input == "0")
+                if (IsYourTurn)
                 {
-                    // ShowBattleUI();
-                    break;
-                }
-
-                // 선택한 몬스터에 공격 함수 실행
-                else
-                {
-                    if (IsYourTurn)//플레이어턴
+                    Console.Clear();
+                    Console.WriteLine("Battle!!");
+                    Console.WriteLine();
+                    for (int i = 0; i < MonsterQueue.Length; i++)
                     {
-                        Console.Clear();
-
-                        MonstersQueue[inputIDX].TakeDamage((int)player.Attack(MonstersQueue[inputIDX].Name, MonstersQueue[inputIDX].level));//공격
-
-
-                    }
-                    else//몬스터턴
-                    {
-                        for (int i = 0; i <= MonstersQueue.Length; i++)
+                        if (MonsterQueue[i] != null)
                         {
-                            if (MonstersQueue[i] != null)
+
+                            bool isDead = MonsterQueue[i].HP <= 0;
+                            string monsterHp = isDead ? "Dead" : MonsterQueue[i].HP.ToString();
+
+                            if (isDead) // 회색으로 
                             {
-                                Console.Clear();
-                                player.TakeDamage(MonstersQueue[i].Attack(player.name));
-                                if (player.isDead) break;
+                                Console.ForegroundColor = ConsoleColor.Gray;
                             }
+
+                            Console.WriteLine($"{i + 1} Lv. {MonsterQueue[i].level} {MonsterQueue[i].Name}  HP {monsterHp}");
                         }
 
                     }
+                    Console.WriteLine("\n");
+                    Console.WriteLine($"[내정보]\nLv.{player.level}  {player.name} ({player.role})");
+                    Console.WriteLine($"HP 100/{player.HP}");
+                    Console.WriteLine($"\n0. 취소\n\n대상을 선택해주세요.");
+                    Console.Write(">>");
+                    string input = Console.ReadLine();
 
+                    if (!int.TryParse(input, out int inputIDX)) { Console.WriteLine("잘못된 입력입니다."); continue; }
+                    if (inputIDX > MonstersQueue.Length) { Console.WriteLine("잘못된 입력입니다."); continue; }
 
-
-                };
-                Console.WriteLine($"\n0. 다음\n\n");
-                Console.Write(">>");
-
-                while (true)
-                {
-
-                    input = Console.ReadLine();
-
-                    if (!int.TryParse(input, out inputIDX))
-                    { Console.WriteLine("잘못된 입력입니다."); continue; }
 
                     if (input == "0")
+
                     {
-                        if (IsYourTurn)
-                        {
-                            IsYourTurn = false;
-                        }
-                        else { IsYourTurn = true; }
-                        // 몬스터 공격 로직();
+                        // ShowBattleUI();
                         break;
+                    }
+                    if (MonstersQueue[inputIDX - 1].isdead) { Console.WriteLine("이미 처치한 몬스터입니다."); continue; }
+                    Console.Clear();
+
+                    MonstersQueue[inputIDX - 1].TakeDamage((int)player.Attack(MonstersQueue[inputIDX - 1].Name, MonstersQueue[inputIDX - 1].level));//공격
+                    
+                    Console.WriteLine($"\n0. 다음\n\n");
+                    Console.Write(">>");
+
+                    while (true)
+                    {
+
+                        input = Console.ReadLine();
+
+                        if (!int.TryParse(input, out inputIDX))
+                        { Console.WriteLine("잘못된 입력입니다."); continue; }
+
+                        if (input == "0")
+                        {
+                            break;
+                        }
+
+                        else { Console.WriteLine("잘못된 입력입니다."); }
 
                     }
+                    IsYourTurn = false; // 플레이어 턴 끝
+                    continue;
 
-                    else { Console.WriteLine("잘못된 입력입니다."); }
 
                 }
-            }
+                else
+                {
+                    for (int i = 0; i <= MonstersQueue.Length; i++)
+                    {
+                        if (MonstersQueue[i] != null)
+                        {
+                            Console.Clear();
+                            player.TakeDamage(MonstersQueue[i].Attack(player.name));
+                            Console.WriteLine($"\n0. 다음\n\n");
+                            Console.Write(">>");
+                            string input = Console.ReadLine();
+
+                            if (!int.TryParse(input, out int inputIDX))
+                            { Console.WriteLine("잘못된 입력입니다."); continue; }
+
+                            if (input == "0")
+                            {
+                                continue;
+                            }
+
+                            else { Console.WriteLine("잘못된 입력입니다."); }
+
+
+
+                        }
+                        else break; 
+
+
+                    }
+                    IsYourTurn = true; // 몬스터 턴 끝
+                }
+                //if (player.isDead)
+                //{
+                //    Console.WriteLine("플레이어가 사망했습니다. 게임을 종료합니다.");
+                //    Environment.Exit(0); // 게임 종료
+                //}
+
+
+
+            };
+
+
+
+
+
         }
 
     }
