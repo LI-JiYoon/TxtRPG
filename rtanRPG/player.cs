@@ -23,7 +23,7 @@ namespace rtanRPG
         public float EXP = 0;
         public bool weapon = false;
         public bool armor = false;
-        public bool isDead = false;
+        public bool isDead => HP <= 0;              //0이하일 때 True, 초과면 자동으로 false
         public Inventory inventory;
 
 
@@ -123,6 +123,7 @@ namespace rtanRPG
 
                 if (rand.Next(0, 101) <= 15)
                 {
+                    Console.Clear();
                     damage = (int)(damage * 1.6);
                     Console.WriteLine($"Lv.{Monsterlevel} {MonsterName} 을(를) 맞췄습니다. [데미지 : {damage}] - 치명타 공격!!");
                     return damage;
@@ -156,17 +157,11 @@ namespace rtanRPG
         {
             HP -= damage;
 
-            if (HP <= 0) { HP = 0; IsDead(HP); }
+            if (HP <= 0) { HP = 0; }
             else
             {
                 Console.WriteLine($"Lv.{level} {name}\r\n" + $"HP {HP + damage} -> {HP}\r\n");
             }
-        }
-
-        public bool IsDead(float hp)
-        {
-            if (hp <= 0) { return isDead = true; }
-            else return isDead;
         }
 
     }

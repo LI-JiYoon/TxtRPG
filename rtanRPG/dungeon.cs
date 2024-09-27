@@ -1,4 +1,5 @@
-﻿using System;
+﻿using rtanRPG;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,13 +22,12 @@ namespace rtanRPG
 
         Monster[] Monsters = new Monster[]
        {
-
            new Monster1(),
            new Monster2(),
            new Monster3()
        };
 
-        Monster[] MonstersQueue = new Monster[4];
+        List <Monster> MonstersQueue = new List <Monster>();
         int queueIndex = 0;
 
         public dungeon(Player player)
@@ -54,7 +54,6 @@ namespace rtanRPG
 
             // 0이 아니면 무한히 질문!
             while (true)
-
             {
                 string inputText = Console.ReadLine();
                 if (!int.TryParse(inputText, out int inputIDX))
@@ -97,29 +96,61 @@ namespace rtanRPG
 
 
         public void EnterDungeon(Difficulty difficulty)//던전입장
-
         {
-
-            numberOfDraws = rand.Next(minValue, maxValue); // 뽑고 싶은 몬스터의 수를 설정 (1~4사이)
-
+            if(MonstersQueue != null)
+            {
+                MonstersQueue.Clear();                                  //MonsterQueue 초기화
+            }
+            numberOfDraws = rand.Next(minValue, maxValue + 1); // 뽑고 싶은 몬스터의 수를 설정 (1~4사이)
+            MonstersQueue.Capacity = numberOfDraws;
 
             for (int i = 0; i < numberOfDraws; i++)
             {
-                // MonstersQueue 배열의 다음 빈 공간에 Monsters 배열의 요소를 추가
-                if (queueIndex < MonstersQueue.Length)
+                int monsterIndex = rand.Next(Monsters.Length);
+                // MonstersQueue 배열의 다음 빈 공간에 Monsters 배열의 요소를 추가           monsterQueue에 랜덤한 몬스터 추가
+                Monster newMonster;
+
+                // 랜덤한 몬스터 생성
+                switch (monsterIndex)
                 {
-                    MonstersQueue[queueIndex] = Monsters[i];
-                    queueIndex++; // MonstersQueue의 인덱스 증가
+                    case 0:
+                        newMonster = new Monster1();
+                        break;
+                    case 1:
+                        newMonster = new Monster2();
+                        break;
+                    case 2:
+                        newMonster = new Monster3();
+                        break;
+                    default:
+                        newMonster = new Monster1();
+                        break;
                 }
+
+                MonstersQueue.Add(newMonster); // MonstersQueue에 새로운 몬스터 추가
             }
 
-            ShowBattleUI(MonstersQueue, player);
+            //전투구현
 
+            while(!MonstersQueue.All(x => x.isDead) && !player.isDead)
+            {
+                DisplayBattleUI(MonstersQueue, player);
 
+                if(MonstersQueue.All(x => x.isDead))
+                {
+                    DisplayBattleResult(MonstersQueue, player);
+                }
 
+                DisplayEnemyAttack();
 
+                if (player.isDead)
+                {
+                    DisplayBattleResult(MonstersQueue, player);
+                }
 
+            }
 
+            /*
             int baseReward = GetBaseReward(difficulty);
 
             // 보상 계산
@@ -128,6 +159,7 @@ namespace rtanRPG
             Console.WriteLine($"Gold {player.gold - reward} G -> {player.gold} G");
             player.dungeonClearCount++;
             player.checkLevelUp();
+            */
         }
 
         private int GetRecommendedDEF(Difficulty difficulty)//난이도 별 권장 방어력
@@ -170,18 +202,22 @@ namespace rtanRPG
         }
 
 
-        public void ShowBattleUI(Monster[] MonsterQueue, Player player)
+        public void DisplayBattleUI(List<Monster> MonsterQueue, Player player)
         {
             Console.Clear();
             Console.WriteLine("Battle!!");
             Console.WriteLine();
-            for (int i = 0; i < MonsterQueue.Length; i++)
+            for (int i = 0; i < MonsterQueue.Count; i++)
 
             {
                 if (MonsterQueue[i] != null)
                 {
+                    if (MonsterQueue[i].isDead)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Gray;                        //죽은 몬스터들 회색으로
+                    }
                     Console.WriteLine($"Lv.{MonsterQueue[i].level} {MonsterQueue[i].Name}  HP {MonsterQueue[i].HP}");
-
+                    Console.ResetColor();
                 }
             }
             Console.WriteLine("\n");
@@ -201,8 +237,7 @@ namespace rtanRPG
 
                 if (input == "1")
                 {
-                    ShowAttackUI(MonsterQueue, player);
-                    //Attack함수
+                    DisplaySelectEnemy(MonsterQueue, player);
                     break;
                 }
                 else { Console.WriteLine("잘못된 입력입니다."); }
@@ -211,141 +246,60 @@ namespace rtanRPG
         }
 
 
-        public void ShowAttackUI(Monster[] MonsterQueue, Player player)
+        public void DisplaySelectEnemy(List<Monster> MonsterQueue, Player player)
         {
-            bool IsYourTurn = true;
-
-
-            while (true)
+            Console.Clear();
+            Console.WriteLine("Battle!!");
+            Console.WriteLine();
+            for (int i = 0; i < MonsterQueue.Count; i++)
             {
-                if (IsYourTurn)
+                if (MonsterQueue[i] != null)
                 {
-                    Console.Clear();
-                    Console.WriteLine("Battle!!");
-                    Console.WriteLine();
-                    for (int i = 0; i < MonsterQueue.Length; i++)
+                    string monsterHp = MonsterQueue[i].isDead ? "Dead" : MonsterQueue[i].HP.ToString();
+
+                    if (MonsterQueue[i].isDead) // 회색으로 
                     {
-                        if (MonsterQueue[i] != null)
-                        {
-
-                            bool isDead = MonsterQueue[i].HP <= 0;
-                            string monsterHp = isDead ? "Dead" : MonsterQueue[i].HP.ToString();
-
-                            if (isDead) // 회색으로 
-                            {
-                                Console.ForegroundColor = ConsoleColor.Gray;
-                            }
-
-                            Console.WriteLine($"{i + 1} Lv. {MonsterQueue[i].level} {MonsterQueue[i].Name}  HP {monsterHp}");
-                        }
-
+                        Console.ForegroundColor = ConsoleColor.Gray;
                     }
-                    Console.WriteLine("\n");
-                    Console.WriteLine($"[내정보]\nLv.{player.level}  {player.name} ({player.role})");
-                    Console.WriteLine($"HP 100/{player.HP}");
-                    Console.WriteLine($"\n0. 취소\n\n대상을 선택해주세요.");
-                    Console.Write(">>");
-                    string input = Console.ReadLine();
-
-                    if (!int.TryParse(input, out int inputIDX)) { Console.WriteLine("잘못된 입력입니다."); continue; }
-                    if (inputIDX > MonstersQueue.Length) { Console.WriteLine("잘못된 입력입니다."); continue; }
-
-
-                    if (input == "0")
-
-                    {
-                        // ShowBattleUI();
-                        break;
-                    }
-                    if (MonstersQueue[inputIDX - 1].isdead) { Console.WriteLine("이미 처치한 몬스터입니다."); continue; }
-                    Console.Clear();
-
-                    MonstersQueue[inputIDX - 1].TakeDamage((int)player.Attack(MonstersQueue[inputIDX - 1].Name, MonstersQueue[inputIDX - 1].level));//공격
-
-                    Console.WriteLine($"\n0. 다음\n\n");
-                    Console.Write(">>");
-
-                    while (true)
-                    {
-
-                        input = Console.ReadLine();
-
-                        if (!int.TryParse(input, out inputIDX))
-                        { Console.WriteLine("잘못된 입력입니다."); continue; }
-
-                        if (input == "0")
-                        {
-                            break;
-                        }
-
-                        else { Console.WriteLine("잘못된 입력입니다."); }
-
-                    }
-                    IsYourTurn = false; // 플레이어 턴 끝
-                    if ((MonstersQueue.All(x => x.isdead == true) || player.isDead == true))
-                    {
-                        BattleEnd(MonstersQueue, player);
-                    }
-
-                    continue;
-
-                    //if(win?)
-
+                    Console.WriteLine($"{i + 1} Lv. {MonsterQueue[i].level} {MonsterQueue[i].Name}  HP {monsterHp}");
+                    Console.ResetColor();
                 }
-                else
-                {
-                    for (int i = 0; i <= MonstersQueue.Length; i++)
-                    {
-                        if (MonstersQueue[i] != null)
-                        {
-                            Console.Clear();
-                            player.TakeDamage(MonstersQueue[i].Attack(player.name));
-                            Console.WriteLine($"\n0. 다음\n\n");
-                            Console.Write(">>");
-                            string input = Console.ReadLine();
+                else break;                                                                                         //null이 아니면 for문탈출
+            }
+            Console.WriteLine("\n");
+            Console.WriteLine($"[내정보]\nLv.{player.level}  {player.name} ({player.role})");
+            Console.WriteLine($"HP 100/{player.HP}");
+            Console.WriteLine($"\n0. 취소\n\n대상을 선택해주세요.");
+            Console.Write(">>");
+            string input = Console.ReadLine();
 
-                            if (!int.TryParse(input, out int inputIDX))
-                            { Console.WriteLine("잘못된 입력입니다."); continue; }
+            if (!int.TryParse(input, out int inputIDX))
+            {
+                Console.WriteLine("잘못된 입력입니다.");
+            }
+            else if (inputIDX > MonstersQueue.Count)
+            {
+                Console.WriteLine("잘못된 입력입니다.");
+            }
+            else if (input == "0")
+            {
+                DisplayBattleUI(MonstersQueue, player);
+            }
+            else if (MonstersQueue[inputIDX - 1].isDead)
+            {
+                Console.WriteLine("이미 처치한 몬스터입니다.");
+                Thread.Sleep(1000);
+                Console.Clear();
+            }
 
-                            if (input == "0")
-                            {
-                                continue;
-                            }
+            MonstersQueue[inputIDX - 1].TakeDamage((int)player.Attack(MonstersQueue[inputIDX - 1].Name, MonstersQueue[inputIDX - 1].level));//공격  
 
-                            else { Console.WriteLine("잘못된 입력입니다."); }
-
-
-
-                        }
-                        else break;
-
-
-                    }
-                    IsYourTurn = true; // 몬스터 턴 끝
-                    if ((MonstersQueue.All(x => x.isdead == true) || player.isDead == true))
-                    {
-                        BattleEnd(MonstersQueue, player);
-                    }
-                    //if(lose?)
-                }
-
-
-                //if (player.isDead)
-                //{
-                //    Console.WriteLine("플레이어가 사망했습니다. 게임을 종료합니다.");
-                //    Environment.Exit(0); // 게임 종료
-                //}
-
-
-            };
-
-
+            Console.WriteLine($"\n0. 다음\n\n");
+            Console.Write(">>");
         }
 
 
-
-
-        public void BattleEnd(Monster[] monsterQueue, Player player)
+        public void DisplayBattleResult(List<Monster> monsterQueue, Player player)
         {
             Console.Clear();
             Console.WriteLine("Battle!! - Result");
@@ -367,7 +321,7 @@ namespace rtanRPG
             Console.WriteLine();
             if (player.isDead == false)
             {
-                Console.WriteLine("던전에서 몬스터 {0}마리를 잡았습니다.", monsterQueue.Length);
+                Console.WriteLine("던전에서 몬스터 {0}마리를 잡았습니다.", monsterQueue.Count);           //이게 몇마리가 아니라 무조건 4가 나오지
                 Console.WriteLine();
             }
             Console.WriteLine($"Lv.{player.level} {player.name}\nHP 100 -> {player.HP}");           //데미지 계산에서 HP가 음수가되면 0이되게하던가 여기서 분기를 나눠도 OK
@@ -395,7 +349,33 @@ namespace rtanRPG
 
         }
 
+
+        public void DisplayEnemyAttack()                //죽은사람은 좀비가 되지 말아주세요
+        {
+            for (int i = 0; i < MonstersQueue.Count; i++)
+            {
+                if (MonstersQueue[i] != null)
+                {
+                    Console.Clear();
+                    player.TakeDamage(MonstersQueue[i].Attack(player.name));
+                    Console.WriteLine($"\n0. 다음\n\n");
+                    Console.Write(">>");
+                    string input = Console.ReadLine();
+
+                    if (!int.TryParse(input, out int inputIDX))
+                    { Console.WriteLine("잘못된 입력입니다."); continue; }
+
+                    if (input == "0")
+                    {
+                        continue;
+                    }
+                    else { Console.WriteLine("잘못된 입력입니다."); }
+                }
+                else break;
+
+            }
+        }
     }
-
-
 }
+
+

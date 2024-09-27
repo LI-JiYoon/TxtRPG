@@ -108,7 +108,7 @@
               "RelativeDocumentMoniker": "rtanRPG\\player.cs",
               "ToolTip": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\player.cs",
               "RelativeToolTip": "rtanRPG\\player.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABAAAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAGgAAAAAAAAAAAAswH0AAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-26T08:56:36.983Z",
               "EditorCaption": ""
@@ -121,7 +121,7 @@
               "RelativeDocumentMoniker": "rtanRPG\\monster.cs",
               "ToolTip": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\monster.cs",
               "RelativeToolTip": "rtanRPG\\monster.cs",
-              "ViewState": "AgIAADEAAAAAAAAAAAAQwH8AAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAEwAAAAAAAAAAAASwFwAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-26T08:33:45.719Z",
               "EditorCaption": ""
@@ -134,7 +134,7 @@
               "RelativeDocumentMoniker": "rtanRPG\\dungeon.cs",
               "ToolTip": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\dungeon.cs",
               "RelativeToolTip": "rtanRPG\\dungeon.cs",
-              "ViewState": "AgIAACQBAAAAAAAAAAAYwEcBAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAH8AAAAAAAAAAAAhwIgAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-26T08:31:49.092Z",
               "EditorCaption": ""
@@ -173,8 +173,7 @@
               "RelativeToolTip": "rtanRPG\\SHM.cs",
               "ViewState": "AgIAAGoAAAAAAAAAAAAQwHUAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T08:36:44.257Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-26T08:36:44.257Z"
             }
           ]
         }

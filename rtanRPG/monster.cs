@@ -17,7 +17,7 @@ namespace rtanRPG
         public int AtkPower { get; set; }
         public int level { get; set; }
 
-        public bool isdead = false;
+        public bool isDead => HP <= 0;
 
         // 몬스터의 기본 생성자
         public Monster(string name, int hp, int attackPower, int LV)
@@ -56,16 +56,6 @@ namespace rtanRPG
             }
         }
 
-        // 몬스터 죽음 판별 메서드
-
-        public void IsDead(int hp)
-        {
-            if (hp <= 0)
-            {
-                isdead = true;
-            }
-
-        }
 
         // 몬스터 정보 메서드
 
