@@ -14,7 +14,7 @@ namespace rtanRPG
         public int level = 1;
         public string name = "";
         public string role = "전사";
-        public float ATK = 10;
+        public float ATK = 80;
         public float DEF = 5;
         public float HP = 100;
         public float gold = 1500;
@@ -141,8 +141,8 @@ namespace rtanRPG
                     // 랜덤 공격력 생성
 
                     int finalDamage = rand.Next((int)minDamage, (int)(maxDamage + 1));
-                    Console.WriteLine($"Lv.{Monsterlevel} {MonsterName} 을(를) 맞췄습니다. [데미지 : {damage}]");
-                    return damage;
+                    Console.WriteLine($"Lv.{Monsterlevel} {MonsterName} 을(를) 맞췄습니다. [데미지 : {finalDamage}]");
+                    return finalDamage;
                 }
 
                 // 몬스터에게 데미지 입히기

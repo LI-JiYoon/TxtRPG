@@ -19,7 +19,6 @@ namespace rtanRPG
         int maxValue = 4; // 몬스터 뽑기 최대값
 
 
-        bool IsYourTurn = true;
         Monster[] Monsters = new Monster[]
        {
 
@@ -214,6 +213,8 @@ namespace rtanRPG
 
         public void ShowAttackUI(Monster[] MonsterQueue, Player player)
         {
+            bool IsYourTurn = true;
+
 
             while (true)
             {
@@ -260,7 +261,7 @@ namespace rtanRPG
                     Console.Clear();
 
                     MonstersQueue[inputIDX - 1].TakeDamage((int)player.Attack(MonstersQueue[inputIDX - 1].Name, MonstersQueue[inputIDX - 1].level));//공격
-                    
+
                     Console.WriteLine($"\n0. 다음\n\n");
                     Console.Write(">>");
 
@@ -281,8 +282,14 @@ namespace rtanRPG
 
                     }
                     IsYourTurn = false; // 플레이어 턴 끝
+                    if ((MonstersQueue.All(x => x.isdead == true) || player.isDead == true))
+                    {
+                        BattleEnd(MonstersQueue, player);
+                    }
+
                     continue;
 
+                    //if(win?)
 
                 }
                 else
@@ -310,12 +317,19 @@ namespace rtanRPG
 
 
                         }
-                        else break; 
+                        else break;
 
 
                     }
                     IsYourTurn = true; // 몬스터 턴 끝
+                    if ((MonstersQueue.All(x => x.isdead == true) || player.isDead == true))
+                    {
+                        BattleEnd(MonstersQueue, player);
+                    }
+                    //if(lose?)
                 }
+
+
                 //if (player.isDead)
                 //{
                 //    Console.WriteLine("플레이어가 사망했습니다. 게임을 종료합니다.");
@@ -323,12 +337,61 @@ namespace rtanRPG
                 //}
 
 
-
             };
 
 
+        }
 
 
+
+
+        public void BattleEnd(Monster[] monsterQueue, Player player)
+        {
+            Console.Clear();
+            Console.WriteLine("Battle!! - Result");
+            Console.WriteLine();
+            if (player.isDead == false)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Vicotry!");
+                Console.WriteLine();
+                Console.ResetColor();
+            }
+            else if (player.isDead == true)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("You Lose!!");
+                Console.WriteLine();
+                Console.ResetColor();
+            }
+            Console.WriteLine();
+            if (player.isDead == false)
+            {
+                Console.WriteLine("던전에서 몬스터 {0}마리를 잡았습니다.", monsterQueue.Length);
+                Console.WriteLine();
+            }
+            Console.WriteLine($"Lv.{player.level} {player.name}\nHP 100 -> {player.HP}");           //데미지 계산에서 HP가 음수가되면 0이되게하던가 여기서 분기를 나눠도 OK
+            Console.WriteLine();
+            Console.WriteLine("0. 다음");
+            Console.WriteLine();
+            Console.Write(">> ");
+
+            //전투 보상(경험치, 골드, 아이템)
+
+            while (true)
+            {
+                string input = Console.ReadLine();
+                if (!int.TryParse(input, out int inputIDX))
+                { Console.WriteLine("잘못된 입력입니다."); continue; }
+                inputIDX -= 1;
+
+                if (input == "0")
+                {
+                    Displaying();       //던전선택창
+                    break;
+                }
+                else { Console.WriteLine("잘못된 입력입니다."); }
+            }
 
         }
 
