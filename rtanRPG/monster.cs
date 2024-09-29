@@ -6,53 +6,76 @@ using System.Threading.Tasks;
 
 namespace rtanRPG
 {
-
-
-
     public class Monster
     {
         // 몬스터의 기본 속성
-        public string Name { get; set; }
-        public int HP { get; set; }
-        public int AtkPower { get; set; }
-        public int level { get; set; }
+        string _name = "";
+        int _hp;
+        int _atkPower;
+        int _level;
 
-        public bool isDead => HP <= 0;
+        // Properties
+        public string name { get; set; } = "";
+        public int hP { get; set; }
+        public int atkPower { get; set; }
+        public int level { get; set; }
+        public bool isDead { get { return hP <= 0 ? true : false; } }
+        // (조건) ? 참일경우 : 거짓일경우
+        // ? : 구분자
+        // 참일경우 : 조건이 참일 경우에 리턴시킬 값
+        // 거짓일경우 : 조건이 거짓일 경우에 리턴시킬 값
 
         // 몬스터의 기본 생성자
         public Monster(string name, int hp, int attackPower, int LV)
         {
-            Name = name;
-            HP = hp;
-            AtkPower = attackPower;
-            level = LV;
+            this._name = name;
+            this._hp = hp;
+            this._atkPower = attackPower;
+            this._level = LV;
+
+            Init();
+        }
+
+        public Monster Clone()
+        {
+            return new Monster(_name, _hp, _atkPower, _level);
+        }
+
+        // 초기화
+        public void Init()
+        {
+            name = _name;
+            hP = _hp;
+            atkPower = _atkPower;
+            level = _level;
         }
 
         // 몬스터 공격 메서드
         public virtual int Attack(string Playername)
         {
 
-            Console.WriteLine($"Lv.{level} {Name}의 공격!\r\n" +
+            Console.WriteLine($"Lv.{level} {name}의 공격!\r\n" +
 
-                $"{Playername} 을 맞췄습니다  [데미지 : {AtkPower}]\r\n\r\n");
+                $"{Playername} 을 맞췄습니다  [데미지 : {atkPower}]\r\n\r\n");
 
-            return AtkPower;
+            return atkPower;
         }
 
         // 몬스터 피해 메서드
         public void TakeDamage(int damage)
         {
-            HP -= damage;
+            int formerHp = hP;
+            hP -= damage;
 
-            if (HP < 0) { HP = 0; }
-            if (HP <= 0)
+            if (hP <= 0)
             {
-                Console.WriteLine($"Lv.{level} {Name}\r\n" + $"HP {HP + damage} -> Dead\r\n");
+                hP = 0;
+                Console.WriteLine($"Lv.{level} {name}\r\n" + $"HP {formerHp} -> Dead\r\n");
 
             }
             else
             {
-                Console.WriteLine($"Lv.{level} {Name}\r\n" + $"HP {HP + damage} -> {HP}\r\n");
+                Console.WriteLine($"Lv.{level} {name}\r\n" + $"HP {formerHp} -> {hP}\r\n");
             }
         }
 
@@ -62,64 +85,25 @@ namespace rtanRPG
         public string MonsterInfo(int idx)
         {
 
-            return ($"{idx + 1} Lv.{level} {Name}  HP {HP}\\r\\n");
+            return ($"{idx + 1} Lv.{level} {name}  HP {hP}\\r\\n");
         }
 
     }
 
-    // Monster1 클래스
-    public class Monster1 : Monster
+
+    public class MonsterPreset
     {
-        public Monster1() : base("김록기", 100, 10, 2)
+        public static List<Monster> baseMonster = new List<Monster>()
         {
-
-        }
-
-        public override int Attack(string Playername)
+            new Monster("김록기", 5, 4, 2),
+            new Monster("안혜린", 10, 7, 10),
+            new Monster("강채린", 20, 10, 5)
+        };
+        public static List<Monster> EpicMonster = new List<Monster>()
         {
-
-            Console.WriteLine($"Lv.{level} {Name}의 공격!\r\n" +
-
-                $"{Playername} 을 맞췄습니다  [데미지 : {AtkPower}]");
-            return AtkPower;
-        }
+            new Monster("김록기(대장)", 1000, 100, 20),
+            new Monster("안혜린(대장)", 1500, 150, 100),
+            new Monster("강채린(대장)", 2000, 200, 50)
+        };
     }
-
-    // Monster2 클래스
-    public class Monster2 : Monster
-    {
-        public Monster2() : base("안혜린", 150, 15, 10)
-        {
-        }
-
-        public override int Attack(string Playername)
-        {
-
-            Console.WriteLine($"Lv.{level} {Name}의 공격!\r\n" +
-
-                $"{Playername} 을 맞췄습니다  [데미지 : {AtkPower}]");
-            return AtkPower;
-        }
-    }
-
-    // Monster3 클래스
-    public class Monster3 : Monster
-    {
-        public Monster3() : base("강채린", 200, 20, 5)
-        {
-        }
-
-        public override int Attack(string Playername)
-        {
-
-            Console.WriteLine($"Lv.{level} {Name}의 공격!\r\n" +
-
-                $"{Playername} 을 맞췄습니다  [데미지 : {AtkPower}]");
-            return AtkPower;
-
-        }
-
-    }
-
-
 }

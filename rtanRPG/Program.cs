@@ -138,7 +138,6 @@ namespace rtanRPG
                         break;
                         // 0.뒤로가기
                         // 뒤로가기란 location.preLocation 의 위치로 이동
-                        break;
                     case STATE.휴식하기:
                         breaktime.Displaying();
                         break;

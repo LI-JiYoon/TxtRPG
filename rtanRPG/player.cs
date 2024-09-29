@@ -155,12 +155,13 @@ namespace rtanRPG
         // 플레이어ㅏ 피해 메서드
         public void TakeDamage(int damage)
         {
+            int formerHp = (int)HP;
             HP -= damage;
 
             if (HP <= 0) { HP = 0; }
             else
             {
-                Console.WriteLine($"Lv.{level} {name}\r\n" + $"HP {HP + damage} -> {HP}\r\n");
+                Console.WriteLine($"Lv.{level} {name}\r\n" + $"HP {formerHp} -> {HP}\r\n");
             }
         }
 

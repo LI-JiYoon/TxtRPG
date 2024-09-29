@@ -56,7 +56,7 @@ namespace rtanRPG
             get
             {
                 if (_isSoltout) return "구매완료";
-                else return ((int)price).ToString();
+                else return ((int)price).ToString()+"G";
             }
             set
             {
@@ -75,8 +75,9 @@ namespace rtanRPG
 
 
         public string Label()
-        { 
-            return $" {name,-15}| 공격력 +{(int)ability,-15}| {description,-15}|";
+        {
+            //return $" {name,-15}| 공격력 +{(int)ability,-15}| {description,-15}|";
+            return string.Format(" {0, -" + MyLog.GetKoreanLength(20, name) + "}| 공격력 +{1, -5}| {2, -"+ MyLog.GetKoreanLength(50, description) + "}| ", name, ability, description);
         }
     }
 
@@ -101,7 +102,8 @@ namespace rtanRPG
 
         public string Label()
         {
-            return $" {name,-15}| 방어력 +{(int) ability,-15}| {description,-15}|";
+            return string.Format(" {0, -"+ MyLog.GetKoreanLength(20, name) + "}| 방어력 +{1, -5}| {2, -"+ MyLog.GetKoreanLength(50, description) + "}| ", name, ability, description);
+            //return $" {name,-15}| 방어력 +{(int)ability,-15}| {description,-15}|";
         }
 
 
@@ -116,7 +118,7 @@ namespace rtanRPG
             get 
             {
                 if (_isSoldout) return "구매완료";
-                else return ((int)price).ToString();
+                else return ((int)price).ToString()+"G";
             }
             set
             {

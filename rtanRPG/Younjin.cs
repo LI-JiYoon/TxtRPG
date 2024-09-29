@@ -15,15 +15,15 @@ namespace rtanRPG
             Console.WriteLine();
             for (int i = 0; i < MonsterQueue.Length; i++)
             {
-                bool isDead = MonsterQueue[i].HP <= 0;
-                string monsterHp = isDead ? "Dead" : MonsterQueue[i].HP.ToString();
+                bool isDead = MonsterQueue[i].hP <= 0;
+                string monsterHp = isDead ? "Dead" : MonsterQueue[i].hP.ToString();
 
                 if (isDead) // 회색으로 
                 {
                     Console.ForegroundColor = ConsoleColor.Gray; 
                 }
 
-                Console.WriteLine($"Lv.{i + 1} {MonsterQueue[i].level} {MonsterQueue[i].Name}  HP {monsterHp}");
+                Console.WriteLine($"Lv.{i + 1} {MonsterQueue[i].level} {MonsterQueue[i].name}  HP {monsterHp}");
             }
             Console.WriteLine("\n");
             Console.WriteLine($"[내정보]\nLv.{player.level}  {player.name} ({player.role})");
@@ -65,11 +65,11 @@ namespace rtanRPG
             Console.WriteLine();
             for (int i = 0; i < MonsterQueue.Length; i++)
             {
-                Console.WriteLine($"Lv.{MonsterQueue[i].level} {MonsterQueue[i].Name} 을(를) 맞췄습니다. [데미지: {finalDamage}]");
+                Console.WriteLine($"Lv.{MonsterQueue[i].level} {MonsterQueue[i].name} 을(를) 맞췄습니다. [데미지: {finalDamage}]");
                 Console.WriteLine("\n");
-                Console.WriteLine($"Lv.{MonsterQueue[i].level} {MonsterQueue[i].Name}");
+                Console.WriteLine($"Lv.{MonsterQueue[i].level} {MonsterQueue[i].name}");
 
-                Console.WriteLine($"HP {MonsterQueue[i].HP} -> {MonsterQueue[i].HP - finalDamage}");
+                Console.WriteLine($"HP {MonsterQueue[i].hP} -> {MonsterQueue[i].hP - finalDamage}");
             }
             Console.WriteLine($"\n0. 다음\n\n");
             Console.Write(">>");
@@ -107,7 +107,7 @@ namespace rtanRPG
             Random random = new Random();
             int finalDamage = random.Next((int)minDamage, (int)(maxDamage + 1));
 
-            MonsterQueue[selectedMonsterIndex].HP -= finalDamage;
+            MonsterQueue[selectedMonsterIndex].hP -= finalDamage;
         }
     }
 }
