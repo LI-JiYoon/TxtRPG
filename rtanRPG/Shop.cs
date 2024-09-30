@@ -35,6 +35,8 @@ namespace rtanRPG
 
         public void Displaying()
         {
+            Console.Clear();
+
             string text =
 
                 "   |\\                     /)\r\n /\\_\\\\__               (_//\r\n|   `>\\-`     _._       //`)\r\n \\ /` \\\\  _.-`:::`-._  //\r\n  `    \\|`    :::    `|/\r\n        |     :::     |\r\n        |.....:::.....|\r\n        |:::::::::::::|\r\n        |     :::     |\r\n        \\     :::     /\r\n         \\    :::    /\r\n          `-. ::: .-'\r\n           //`:::`\\\\\r\n          //   '   \\\\\r\n         |/         \\\\"
@@ -92,6 +94,8 @@ namespace rtanRPG
 
         public void buying()
         {
+            Console.Clear();
+
 
             string text =
                "상점\r\n" +
@@ -152,6 +156,8 @@ namespace rtanRPG
         }
         public void resell()
         {
+            Console.Clear();
+
             string text =
                "상점\r\n" +
                "필요한 아이템을 얻을 수 있는 상점입니다.\r\n\r\n" +

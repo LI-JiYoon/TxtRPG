@@ -38,6 +38,7 @@ namespace rtanRPG
         /// </summary>
         public void DisplayStatus()
         {
+            Console.Clear();
             string text =
                 $"Lv. {level}      \r\n" +
                 $"{name} ( {role} )\r\n" +

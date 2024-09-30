@@ -45,6 +45,7 @@ namespace rtanRPG
         //메서드
         public void Displaying()
         {
+            Console.Clear();
             string text =
 
                 "                                  |>>>\r\n                                  |\r\n                    |>>>      _  _|_  _         |>>>\r\n                    |        |;| |;| |;|        |\r\n                _  _|_  _    \\\\.    .  /    _  _|_  _\r\n               |;|_|;|_|;|    \\\\:. ,  /    |;|_|;|_|;|\r\n               \\\\..      /    ||;   . |    \\\\.    .  /\r\n                \\\\.  ,  /     ||:  .  |     \\\\:  .  /\r\n                 ||:   |_   _ ||_ . _ | _   _||:   |\r\n                 ||:  .|||_|;|_|;|_|;|_|;|_|;||:.  |\r\n                 ||:   ||.    .     .      . ||:  .|\r\n                 ||: . || .     . .   .  ,   ||:   |       \\,/\r\n                 ||:   ||:  ,  _______   .   ||: , |            /`\\\r\n                 ||:   || .   /+++++++\\    . ||:   |\r\n                 ||:   ||.    |+++++++| .    ||: . |\r\n              __ ||: . ||: ,  |+++++++|.  . _||_   |\r\n     ____--`~    '--~~__|.    |+++++__|----~    ~`---,              ___\r\n-~--~                   ~---__|,--~'                  ~~----_____-~'   `~----~~"
@@ -103,6 +104,8 @@ namespace rtanRPG
         /// <param name="difficulty"></param>
         public void EnterDungeon(Difficulty difficulty)
         {
+            Console.Clear();
+
             // MonsterQueue 초기화
             MonstersQueue = new List<Monster>();
 
@@ -120,7 +123,7 @@ namespace rtanRPG
             else PlayBattle();
             
 
-            /*
+            
             int baseReward = GetBaseReward(difficulty);
 
             // 보상 계산
@@ -129,7 +132,7 @@ namespace rtanRPG
             Console.WriteLine($"Gold {player.gold - reward} G -> {player.gold} G");
             player.dungeonClearCount++;
             player.checkLevelUp();
-            */
+            
         }
 
         public void PlayBattle()
@@ -183,7 +186,7 @@ namespace rtanRPG
             Console.WriteLine($"[내정보]]\r\nLv.{player.level}  {player.name} ({player.role})");
             Console.WriteLine($"HP 100/{player.HP}");
 
-            Console.WriteLine($"\n1. 공격\n\n원하시는 행동을 입력해주세요.");
+            Console.WriteLine($"\n1. 공격\n0. 도망치기\n\n원하시는 행동을 입력해주세요.");
 
             Console.Write(">>");
 
@@ -199,6 +202,12 @@ namespace rtanRPG
                     DisplaySelectEnemy(MonsterQueue, player);
                     break;
                 }
+                if (input == "0")
+                {
+                    
+                    break;
+                }
+
                 else { Console.WriteLine("잘못된 입력입니다."); }
 
             }
@@ -276,6 +285,7 @@ namespace rtanRPG
             }
             else if (player.isDead == true)
             {
+                player.HP += 10;
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine("You Lose!!");
                 Console.WriteLine();

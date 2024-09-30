@@ -23,6 +23,8 @@ namespace rtanRPG
 
         public void display()
         {
+            Console.Clear();
+
             string text =
                 "인벤토리\r\n" +
                 "보유 중인 아이템을 관리할 수 있습니다.\r\n\r\n" +
@@ -104,7 +106,9 @@ namespace rtanRPG
 
      
         public void equip()
-        { 
+        {
+            Console.Clear();
+
             string text =
                 "장착관리\r\n" +
                 "보유 중인 아이템을 관리할 수 있습니다.\r\n\r\n" +

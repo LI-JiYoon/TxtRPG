@@ -70,6 +70,7 @@ namespace rtanRPG
                         break;
 
                     case STATE.마을:
+                        Console.Clear();
 
                         Console.WriteLine(
 

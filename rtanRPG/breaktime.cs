@@ -21,6 +21,8 @@ namespace rtanRPG
 
         public void Displaying()
         {
+            Console.Clear();
+
             string text =
 
                 "       _\r\n     _|=|__________\r\n    /              \\\r\n   /                \\\r\n  /__________________\\\r\n   ||  || /--\\ ||  ||\r\n   ||[]|| | .| ||[]||\r\n ()||__||_|__|_||__||()\r\n( )|-|-|-|====|-|-|-|( ) \r\n^^^^^^^^^^====^^^^^^^^^^^"
@@ -67,9 +69,11 @@ namespace rtanRPG
                     break;
 
                 }
-                else { Console.WriteLine("잘못된 입력입니다."); }
 
+                else { Console.WriteLine("잘못된 입력입니다."); }
+                Location.SetLocation(STATE.마을);
             }
+            Location.SetLocation(STATE.마을);
 
             MyLog.절취선();
 
