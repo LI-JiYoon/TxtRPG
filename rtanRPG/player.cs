@@ -19,6 +19,7 @@ namespace rtanRPG
         public float HP = 100;
         public float gold = 1500;
         public float dungeonClearCount = 0;
+        public float MP = 100;
 
         public float EXP = 0;
         public bool weapon = false;
@@ -45,6 +46,7 @@ namespace rtanRPG
                 $"공격력 : {ATK}\r\n" +
                 $"방어력 : {DEF}\r\n" +
                 $"체 력 : {HP}\r\n" +
+                $"체 력 : {MP}\r\n" +
                 $"Gold : {gold} G\r\n\r\n" +
 
                 "0. 나가기\r\n\r\n" +
