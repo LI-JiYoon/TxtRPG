@@ -15,7 +15,7 @@
 
 |                             [이지윤](https://github.com/LI-JiYoon)                              |                              [조윤진](https://github.com/Joyoounjin)                              |                             [손형민](https://github.com/Zzondy-Unity)                              |                                                    
 | :-------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: | 
-| [![Avatar](https://avatars.githubusercontent.com/u/84116288?v=4)](https://github.com/LI-JiYoon) | [![Avatar](https://avatars.githubusercontent.com/u/87790607?v=4)]([https://github.com/aromadsh](https://github.com/Joyoounjin)) | [![Avatar](https://avatars.githubusercontent.com/u/110949465?v=4)]([https://github.com/Hyunjaa](https://github.com/Zzondy-Unity)) | 
+| [![Avatar](https://avatars.githubusercontent.com/u/84116288?v=4)](https://github.com/LI-JiYoon) | [![Avatar](https://avatars.githubusercontent.com/u/180900470?v=4)]([https://github.com/aromadsh](https://github.com/Joyoounjin)) | [![Avatar](https://avatars.githubusercontent.com/u/182717277?v=4)]([https://github.com/Hyunjaa](https://github.com/Zzondy-Unity)) | 
 
 
 ## 📚 프로젝트 결과물
