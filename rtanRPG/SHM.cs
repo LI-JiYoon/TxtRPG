@@ -51,32 +51,7 @@
 
 
 
-//        public class Potion : Item
-//        {
-//            List<string> potionEffect = new List<string>()
-//            {
-//                "체력"
-//            };
 
-//            public string name { get; set; }
-//            public string description { get; set; }
-//            public float effect;
-//            public float ability { get { return effect; } }
-//            public float price { get; set; }
-//            public bool alreadyHave { get; set; }
-//            public int potionType;       //포션타입0은 체력포션, 1 ~는 다른타입의 포션
-//            public string type { get { return potionEffect[potionType]; } }
-//            public string isSoldout { get; set; }
-
-
-//            public Potion(string name, string description, float effect, float price, int potiontype)
-//            {
-//                this.name = name;
-//                this.effect = effect;
-//                this.description = description;
-//                this.price = price;
-//                potionType = potiontype;
-//            }
 
 
 //            public string Label()
@@ -87,25 +62,7 @@
 //            public virtual void UsePotion(Player player) { }
 
 //        }
-//        public class HealthPotion : Potion
-//        {
-//            public string name { get; set; }
-//            public string description { get; set; }
-//            public float ability { get; }
-//            public float price { get; set; }
 
-//            //하급체력포션, 중급체력포션등으로 나눌수도?
-//            public HealthPotion(string name, string description, float effect, float price) : base(name, description, effect, price, 0)
-//            {
-
-//            }
-//            //public override void UsePotion (Player player)
-//            //{
-//            //    player.HP += ability;
-//            //    RemoveItem(items[6])        // 인벤토리의 items배열에 추가하면 체력포션은 6번이니까
-//            //    Console.WriteLine($"{name}사용!\n플레이어의 체력을 {(int)ability} 회복했습니다");
-//            //}
-//        }
 
 //        // Dungeon.cs의 112번째 줄에 적용하면 될 것 같습니다.
 //        //플레이어의 MaxHP와 현재HP를 구분하면 좋을것 같습니다.

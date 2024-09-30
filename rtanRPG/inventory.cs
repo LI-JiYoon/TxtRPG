@@ -86,6 +86,18 @@ namespace rtanRPG
 
         }
 
+        public void UsePotion(HealthPotion potion)
+        {
+            player.HP += potion.ability;
+            RemoveItem(potion);
+            Console.WriteLine($"{potion.name}사용!\n플레이어의 {potion.type}을 {(int)potion.ability} 회복했습니다");
+        }
+        public void UsePotion(ManaPotion potion)
+        {
+            player.MP += potion.ability;
+            RemoveItem(potion);
+            Console.WriteLine($"{potion.name}사용!\n플레이어의 {potion.type}을 {(int)potion.ability} 회복했습니다");
+        }
 
         /// <summary>
         /// 인벤토리에 아이템이 있는지 확인하는 메서드
@@ -141,27 +153,59 @@ namespace rtanRPG
                     Location.SetLocation(STATE.인벤토리);
                     break;
                 }
-                else
+                else if (!(items[inputIDX] is Potion))
                 {
-                    // 이름 앞에 [E]가 붙어있으면 [E]를 제거
-                    if (items[inputIDX].name.Substring(0, 3) == "[E]")
-                        
-                        items[inputIDX].name = items[inputIDX].name.Substring(3);
-                    else
-                    {
-                        foreach (var item in items)
-                        {
-                            if (item.name.Substring(0, 3) == "[E]" && 
-                                item.type == items[inputIDX].type)
-                            {
-                                item.name = item.name.Substring(3);
-                                break;
-                            }    
-                        }
-                        items[inputIDX].name = "[E]" + items[inputIDX].name;
-                    }
+                    EquipItem(inputIDX);
                     break;
+                }
+                else if (items[inputIDX] is HealthPotion healthpotion)
+                {
+                    UsePotion(healthpotion);
+                    break;
+                }
+                else if (items[inputIDX] is ManaPotion manapotion)
+                {
+                    UsePotion(manapotion);
+                    break;
+                }
+            }
+        }
 
+        public void EquipItem(int inputIDX)
+        {
+            if (items[inputIDX].name.Substring(0, 3) == "[E]")
+            {
+                items[inputIDX].name = items[inputIDX].name.Substring(3);
+                if (items[inputIDX] is AtkItem)
+                {
+                   // player.ExtraAtk -= items[inputIDX].ability;
+                }
+                else if (items[inputIDX] is DefItem)
+                {
+                  //  player.ExtraDef -= items[inputIDX].ability;
+
+                }
+            }
+
+            else
+            {
+                foreach (var item in items)
+                {
+                    if (item.name.Substring(0, 3) == "[E]" &&
+                        item.type == items[inputIDX].type)
+                    {
+                        item.name = item.name.Substring(3);
+                        break;
+                    }
+                }
+                items[inputIDX].name = "[E]" + items[inputIDX].name;
+                if (items[inputIDX] is AtkItem)
+                {
+                  //  player.ExtraAtk += items[inputIDX].ability;
+                }
+                else if (items[inputIDX] is DefItem)
+                {
+                  //  player.ExtraDef += items[inputIDX].ability;
                 }
             }
         }
