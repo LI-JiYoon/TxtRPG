@@ -13,7 +13,7 @@ namespace rtanRPG
         Random rand = new Random();
         public int level = 1;
         public string name = "";
-        public string role = "전사";
+        public string role;
         public float ATK = 80;
         public float DEF = 5;
         public float HP = 100;
@@ -21,19 +21,22 @@ namespace rtanRPG
         public float dungeonClearCount = 0;
         public float MP = 100;
 
+        public int extraAtk;
+        public int extraDef;
+
         public float EXP = 0;
         public bool weapon = false;
         public bool armor = false;
         public bool isDead => HP <= 0;              //0이하일 때 True, 초과면 자동으로 false
         public Inventory inventory;
-
+        public MiniGame minigame;
 
         public Player()
         {
             inventory = new Inventory(this);
+            minigame = new MiniGame(this);  
         }
-
-
+            
         /// <summary>
         /// 상태보기
         /// </summary>
@@ -43,12 +46,11 @@ namespace rtanRPG
             string text =
                 $"Lv. {level}      \r\n" +
                 $"{name} ( {role} )\r\n" +
-                $"공격력 : {ATK}\r\n" +
-                $"방어력 : {DEF}\r\n" +
+                (extraAtk == 0 ? $"공격력 : {ATK}\r\n" : $"공격력 : {ATK + extraAtk} (+{extraAtk})\r\n") +
+                (extraDef == 0 ? $"방어력 : {DEF}\r\n" : $"방어력 : {DEF + extraDef} (+{extraDef})\r\n") +
                 $"체 력 : {HP}\r\n" +
-                $"체 력 : {MP}\r\n" +
+                $"마나 : {MP}\r\n" +
                 $"Gold : {gold} G\r\n\r\n" +
-
                 "0. 나가기\r\n\r\n" +
 
                 "원하시는 행동을 입력해주세요.\r\n" +

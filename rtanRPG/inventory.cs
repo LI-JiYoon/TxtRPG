@@ -145,18 +145,19 @@ namespace rtanRPG
                 {
                     // 이름 앞에 [E]가 붙어있으면 [E]를 제거
                     if (items[inputIDX].name.Substring(0, 3) == "[E]")
-                        
+                    {
                         items[inputIDX].name = items[inputIDX].name.Substring(3);
+                    }
                     else
                     {
                         foreach (var item in items)
                         {
-                            if (item.name.Substring(0, 3) == "[E]" && 
+                            if (item.name.Substring(0, 3) == "[E]" &&
                                 item.type == items[inputIDX].type)
                             {
                                 item.name = item.name.Substring(3);
                                 break;
-                            }    
+                            }
                         }
                         items[inputIDX].name = "[E]" + items[inputIDX].name;
                     }

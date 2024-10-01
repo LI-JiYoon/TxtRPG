@@ -131,7 +131,7 @@ namespace rtanRPG
     {
         public string name { get; set; }
         public string description { get; set; }
-        public float ability { get;}
+        public float ability { get; }
         public float price { get; set; }
         public bool alreadyHave { get; set; }
         public string type { get; }
