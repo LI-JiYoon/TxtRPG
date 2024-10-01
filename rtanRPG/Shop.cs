@@ -132,6 +132,7 @@ namespace rtanRPG
                 }
 
                 if (input == "0") { break; }
+                
 
                 Item selected = items[inputIDX];
                 if (player.inventory.HasItem(selected))
