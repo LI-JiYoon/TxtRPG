@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-
 namespace rtanRPG
 {
     internal class dungeon
@@ -20,9 +19,11 @@ namespace rtanRPG
             Hard
         }
 
+        int dungeongClearCount = 0;
+
         // State
         bool Isclear = false;
-
+        bool isFleeing;
 
         // Field        
         private Player player;
@@ -30,7 +31,7 @@ namespace rtanRPG
         /// 전투 준비중인 몬스터
         /// </summary>
         List<Monster> MonstersQueue = new List<Monster>();
-       
+
 
 
         //생성자
@@ -51,9 +52,8 @@ namespace rtanRPG
                 "                                  |>>>\r\n                                  |\r\n                    |>>>      _  _|_  _         |>>>\r\n                    |        |;| |;| |;|        |\r\n                _  _|_  _    \\\\.    .  /    _  _|_  _\r\n               |;|_|;|_|;|    \\\\:. ,  /    |;|_|;|_|;|\r\n               \\\\..      /    ||;   . |    \\\\.    .  /\r\n                \\\\.  ,  /     ||:  .  |     \\\\:  .  /\r\n                 ||:   |_   _ ||_ . _ | _   _||:   |\r\n                 ||:  .|||_|;|_|;|_|;|_|;|_|;||:.  |\r\n                 ||:   ||.    .     .      . ||:  .|\r\n                 ||: . || .     . .   .  ,   ||:   |       \\,/\r\n                 ||:   ||:  ,  _______   .   ||: , |            /`\\\r\n                 ||:   || .   /+++++++\\    . ||:   |\r\n                 ||:   ||.    |+++++++| .    ||: . |\r\n              __ ||: . ||: ,  |+++++++|.  . _||_   |\r\n     ____--`~    '--~~__|.    |+++++__|----~    ~`---,              ___\r\n-~--~                   ~---__|,--~'                  ~~----_____-~'   `~----~~"
 
                 + "\r\n\r\n" +
-                "1. 쉬운 던전     | 방어력 5 이상 권장\r\n" +
-                "2. 일반 던전     | 방어력 11 이상 권장\r\n" +
-                "3. 어려운 던전    | 방어력 17 이상 권장\r\n" +
+
+                $"1. 던전 입장    | (현재 진행 : {dungeongClearCount + 1}층)\r\n" +
                 "0. 나가기\r\n\r\n" +
                 "" +
                 "원하시는 행동을 입력해주세요." +
@@ -74,19 +74,8 @@ namespace rtanRPG
                 }
                 else if (inputText == "1")
                 {
-                    EnterDungeon(dungeon.Difficulty.Easy);
-                    break;
-                }
-                else if (inputText == "2")
-                {
 
-                    EnterDungeon(dungeon.Difficulty.Normal);
-                    break;
-                }
-                else if (inputText == "3")
-                {
-
-                    EnterDungeon(dungeon.Difficulty.Hard);
+                    EnterDungeon(DungeonDifficulty(dungeongClearCount + 1));
                     break;
                 }
                 else
@@ -96,43 +85,47 @@ namespace rtanRPG
             }
             MyLog.절취선();
         }
-        
+
 
         /// <summary>
         /// 던전입장
         /// </summary>
         /// <param name="difficulty"></param>
-        public void EnterDungeon(Difficulty difficulty)
+        public void EnterDungeon(string difficulty)
         {
-            Console.Clear();
+            //도망치기 변수 초기화
+            isFleeing = false;
 
             // MonsterQueue 초기화
             MonstersQueue = new List<Monster>();
 
+
             // 몬스터 생성
-            int numberOfDraws = rand.Next(1, 5); // 뽑고 싶은 몬스터의 수를 설정 (1~4사이)
-            for (int i = 0; i < numberOfDraws; i++)
-            {
-                int monsterIndex = rand.Next(MonsterPreset.baseMonster.Count);
-                Monster tempMonster = MonsterPreset.baseMonster[monsterIndex].Clone();
-                MonstersQueue.Add(tempMonster); // MonstersQueue에 새로운 몬스터 추가
-            }
+            MonstersQueue = makeMonster(ref MonstersQueue, difficulty);
+
+            //int numberOfDraws = rand.Next(1, 5); // 뽑고 싶은 몬스터의 수를 설정 (1~4사이)
+            //for (int i = 0; i < numberOfDraws; i++)
+            //{
+            //    int monsterIndex = rand.Next(MonsterPreset.baseMonster.Count);
+            //    Monster tempMonster = MonsterPreset.baseMonster[monsterIndex].Clone();
+            //    MonstersQueue.Add(tempMonster); // MonstersQueue에 새로운 몬스터 추가
+            //}
 
             //전투구현
-            if(player.isDead) Console.WriteLine("체력을 회복하고 오세요");
+            if (player.isDead) Console.WriteLine("체력을 회복하고 오세요");
             else PlayBattle();
-            
 
-            
-            int baseReward = GetBaseReward(difficulty);
 
-            // 보상 계산
-            int reward = CalculateReward(player.ATK, baseReward);
-            player.gold += reward;
-            Console.WriteLine($"Gold {player.gold - reward} G -> {player.gold} G");
+
+            //int baseReward = GetBaseReward(difficulty);
+
+            //// 보상 계산
+            //int reward = CalculateReward(player.ATK, baseReward);
+            //player.gold += reward;
+            //Console.WriteLine($"Gold {player.gold - reward} G -> {player.gold} G");
             player.dungeonClearCount++;
             player.checkLevelUp();
-            
+
         }
 
         public void PlayBattle()
@@ -142,6 +135,15 @@ namespace rtanRPG
             {
                 // 전투 UI 띄우기
                 DisplayBattleUI(MonstersQueue, player);
+
+                //도망치기 선택 경우 던전입장 UI로 return
+                if (isFleeing)
+                {
+                    Console.Clear();
+                    Console.WriteLine("당신은 쫄아서 튀었다..!");
+                    Console.ReadKey();
+                    return;
+                }
 
                 // 몬스터 전멸일 경우
                 if (MonstersQueue.All(x => x.isDead))
@@ -161,7 +163,7 @@ namespace rtanRPG
         }
 
 
-        
+
         public void DisplayBattleUI(List<Monster> MonsterQueue, Player player)
         {
             Console.Clear();
@@ -204,8 +206,10 @@ namespace rtanRPG
                 }
                 if (input == "0")
                 {
-                    
+                    //도망치기 선택시
+                    isFleeing = true;
                     break;
+
                 }
 
                 else { Console.WriteLine("잘못된 입력입니다."); }
@@ -226,7 +230,7 @@ namespace rtanRPG
 
                     if (MonsterQueue[i].isDead) // 회색으로 
                     {
-                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
                     }
                     Console.WriteLine($"{i + 1} Lv. {MonsterQueue[i].level} {MonsterQueue[i].name}  HP {monsterHp}");
                     Console.ResetColor();
@@ -261,7 +265,7 @@ namespace rtanRPG
                 {
                     Console.WriteLine("이미 처치한 몬스터입니다.");
                     Thread.Sleep(1000);
-                   
+
                 }
                 else break;
             }
@@ -269,11 +273,14 @@ namespace rtanRPG
             //공격  
             Console.Clear();
             MonstersQueue[inputIDX - 1].TakeDamage((int)player.Attack(MonstersQueue[inputIDX - 1].name, MonstersQueue[inputIDX - 1].level));
+            //경험치
+            if (MonstersQueue[inputIDX - 1].isDead) player.EXP += MonstersQueue[inputIDX - 1].level * 1;
+
             Console.ReadKey();
         }
         public void DisplayBattleResult(List<Monster> monsterQueue, Player player)
         {
-        
+
             Console.WriteLine("Battle!! - Result");
             Console.WriteLine();
             if (player.isDead == false)
@@ -282,10 +289,14 @@ namespace rtanRPG
                 Console.WriteLine("Vicotry!");
                 Console.WriteLine();
                 Console.ResetColor();
+                player.checkLevelUp();
+                dungeongClearCount += 1;
             }
             else if (player.isDead == true)
             {
+
                 player.HP += 10;
+                player.EXP -= 10;
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine("You Lose!!");
                 Console.WriteLine();
@@ -351,8 +362,62 @@ namespace rtanRPG
 
             }
         }
-        
 
+        public string DungeonDifficulty(int dungeonLevel)//던전 층수 별 난이도 설정
+        {
+            if (dungeonLevel >= 1 && dungeonLevel <= 5) return "Easy";
+            else if (dungeonLevel >= 6 && dungeonLevel <= 15) return "Normal";
+            else return "Hard";
+
+        }
+
+        public List<Monster> makeMonster(ref List<Monster> MonstersQueue, string Difficulty)
+        {
+            int numberOfDraws = rand.Next(1, 5); // 뽑고 싶은 몬스터의 수를 설정 (1~4사이)
+            if (Difficulty == "Easy")
+            {
+                for (int i = 0; i < numberOfDraws; i++)
+                {
+                    int monsterIndex = rand.Next(MonsterPreset.baseMonster.Count);
+                    Monster tempMonster = MonsterPreset.baseMonster[monsterIndex].Clone();
+                    MonstersQueue.Add(tempMonster); // MonstersQueue에 새로운 몬스터 추가
+                }
+                return MonstersQueue;
+            }
+            else if (Difficulty == "Normal")
+            {
+
+                for (int i = 0; i < numberOfDraws; i++)
+                {
+                    int monsterIndex = rand.Next(MonsterPreset.baseMonster.Count);
+                    Monster tempMonster = MonsterPreset.NormalMonster[monsterIndex].Clone();
+                    MonstersQueue.Add(tempMonster); // MonstersQueue에 새로운 몬스터 추가
+                }
+                return MonstersQueue;
+            }
+            else if (Difficulty == "Hard")
+            {
+
+                for (int i = 0; i < numberOfDraws; i++)
+                {
+                    int monsterIndex = rand.Next(MonsterPreset.baseMonster.Count);
+                    Monster tempMonster = MonsterPreset.HardMonster[monsterIndex].Clone();
+                    MonstersQueue.Add(tempMonster); // MonstersQueue에 새로운 몬스터 추가
+                }
+                return MonstersQueue;
+            }
+            else
+            {
+
+                for (int i = 0; i < numberOfDraws; i++)
+                {
+                    int monsterIndex = rand.Next(MonsterPreset.baseMonster.Count);
+                    Monster tempMonster = MonsterPreset.EpicMonster[monsterIndex].Clone();
+                    MonstersQueue.Add(tempMonster); // MonstersQueue에 새로운 몬스터 추가
+                }
+                return MonstersQueue;
+            }
+        }
 
 
         private int GetRecommendedDEF(Difficulty difficulty)//난이도 별 권장 방어력

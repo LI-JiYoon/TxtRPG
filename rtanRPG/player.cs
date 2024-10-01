@@ -50,6 +50,7 @@ namespace rtanRPG
                 (extraDef == 0 ? $"방어력 : {DEF}\r\n" : $"방어력 : {DEF + extraDef} (+{extraDef})\r\n") +
                 $"체 력 : {HP}\r\n" +
                 $"마나 : {MP}\r\n" +
+                $"경험치 : {EXP}\r\n" +
                 $"Gold : {gold} G\r\n\r\n" +
                 "0. 나가기\r\n\r\n" +
 
@@ -83,10 +84,13 @@ namespace rtanRPG
         {
 
             // 던전 클리어 횟수가 현재 레벨에서 필요한 횟수를 초과할 경우 레벨업
-            if (EXP >= NeededEXP(level))
+            while (EXP >= NeededEXP(level))
             {
-
+                int formerLevel = level;
+                EXP -= NeededEXP(level);
                 levelUp();
+                Console.WriteLine($"레벨이 {formerLevel} -> {level}로 올랐습니다!");
+
             }
         }
         public void levelUp()
@@ -95,7 +99,7 @@ namespace rtanRPG
             level += 1;
             ATK += 0.5f;
             DEF += 1;
-            EXP = 0; // 클리어 횟수 초기화
+
 
 
 
@@ -109,6 +113,7 @@ namespace rtanRPG
             else if (level == 4) { return 100; }
             else return 0;
         }
+       
 
         public float Attack(string MonsterName, int Monsterlevel)
         {
