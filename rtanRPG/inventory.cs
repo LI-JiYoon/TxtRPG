@@ -19,7 +19,6 @@ namespace rtanRPG
             this.player = player;
         }
 
-
         public Dictionary<Item, int> inventory = new Dictionary<Item, int>()
         {
            { new DefItem("무쇠갑옷", 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2000), 0 },
@@ -28,12 +27,24 @@ namespace rtanRPG
            { new AtkItem("청동 도끼", 5, "어디선가 사용됐던거 같은 도끼입니다.", 1500), 0 },
            { new AtkItem("스파르타의 창", 7, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3000), 0 },
            { new AtkItem("뿅망치", 1, "뿅망치에 맞으면 삐용삐용.", 300), 0 },
-           { new HealthPotion("체력포션", 50, "물배를 채워 허기감을 약간 체워줍니다.", 500), 0},
+           { new HealthPotion("체력포션", 50, "물배를 채워 허기감을 약간 채워줍니다.", 500), 0},
+           { new HealthPotion("고급 체력포션", 80, "물배를 채워 허기감을 많이 채워줍니다.", 800), 0},
            { new ManaPotion("마나포션", 100, "용기를 얻어 부탁할 수 있습니..", 800), 0 }
         };
         public List<Item> equipList = new List<Item>();
 
 
+        public Item[] InitalInventoryArray(Dictionary<Item, int> inventory)
+        {
+            Item[] items = new Item[inventory.Count];
+            int index = 0;
+            foreach (KeyValuePair<Item, int> item in inventory)
+            {
+                items[index] = item.Key;
+                index++;
+            }
+            return items;
+        }
         public void display()
         {
             Console.Clear();
@@ -44,7 +55,9 @@ namespace rtanRPG
 
                 "[아이템 목록]\r\n\r\n" +
 
-                PrintInventory() + "\r\n" +
+                PrintInventory() + "\r\n\r\n\r\n" +
+
+               $"보유 골드 : {player.gold}\r\n\r\n" +
 
                 "1. 장착 관리\r\n" +
                 "0. 나가기\r\n\r\n" +
@@ -92,7 +105,7 @@ namespace rtanRPG
         {
             inventory[item] += 1;
         }
-        public void RemoveItem(Item item)//아이템 추가 메서드
+        public void RemoveItem(Item item)//아이템 제거 메서드
         {
             inventory[item] -= 1;
             if (inventory[item] < 0)
@@ -107,12 +120,15 @@ namespace rtanRPG
             player.HP += potion.ability;
             RemoveItem(potion);
             Console.WriteLine($"{potion.name}사용!\n플레이어의 {potion.type}을 {(int)potion.ability} 회복했습니다");
+            Console.ReadKey();
         }
         public void UsePotion(ManaPotion potion)
         {
             player.MP += potion.ability;
             RemoveItem(potion);
             Console.WriteLine($"{potion.name}사용!\n플레이어의 {potion.type}을 {(int)potion.ability} 회복했습니다");
+            Console.ReadKey();
+
         }
 
         /// <summary>
@@ -138,7 +154,6 @@ namespace rtanRPG
             }
         }
 
-
         public void equip()
         {
             Console.Clear();
@@ -147,7 +162,7 @@ namespace rtanRPG
             int index = 1;
             foreach (KeyValuePair<Item, int> i in inventory)
             {
-                if (i.Value > 1)
+                if (i.Value > 0)
                 {
                     indexedInventory.Add(index, i.Key);
                     index++;
@@ -175,7 +190,7 @@ namespace rtanRPG
             while (true)
             {
                 string inputText = Console.ReadLine();
-                if (!int.TryParse(inputText, out int inputIDX) || inputIDX < 1 || inputIDX > indexedInventory.Count)
+                if (!int.TryParse(inputText, out int inputIDX) || inputIDX > indexedInventory.Count)
                 {
                     Console.WriteLine("잘못된 입력입니다.");
                     continue;
@@ -189,7 +204,7 @@ namespace rtanRPG
                     Location.SetLocation(STATE.인벤토리);
                     break;
                 }
-                if(indexedInventory.TryGetValue(inputIDX + 1, out Item itemKey))
+                if (indexedInventory.TryGetValue(inputIDX + 1, out Item itemKey))
                 {
                     if (!(itemKey is Potion))
                     {
@@ -218,11 +233,11 @@ namespace rtanRPG
                 item.name = item.name.Substring(3);
                 if (item is AtkItem)
                 {
-                   // player.extraAtk -= item.ability;
+                    // player.extraAtk -= item.ability;
                 }
                 else if (item is DefItem)
                 {
-                  //  player.extraDef -= item.ability;
+                    //  player.extraDef -= item.ability;
 
                 }
                 equipList.Remove(item);

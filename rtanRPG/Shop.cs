@@ -17,26 +17,14 @@ namespace rtanRPG
         private Player player; // 플레이어 객체를 저장할 필드
         private Dictionary<Item, int> inventory;
 
+        Item[] items;
+
         public Shop(Player player)
         {
             this.player = player;
             this.inventory = player.inventory.inventory;
+            this.items = player.inventory.InitalInventoryArray(player.inventory.inventory);
         }
-
-        
-
-        Item[] items = new Item[]
-        {
-            new DefItem("무쇠갑옷", 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2000),
-            new DefItem("스파르타의 갑옷", 15, "스파르타의 전사들이 사용했다는 전설의 갑옷입니다", 3500),
-            new AtkItem("낡은 검", 2, "쉽게 볼 수 있는 낡은 검 입니다.", 600),
-            new AtkItem("청동 도끼", 5, "어디선가 사용됐던거 같은 도끼입니다.", 1500),
-            new AtkItem("스파르타의 창", 7, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3000),
-            new AtkItem("뿅망치", 1, "뿅망치에 맞으면 삐용삐용.", 300),
-            new HealthPotion("체력포션", 50, "물배를 채워 허기감을 약간 체워줍니다.", 500),
-            new ManaPotion("마나포션", 100, "용기를 얻어 부탁할 수 있습니..", 800)
-        };
-
 
         public void Displaying()
         {
@@ -96,7 +84,6 @@ namespace rtanRPG
             MyLog.절취선();
         }
 
-
         public void buying()
         {
             Console.Clear();
@@ -144,10 +131,17 @@ namespace rtanRPG
                     }
                     else
                     {
+                        player.gold -= selected.price;
+                        if (player.gold < 0)
+                        {
+                            player.gold += selected.price;
+                            Console.WriteLine("Gold가 부족합니다.");
+                            continue;
+                        }
+
                         player.inventory.AddItem(selected);
                         selected.isSoldout = "true";
-                        player.gold -= selected.price;
-                        Console.WriteLine("구매를 완료했습니다.");
+                        Console.WriteLine("Gold가 부족합니다.");
                         break;
                     }
                 }
@@ -170,6 +164,7 @@ namespace rtanRPG
             }
 
         }
+
         public void resell()
         {
             Console.Clear();
@@ -203,7 +198,7 @@ namespace rtanRPG
             {
                 // 예외 처리
                 string input = Console.ReadLine();
-                if (!int.TryParse(text, out int inputIDX) || inputIDX < 1 || inputIDX > indexed.Count)
+                if (!int.TryParse(input, out int inputIDX) || inputIDX < 0 || inputIDX > indexed.Count)
                 {
                     Console.WriteLine("잘못된 입력입니다.");
                     continue;
@@ -250,6 +245,7 @@ namespace rtanRPG
             }
             return itemsInven;
         }
+
         public string itemsInvenWithIdx()
 
         {
@@ -264,6 +260,7 @@ namespace rtanRPG
 
             return itemsInvenWithIdx;
         }
+
         public string resellTxt()
         {
             string reseltxt = "";
@@ -280,17 +277,5 @@ namespace rtanRPG
             return reseltxt;
         }
     }
-    /*
-    Dictionary<int, Item> indexed = new Dictionary<int, Item>();
-                int number = 1;
-            foreach(KeyValuePair<Item, int> i in inventory)
-            {
-                if (player.inventory.HasItem(i.Key))
-                {
-                    reseltxt += $"{number}" + $"{i.Key.Label()}" + $"{i.Key.price * discount}" + "\r\n";
-                    number++;
-                }
 
-            }
-    */
 }

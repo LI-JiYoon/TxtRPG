@@ -96,11 +96,12 @@ namespace rtanRPG
             }
         }
     }
+
     public class HealthPotion : Potion
     {
         public string name { get; set; }
         public string description { get; set; }
-        public float ability { get; }
+        public float ability { get { return effect; } }
         public float price { get; set; }
 
         //하급체력포션, 중급체력포션등으로 나눌수도?
@@ -110,11 +111,12 @@ namespace rtanRPG
         }
 
     }
+
     public class ManaPotion : Potion
     {
         public string name { get; set; }
         public string description { get; set; }
-        public float ability { get; }
+        public float ability { get { return effect; } }
         public float price { get; set; }
 
         //하급체력포션, 중급체력포션등으로 나눌수도?
@@ -124,6 +126,7 @@ namespace rtanRPG
         }
 
     }
+
     public class Potion : Item
     {
         List<string> potionEffect = new List<string>()
@@ -193,8 +196,4 @@ namespace rtanRPG
             public string Label();
 
         }
-
-
-
-
 }
