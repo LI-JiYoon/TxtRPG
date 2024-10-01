@@ -28,12 +28,12 @@ namespace rtanRPG
                     float increaseATK = (player.ATK) * 0.20f;
                     player.ATK += increaseATK;
                     break;
-                case " ": // 광역 스킬 
+                case " ": //// 광역 스킬 
                     break;
             }
         }
     }
-
+      
     public class Tutor(Player player) : Skill
     {
         private Player player = player;
