@@ -33,7 +33,7 @@ namespace rtanRPG
             }
         }
     }
-      
+
     public class Tutor(Player player) : Skill
     {
         private Player player = player;
