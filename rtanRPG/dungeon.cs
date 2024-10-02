@@ -26,6 +26,7 @@ namespace rtanRPG
         // State
         bool Isclear = false;
         bool isFleeing;
+        bool ClearDiff = false;
 
         // Field        
         private Player player;
@@ -337,6 +338,7 @@ namespace rtanRPG
                 player.checkLevelUp();
                 dungeongClearCount += 1;
                 player.quest.ClearDungeon(player);
+                
             }
             else if (player.isDead == true)
             {

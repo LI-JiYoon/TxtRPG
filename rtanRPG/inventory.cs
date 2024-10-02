@@ -233,11 +233,11 @@ namespace rtanRPG
                 item.name = item.name.Substring(3);
                 if (item is AtkItem)
                 {
-                    // player.extraAtk -= item.ability;
+                    player.extraAtk -= (int)item.ability;
                 }
                 else if (item is DefItem)
                 {
-                    //  player.extraDef -= item.ability;
+                    player.extraDef -= (int)item.ability;
 
                 }
                 equipList.Remove(item);
@@ -258,11 +258,11 @@ namespace rtanRPG
                 item.name = "[E]" + item.name;
                 if (item is AtkItem)
                 {
-                    //  player.extraAtk += item.ability;
+                    player.extraAtk += (int)item.ability;
                 }
                 else if (item is DefItem)
                 {
-                    //  player.extraDef += item.ability;
+                    player.extraDef += (int)item.ability;
                 }
                 equipList.Add(item);
             }
