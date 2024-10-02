@@ -88,7 +88,7 @@ namespace rtanRPG
         public static List<Skill> TutorSkills = new List<Skill>()
     {
         new TutorSkill("매혹적인 튜터의 윙크♥", 70, false, 10, "윙크로 그의 마음을 흔들어봅시다. 공략지수 70"),  // 단일딜
-        new TutorSkill("심퉁유발 튜터의 사랑의 눈빛♥", 40, true, 15, "그윽한 눈빛으로 모든 매니저님의 하-또를 뻇아옵시다 . 공략지수 40") // 광역딜
+        new TutorSkill("심쿵유발 튜터의 사랑의 눈빛♥", 40, true, 15, "그윽한 눈빛으로 모든 매니저님의 하-또를 뻇아옵시다 . 공략지수 40") // 광역딜
     };
 
         // 매니저 스킬 리스트
