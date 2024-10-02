@@ -32,11 +32,13 @@ namespace rtanRPG
         public bool isDead => HP <= 0;              //0이하일 때 True, 초과면 자동으로 false
         public Inventory inventory;
         public MiniGame minigame;
+        public Quest quest;
 
         public Player()
         {
             inventory = new Inventory(this);
-            minigame = new MiniGame(this);  
+            minigame = new MiniGame(this);
+            quest = new Quest(this);
         }
 
         private static Dictionary<string, (float ATK, float DEF)> roleStats = new Dictionary<string, (float, float)> 
