@@ -37,9 +37,7 @@ namespace rtanRPG
 
         public virtual void CheckComplete(Player player) { }
         public virtual void HandleDead(Monster monster) { }
-        public virtual void ClearDungeon(Player player)
-        {
-        }
+        public virtual void ClearDungeon(Player player) { }
 
 
     }
@@ -62,6 +60,8 @@ namespace rtanRPG
 
         public override void CheckComplete(Player player)
         {
+            CurrentClear = dungeon.dungeongClearCount;
+
             if (CurrentClear >= RequiredClears)
             {
                 CurrentClear = RequiredClears;
