@@ -33,12 +33,14 @@ namespace rtanRPG
         public Inventory inventory;
         public MiniGame minigame;
         public Quest quest;
+        public QuestUI questUI;
 
         public Player()
         {
             inventory = new Inventory(this);
             minigame = new MiniGame(this);
             quest = new Quest(this);
+            questUI = new QuestUI(this);
         }
 
         private static Dictionary<string, (float ATK, float DEF)> roleStats = new Dictionary<string, (float, float)> 

@@ -109,75 +109,81 @@ namespace rtanRPG
 
     }
 
-    public class DifficultDungeon : Quest
-    {
-        bool isClearDifficult;
-        public DifficultDungeon(int id, string questName, string description, string questReward) : base(id, questName, description, questReward)
-        {
-            this.isClearDifficult = false;
-        }
+    //public class DifficultDungeon : Quest
+    //{
+    //    bool isClearDifficult;
+    //    public DifficultDungeon(int id, string questName, string description, string questReward) : base(id, questName, description, questReward)
+    //    {
+    //        this.isClearDifficult = false;
+    //    }
 
-        public override void DifClear()
-        {
-            isClearDifficult = true;
-        }
-        public override void CheckComplete(Player player)
-        {
-            if (isClearDifficult)
-            {
-                readyToClear = true;
-            }
-        }
-        public override void Reward(Player player)
-        {
-            player.gold += 5000;
-        }
+    //    public override void DifClear()
+    //    {
+    //        isClearDifficult = true;
+    //    }
+    //    public override void CheckComplete(Player player)
+    //    {
+    //        if (isClearDifficult)
+    //        {
+    //            readyToClear = true;
+    //        }
+    //    }
+    //    public override void Reward(Player player)
+    //    {
+    //        player.gold += 5000;
+    //    }
 
-    }
+    //}
 
-    public class HardMonsterCatch : Quest
-    {
-        public bool isKimCatch = false;
-        public bool isGangCatch = false;
-        public bool isAnCatch = false;
+    //public class HardMonsterCatch : Quest
+    //{
+    //    public bool isKimCatch = false;
+    //    public bool isGangCatch = false;
+    //    public bool isAnCatch = false;
 
-        public HardMonsterCatch() : base(00, "basic", "basicDesc", "basicReward")
-        {
+    //    public HardMonsterCatch() : base(00, "basic", "basicDesc", "basicReward")
+    //    {
 
-        }
-        public HardMonsterCatch(int id, string questName, string description, string questReward) : base(id, questName, description, questReward)
-        {
+    //    }
+    //    public HardMonsterCatch(int id, string questName, string description, string questReward) : base(id, questName, description, questReward)
+    //    {
 
-        }
+    //    }
 
-        public override void CheckComplete(Player player)
-        {
-            if (isKimCatch == true && isAnCatch == true && !isGangCatch == true)
-            {
-                readyToClear = true;
-            }
-        }
+    //    public override void CheckComplete(Player player)
+    //    {
+    //        if (isKimCatch == true && isAnCatch == true && !isGangCatch == true)
+    //        {
+    //            readyToClear = true;
+    //        }
+    //    }
 
-        public override void Reward(Player player)
-        {
-            player.gold += 10000;
-        }
+    //    public override void Reward(Player player)
+    //    {
+    //        player.gold += 10000;
+    //    }
 
-        public override void HandleDead(Monster monster)
-        {
-            if (MonsterPreset.HardMonster.Contains(monster))
-            {
-                switch (monster.name)
-                {
-                    case "김록기(대장)":
-                        isKimCatch = true;
-                        break;
-                    case "안혜린(대장)":
-                        isAnCatch = true; break;
-                    case "강채린(대장)":
-                        isGangCatch = true; break;
-                }
-            }
-        }
-    }
+    //    public override void HandleDead(Monster monster)
+    //    {
+    //        string temp = "";
+    //        foreach(Monster hardmonster in MonsterPreset.HardMonster)
+    //        {
+    //            if(monster.name == hardmonster.name)
+    //            {
+    //                temp = hardmonster.name;
+    //            }
+    //        }
+    //            switch (temp)
+    //            {
+    //                case "눈부시게 강한 김록기":
+    //                    isKimCatch = true;
+    //                    break;
+    //                case "눈부시게 강한 안혜린":
+    //                    isAnCatch = true; break;
+    //                case "눈부시게 강한 강채린":
+    //                    isGangCatch = true; break;
+    //            }
+            
+    //    }
+    //}
 }

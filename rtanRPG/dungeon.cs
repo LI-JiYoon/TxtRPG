@@ -339,20 +339,20 @@ namespace rtanRPG
                 string Dif = DungeonDifficulty(dungeongClearCount);
 
                 dungeongClearCount += 1;
-                player.quest.ClearDungeon(player);
-                if(Dif == "Hard")
-                {
-                    player.quest.DifClear();
-                }
+                //Quest tempQuest = player.questUI.GetQuest(03);
+                //player.quest.ClearDungeon(player);
+                //if(Dif == "Hard")
+                //{
+                //    player.tempQuest.DifClear();
+                //}
 
             }
             else if (player.isDead == true)
             {
 
-                player.HP += 10;
-                player.EXP -= 10;
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine("You Lose!!");
+                player.EXP -= 10;
                 Console.WriteLine();
                 Console.ResetColor();
             }

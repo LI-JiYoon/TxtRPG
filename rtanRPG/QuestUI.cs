@@ -11,8 +11,7 @@ namespace rtanRPG
     {
         private Player player; // 플레이어 객체를 저장할 필드
         private Dictionary<Item, int> inventory;
-        private Dictionary<int, Quest> quests;
-        public Item questItem;
+        public Dictionary<int, Quest> quests;
 
         
         public QuestUI(Player player)
@@ -20,11 +19,10 @@ namespace rtanRPG
             this.player = player;
             this.inventory = player.inventory.inventory;
             quests = new Dictionary<int, Quest>();
-            questItem = inventory.Keys.First(item => item.price == 1500f);
             AddQuest(quest01);
             AddQuest(quest02);
-            AddQuest(quest03);
-            AddQuest(quest04);
+            //AddQuest(quest03);
+            //AddQuest(quest04);
         }
 
         
@@ -33,11 +31,22 @@ namespace rtanRPG
             "어디한번 매니저님께 부탁해보지 않겠나? 밥을 사달라고!\r\n\r\n던전클리어5회", "1000G", 5);
         Quest quest02 = new InventoryQuest(02, "더욱 강하게 어필하기!",
             "부탁드려봤지만 아직 부족하다! 더 강하게 어필해야할 필요가 있다!\r\n\r\n", "스파르타의 창", "청동 도끼");
-        Quest quest03 = new DifficultDungeon(03, "강해진 상태로 어필하기", "이젠... 사주시겠죠?\r\n\r\n16층 이상 클리어",
-            "5000G");
-        Quest quest04 = new HardMonsterCatch(04, "최종병기 매니저님", "이제 연습은 끝났다. 매니저님들께 부탁을 드리러 가자.", "10000G");
+        //Quest quest03 = new DifficultDungeon(03, "강해진 상태로 어필하기", "이젠... 사주시겠죠?\r\n\r\n16층 이상 클리어",
+        //    "5000G");
+        //Quest quest04 = new HardMonsterCatch(04, "최종병기 매니저님", "이제 연습은 끝났다. 매니저님들께 부탁을 드리러 가자.", "10000G");
 
 
+        public Quest GetQuest(int num)
+        {
+            foreach(KeyValuePair<int, Quest> i in quests)
+            {
+                if(i.Key == num)
+                {
+                    return i.Value;
+                }
+            }
+            return null;
+        }
 
         public void DisplayQuestUI()
         {
@@ -46,7 +55,7 @@ namespace rtanRPG
 
             while (isSelected == false)
             {
-                foreach (KeyValuePair<int, Quest> i in quests)
+                foreach (KeyValuePair<int, Quest> i in quests)      //모든 퀘스트 성공여부 체크
                 {
                     i.Value.CheckComplete(player);
                 }
@@ -103,38 +112,38 @@ namespace rtanRPG
 
                             DisplaySelectedQuest(quest02); break;
                         }
-                    case 3:
-                        if (quest03.isCleared)
-                            break;
-                        else if (quest03.readyToClear)
-                        {
-                            isSelected = true;
+                    //case 3:
+                    //    if (quest03.isCleared)
+                    //        break;
+                    //    else if (quest03.readyToClear)
+                    //    {
+                    //        isSelected = true;
 
-                            DisplayReadyToClearQuest(quest03);
-                            break;
-                        }
-                        else
-                        {
-                            isSelected = true;
+                    //        DisplayReadyToClearQuest(quest03);
+                    //        break;
+                    //    }
+                    //    else
+                    //    {
+                    //        isSelected = true;
 
-                            DisplaySelectedQuest(quest03); break;
-                        }
-                    case 4:
-                        if (quest04.isCleared)
-                            break;
-                        else if (quest04.readyToClear)
-                        {
-                            isSelected = true;
+                    //        DisplaySelectedQuest(quest03); break;
+                    //    }
+                    //case 4:
+                    //    if (quest04.isCleared)
+                    //        break;
+                    //    else if (quest04.readyToClear)
+                    //    {
+                    //        isSelected = true;
 
-                            DisplayReadyToClearQuest(quest04);
-                            break;
-                        }
-                        else
-                        {
-                            isSelected = true;
+                    //        DisplayReadyToClearQuest(quest04);
+                    //        break;
+                    //    }
+                    //    else
+                    //    {
+                    //        isSelected = true;
 
-                            DisplaySelectedQuest(quest04); break;
-                        }
+                    //        DisplaySelectedQuest(quest04); break;
+                    //    }
 
                     default:
                         Console.WriteLine("잘못된 입력입니다."); continue;
@@ -272,18 +281,18 @@ namespace rtanRPG
             {
                 ToDo += inventoryQuest.readyToClear ? $"{inventoryQuest.targetItem} 장착완료" : $"{inventoryQuest.targetItem} 장착하기";
             }
-            else if (quest is DifficultDungeon difDun)
-            {
-                ToDo += difDun.readyToClear ? "1/1" : "0/1";
-            }
-            else if(quest is HardMonsterCatch HMC)
-            {
-                string WhoCated = "";
-                WhoCated += HMC.isKimCatch ? "눈부시게 강한 김록기 1/1\r\n" : "눈부시게 강한 김록기 0/1\r\n";
-                WhoCated += HMC.isAnCatch ? "눈부시게 강한 안혜린 1/1\r\n" : "눈부시게 강한 안혜린 0/1\r\n";
-                WhoCated += HMC.isGangCatch ? "눈부시게 강한 강채린 1/1" : "눈부시게 강한 강채린 0/1";
-                ToDo += WhoCated;
-            }
+            //else if (quest is DifficultDungeon difDun)
+            //{
+            //    ToDo += difDun.readyToClear ? "1/1" : "0/1";
+            //}
+            //else if(quest is HardMonsterCatch HMC)
+            //{
+            //    string WhoCated = "";
+            //    WhoCated += HMC.isKimCatch ? "눈부시게 강한 김록기 1/1\r\n" : "눈부시게 강한 김록기 0/1\r\n";
+            //    WhoCated += HMC.isAnCatch ? "눈부시게 강한 안혜린 1/1\r\n" : "눈부시게 강한 안혜린 0/1\r\n";
+            //    WhoCated += HMC.isGangCatch ? "눈부시게 강한 강채린 1/1" : "눈부시게 강한 강채린 0/1";
+            //    ToDo += WhoCated;
+            //}
             return ToDo;
         }
 

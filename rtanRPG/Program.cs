@@ -24,8 +24,7 @@ namespace rtanRPG
             dungeon dungeon = new dungeon(player);
             MiniGame minigame = new MiniGame(player);
             QuestUI questUI = new QuestUI(player);
-            Quest quest4 = new Quest(player);
-            dungeon.onDead += quest4.HandleDead;
+            //dungeon.onDead += quest4.HandleDead;
 
             // 내 위치 초기화
             Location.preLocation = STATE.시작;
