@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace rtanRPG
 {
-    //Location에 퀘스트장소 추가 + 퀘스트는 퀘스트 클래스를 상속받는 것으로 (추상화? 인터페이스? 클래스?, 제일 익숙치 않은 추상화?)
+    //Location에 퀘스트장소 추가
     public class QuestUI
     {
         private Player player; // 플레이어 객체를 저장할 필드
         private Dictionary<Item, int> inventory;
         private Dictionary<int, Quest> quests;
-        static public Item questItem;
+        public Item questItem;
 
         
         public QuestUI(Player player)
@@ -20,19 +20,20 @@ namespace rtanRPG
             this.player = player;
             this.inventory = player.inventory.inventory;
             quests = new Dictionary<int, Quest>();
-            questItem = inventory.Keys.First(item => item.name == "청동 도끼");
+            questItem = inventory.Keys.First(item => item.price == 1500f);
             AddQuest(quest01);
             AddQuest(quest02);
             AddQuest(quest03);
             AddQuest(quest04);
         }
 
+        
         Quest quest01 = new DungeonClearQuest(01, "당신 배가 고프지 않은가?",
-"배가 고픈 당신! 매니저님들과 가까워지고싶지만 소심한 I라 말못하는 당신!\r\n" +
-"어디한번 매니저님께 부탁해보지 않겠나? 밥을 사달라고!\r\n아무던전클리어1회", "1000G", 5);
+            "배가 고픈 당신! 매니저님들과 가까워지고싶지만 소심한 I라 말못하는 당신!\r\n" +
+            "어디한번 매니저님께 부탁해보지 않겠나? 밥을 사달라고!\r\n\r\n던전클리어5회", "1000G", 5);
         Quest quest02 = new InventoryQuest(02, "더욱 강하게 어필하기!",
-            "부탁드려봤지만 아직 부족하다! 더 강하게 어필해야할 필요가 있다!\r\n청동 도끼 장착하기", "스파르타의 창", questItem);
-        Quest quest03 = new DifficultDungeon(03, "강해진 상태로 어필하기", "이젠... 사주시겠죠?\r\n어려운난이도 클리어",
+            "부탁드려봤지만 아직 부족하다! 더 강하게 어필해야할 필요가 있다!\r\n\r\n", "스파르타의 창", "청동 도끼");
+        Quest quest03 = new DifficultDungeon(03, "강해진 상태로 어필하기", "이젠... 사주시겠죠?\r\n\r\n어려움난이도 클리어",
             "5000G");
         Quest quest04 = new HardMonsterCatch(04, "최종병기 매니저님", "이제 연습은 끝났다. 매니저님들께 부탁을 드리러 가자.", "10000G");
 
@@ -40,17 +41,24 @@ namespace rtanRPG
 
         public void DisplayQuestUI()
         {
-            Console.Clear();
-            //퀘스트 이름들 보여주는데 이미 완료된(isCleared)는 회색처리 및 선택불가, 뒤에 (완료)
-            //진행중인 퀘스트(isAccepted, !isCleared)는 뒤에 (진행중)
-            string text =
-               $"{ShowQuests}\r\n" +
-               "0. 나가기 \r\n\r\n" +
-                "원하시는 퀘스트를 선택해주세요.\r\n";
-            Console.WriteLine(text);
 
-            while (true)
+            bool isSelected = false;
+
+            while (isSelected == false)
             {
+                foreach (KeyValuePair<int, Quest> i in quests)
+                {
+                    i.Value.CheckComplete(player);
+                }
+                Console.Clear();
+                //퀘스트 이름들 보여주는데 이미 완료된(isCleared)는 회색처리 및 선택불가, 뒤에 (완료)
+                //진행중인 퀘스트(isAccepted, !isCleared)는 뒤에 (진행중)
+                string text =
+                   $"{ShowQuests()}\r\n" +
+                   "0. 나가기 \r\n\r\n" +
+                    "원하시는 퀘스트를 선택해주세요.\r\n";
+                Console.WriteLine(text);
+
                 string input = Console.ReadLine();
                 if (!int.TryParse(input, out int inputIDX))
                 { Console.WriteLine("잘못된 입력입니다."); continue; }
@@ -59,7 +67,9 @@ namespace rtanRPG
                 {
                     case 0:
                         {
-                            //SetLocation(STATE.마을);
+                            isSelected = true;
+
+                            Location.SetLocation(STATE.마을);
                             break;
                         }
                     case 1:
@@ -68,22 +78,29 @@ namespace rtanRPG
                         else if (quest01.readyToClear)
                         {
                             DisplayReadyToClearQuest(quest01);
+                            isSelected = true;
                             break;
                         }
                         else
                         {
+                            isSelected = true;
+
                             DisplaySelectedQuest(quest01); break;
                         }
                     case 2:
                         if (quest02.isCleared)
                             break;
-                        else if (quest02.readyToClear)
+                        else if (quest02.readyToClear == true)
                         {
+                            isSelected = true;
+
                             DisplayReadyToClearQuest(quest02);
                             break;
                         }
                         else
                         {
+                            isSelected = true;
+
                             DisplaySelectedQuest(quest02); break;
                         }
                     case 3:
@@ -91,11 +108,15 @@ namespace rtanRPG
                             break;
                         else if (quest03.readyToClear)
                         {
+                            isSelected = true;
+
                             DisplayReadyToClearQuest(quest03);
                             break;
                         }
                         else
                         {
+                            isSelected = true;
+
                             DisplaySelectedQuest(quest03); break;
                         }
                     case 4:
@@ -103,11 +124,15 @@ namespace rtanRPG
                             break;
                         else if (quest04.readyToClear)
                         {
+                            isSelected = true;
+
                             DisplayReadyToClearQuest(quest04);
                             break;
                         }
                         else
                         {
+                            isSelected = true;
+
                             DisplaySelectedQuest(quest04); break;
                         }
 
@@ -118,11 +143,12 @@ namespace rtanRPG
         }
         public void DisplaySelectedQuest(Quest quest)
         {
+            quest.CheckComplete(player);
             Console.Clear();
             string text =
                 $"{quest.QuestName}\r\n\r\n" +
                 $"{quest.Description}\r\n\r\n" +
-                $"{WhatToDoForQuest(quest)}" +
+                $"{WhatToDoForQuest(quest)}\r\n" +
                 $"보상\r\n{quest.QuestReward}\r\n\r\n" +
                 "1. 수락" +
                 "0.나가기\r\n\r\n" +
@@ -203,6 +229,7 @@ namespace rtanRPG
         string ShowQuests()
         {
             string ShowAllQuest = "";
+            int number =1;
             foreach (KeyValuePair<int, Quest> i in quests)
             {
                 string isRunning = "";
@@ -223,10 +250,12 @@ namespace rtanRPG
                 }
                 else if (i.Value.isAccepted && i.Value.readyToClear && i.Value.isCleared)
                 {
+                    isRunning += "(완료)";
                     //이미 완료한 상태
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.ForegroundColor = ConsoleColor.Red;
                 }
-                ShowAllQuest += i.Value.QuestName + isRunning + "\r\n";
+                ShowAllQuest += number +"- " + i.Value.QuestName + isRunning + "\r\n";
+                number++;
                 Console.ResetColor();
             }
             return ShowAllQuest;
@@ -237,11 +266,11 @@ namespace rtanRPG
             string ToDo = "";
             if (quest is DungeonClearQuest dungeonClearQuest)
             {
-                ToDo += $"{dungeonClearQuest.RequiredClears}/{dungeonClearQuest.CurrentClear}";
+                ToDo += $"{dungeonClearQuest.CurrentClear}/{dungeonClearQuest.RequiredClears}";
             }
             else if (quest is InventoryQuest inventoryQuest)
             {
-                ToDo += inventoryQuest.readyToClear ? $"{inventoryQuest.targetItem.name} 장착완료" : $"{inventoryQuest.targetItem.name} 장착하기";
+                ToDo += inventoryQuest.readyToClear ? $"{inventoryQuest.targetItem} 장착완료" : $"{inventoryQuest.targetItem} 장착하기";
             }
             else if (quest is DifficultDungeon difDun)
             {

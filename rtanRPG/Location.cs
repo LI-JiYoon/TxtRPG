@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace rtanRPG
 {
-    public enum STATE { 시작, 마을, 상점, 휴식하기, 던전, 인벤토리, 상태보기, 회복하기, 미니게임 }    
+    public enum STATE { 시작, 마을, 상점, 휴식하기, 던전, 인벤토리, 상태보기, 회복하기, 미니게임, 퀘스트 }    
 
     public static class Location
     {

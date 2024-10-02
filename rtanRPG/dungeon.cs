@@ -9,6 +9,7 @@ using System.IO;
 using static rtanRPG.dungeon;
 namespace rtanRPG
 {
+    public delegate void MonsterDeadHandler(Monster monster);
     internal class dungeon
     {
         // init
@@ -20,7 +21,7 @@ namespace rtanRPG
             Hard
         }
 
-        int dungeongClearCount = 0;
+        static public int dungeongClearCount = 0;
 
         // State
         bool Isclear = false;
@@ -292,8 +293,16 @@ namespace rtanRPG
 
             Console.ReadKey();
         }
+        public event MonsterDeadHandler onDead;
         public void DisplayBattleResult(List<Monster> monsterQueue, Player player)
         {
+            foreach(Monster monster in monsterQueue)
+            {
+                if (monster.isDead)
+                {
+                    onDead?.Invoke(monster);
+                }
+            }
             int baseReward = 0;
             int extraReward = 0;
             List<Item> rewardItems = new List<Item>();//부상 아이템을 받아줄 리스트
@@ -327,6 +336,7 @@ namespace rtanRPG
                 Console.WriteLine();
                 player.checkLevelUp();
                 dungeongClearCount += 1;
+                player.quest.ClearDungeon(player);
             }
             else if (player.isDead == true)
             {

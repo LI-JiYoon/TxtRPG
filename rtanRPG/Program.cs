@@ -23,6 +23,9 @@ namespace rtanRPG
             breaktime breaktime = new breaktime(player);
             dungeon dungeon = new dungeon(player);
             MiniGame minigame = new MiniGame(player);
+            QuestUI questUI = new QuestUI(player);
+            Quest quest4 = new Quest(player);
+            dungeon.onDead += quest4.HandleDead;
 
             // 내 위치 초기화
             Location.preLocation = STATE.시작;
@@ -121,7 +124,8 @@ namespace rtanRPG
                             "3. 상점\r\n" +
                             "4. 던전\r\n" +
                             "5. 휴식하기\r\n" +
-                            "6. 미니게임\r\n\r\n" +
+                            "6. 미니게임\r\n" +
+                            "7. 퀘스트\r\n\r\n" +
 
                             "원하시는 행동을 입력해주세요.");
                 
@@ -159,6 +163,12 @@ namespace rtanRPG
                                 Location.SetLocation(STATE.미니게임);
                                 break;
                             }
+                            else if (inputText == "7")
+                            {
+                                Location.SetLocation(STATE.퀘스트);
+                                break;
+                            }
+
                             else
                             {
                                 Console.WriteLine("정확한 값을 입력하세요");
@@ -194,6 +204,10 @@ namespace rtanRPG
                     case STATE.미니게임:
                         minigame.Displaying();
                         break;
+                    case STATE.퀘스트:
+                        questUI.DisplayQuestUI();
+                        break;
+
                 }
             }
         }

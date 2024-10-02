@@ -9,6 +9,7 @@ namespace rtanRPG
 {
     public class Quest
     {
+        private Player player;
         public int Id { get; }
         public string QuestName { get; }
         public string Description { get; }
@@ -27,27 +28,35 @@ namespace rtanRPG
             readyToClear = false;
         }
 
+        public Quest(Player player) 
+        { 
+            this.player = player;
+        }
+
         public virtual void Reward(Player player) { }
 
         public virtual void CheckComplete(Player player) { }
         public virtual void HandleDead(Monster monster) { }
+        public virtual void ClearDungeon(Player player)
+        {
+        }
+
 
     }
 
     public class DungeonClearQuest : Quest
     {
         public int RequiredClears { get; set; }
-        public int CurrentClear { get; set; }
-
+        public int CurrentClear {  get; set; }
         public DungeonClearQuest(int id, string questName, string description, string questReward, int requiredClears) : base(id, questName, description, questReward)
         {
             RequiredClears = requiredClears;
             CurrentClear = 0;
         }
 
-        public void ClearDungeon(Player player)
+        public override void ClearDungeon(Player player)
         {
-            CurrentClear++;
+            CurrentClear = dungeon.dungeongClearCount;
             CheckComplete(player);
         }
 
@@ -71,19 +80,23 @@ namespace rtanRPG
 
     public class InventoryQuest : Quest
     {
-        public Item targetItem { get; set; }
+        public string targetItem { get; set; }
 
-        public InventoryQuest(int id, string questName, string description, string questReward, Item targetItem) : base(id, questName, questReward, questName)
+        public InventoryQuest(int id, string questName, string description, string questReward, string targetItem) : base(id, questName, description, questReward)
         {
 
-            this.targetItem = targetItem;
+            this.targetItem = "[E]" + targetItem;
         }
 
         public override void CheckComplete(Player player)
         {
-            if (player.inventory.equipList.Contains(targetItem))
+            foreach(KeyValuePair<Item, int> i in player.inventory.inventory)
             {
-                readyToClear = true;
+                if(i.Key.name == targetItem && i.Value > 0 && player.inventory.equipList.Contains(i.Key))
+                {
+                    readyToClear = true;
+                }
+                
             }
         }
         public override void Reward(Player player)
@@ -98,7 +111,7 @@ namespace rtanRPG
     public class DifficultDungeon : Quest
     {
         bool isClearDifficult;
-        public DifficultDungeon(int id, string questName, string description, string questReward) : base(id, questName, questReward, questName)
+        public DifficultDungeon(int id, string questName, string description, string questReward) : base(id, questName, description, questReward)
         {
             this.isClearDifficult = false;
         }
@@ -123,7 +136,11 @@ namespace rtanRPG
         public bool isGangCatch = false;
         public bool isAnCatch = false;
 
-        public HardMonsterCatch(int id, string questName, string description, string questReward) : base(id, questName, questReward, questName)
+        public HardMonsterCatch() : base(00, "basic", "basicDesc", "basicReward")
+        {
+
+        }
+        public HardMonsterCatch(int id, string questName, string description, string questReward) : base(id, questName, description, questReward)
         {
 
         }
