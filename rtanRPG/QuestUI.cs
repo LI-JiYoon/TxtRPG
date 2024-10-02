@@ -33,7 +33,7 @@ namespace rtanRPG
             "어디한번 매니저님께 부탁해보지 않겠나? 밥을 사달라고!\r\n\r\n던전클리어5회", "1000G", 5);
         Quest quest02 = new InventoryQuest(02, "더욱 강하게 어필하기!",
             "부탁드려봤지만 아직 부족하다! 더 강하게 어필해야할 필요가 있다!\r\n\r\n", "스파르타의 창", "청동 도끼");
-        Quest quest03 = new DifficultDungeon(03, "강해진 상태로 어필하기", "이젠... 사주시겠죠?\r\n\r\n어려움난이도 클리어",
+        Quest quest03 = new DifficultDungeon(03, "강해진 상태로 어필하기", "이젠... 사주시겠죠?\r\n\r\n16층 이상 클리어",
             "5000G");
         Quest quest04 = new HardMonsterCatch(04, "최종병기 매니저님", "이제 연습은 끝났다. 매니저님들께 부탁을 드리러 가자.", "10000G");
 
