@@ -336,9 +336,15 @@ namespace rtanRPG
                 }
                 Console.WriteLine();
                 player.checkLevelUp();
+                string Dif = DungeonDifficulty(dungeongClearCount);
+
                 dungeongClearCount += 1;
                 player.quest.ClearDungeon(player);
-                
+                if(Dif == "Hard")
+                {
+                    player.quest.DifClear();
+                }
+
             }
             else if (player.isDead == true)
             {

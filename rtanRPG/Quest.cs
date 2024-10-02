@@ -38,6 +38,7 @@ namespace rtanRPG
         public virtual void CheckComplete(Player player) { }
         public virtual void HandleDead(Monster monster) { }
         public virtual void ClearDungeon(Player player) { }
+        public virtual void DifClear() { }
 
 
     }
@@ -116,6 +117,10 @@ namespace rtanRPG
             this.isClearDifficult = false;
         }
 
+        public override void DifClear()
+        {
+            isClearDifficult = true;
+        }
         public override void CheckComplete(Player player)
         {
             if (isClearDifficult)
