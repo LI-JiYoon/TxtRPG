@@ -12,10 +12,10 @@ namespace rtanRPG
     {
         private Player player;
         private int playerWins = 0;
-        
+
         public int GetGold()
         {
-          return playerWins * 50;
+            return playerWins * 50;
         }
 
         public MiniGame(Player player)
@@ -23,7 +23,7 @@ namespace rtanRPG
             this.player = player;
         }
 
-    
+
 
         public void Displaying()
         {
@@ -62,11 +62,18 @@ namespace rtanRPG
                     RockPaperSissors();
                     break;
                 }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                }
             }
         }
 
         public void RockPaperSissors()
         {
+
+            Console.Clear();
+
             string[] choices = { "가위", "바위", "보" };
             int attempts = 3;
             string playerChoice = "";
@@ -81,8 +88,8 @@ namespace rtanRPG
                 if (playerChoice != "가위" && playerChoice != "바위" && playerChoice != "보")
                 {
                     Console.WriteLine("잘못된 입력입니다!");
-                    i--;  
-                    continue;  
+                    i--;
+                    continue;
                 }
 
                 Console.WriteLine("NPC: " + computerChoice);
@@ -104,7 +111,7 @@ namespace rtanRPG
                     Console.WriteLine("NPC 승리!");
                 }
             }
-            
+
             Console.Clear();
 
             string text =

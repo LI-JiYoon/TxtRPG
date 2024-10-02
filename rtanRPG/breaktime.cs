@@ -104,7 +104,7 @@ namespace rtanRPG
                 {
                     if(player.gold >=500)
                     {
-                        player.HP = 100;
+                        player.HP = player.maxHP;
                         player.gold -= price;
                         Console.WriteLine("휴식을 완료했습니다.");
                     }
