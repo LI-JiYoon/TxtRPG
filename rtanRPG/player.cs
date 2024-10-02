@@ -14,12 +14,14 @@ namespace rtanRPG
         public int level = 1;
         public string name = "";
         public string role;
-        public float ATK = 80;
-        public float DEF = 5;
+        public float ATK;
+        public float DEF;
         public float HP = 100;
+        public float MP = 100;
+        public float maxHP = 100;
+        public float maxMP = 100;
         public float gold = 1500;
         public float dungeonClearCount = 0;
-        public float MP = 100;
 
         public int extraAtk;
         public int extraDef;
@@ -36,7 +38,27 @@ namespace rtanRPG
             inventory = new Inventory(this);
             minigame = new MiniGame(this);  
         }
-            
+
+        private static Dictionary<string, (float ATK, float DEF)> roleStats = new Dictionary<string, (float, float)> 
+    {
+        {"수강생", (80, 5)},   
+        {"튜터", (70, 20)},
+        {"매니저", (90, 15)}
+    };
+
+        public void SetPlayerStats(string selectedRole)
+        {
+            if (roleStats.ContainsKey(selectedRole))
+            {
+                (this.ATK, this.DEF) = roleStats[selectedRole];
+                this.role = selectedRole;
+            }
+            else
+            {
+                Console.WriteLine("잘못된 직업입니다.");
+            }
+        }
+
         /// <summary>
         /// 상태보기
         /// </summary>
@@ -48,8 +70,8 @@ namespace rtanRPG
                 $"{name} ( {role} )\r\n" +
                 (extraAtk == 0 ? $"공격력 : {ATK}\r\n" : $"공격력 : {ATK + extraAtk} (+{extraAtk})\r\n") +
                 (extraDef == 0 ? $"방어력 : {DEF}\r\n" : $"방어력 : {DEF + extraDef} (+{extraDef})\r\n") +
-                $"체 력 : {HP}\r\n" +
-                $"마나 : {MP}\r\n" +
+                $"체 력 : {HP}/{maxHP}\r\n" +
+                $"마나 : {MP}/{maxMP}\r\n" +
                 $"경험치 : {EXP}\r\n" +
                 $"Gold : {gold} G\r\n\r\n" +
                 "0. 나가기\r\n\r\n" +
@@ -99,10 +121,8 @@ namespace rtanRPG
             level += 1;
             ATK += 0.5f;
             DEF += 1;
-
-
-
-
+            maxHP += 50;
+            maxMP += 50;
         }
         public int NeededEXP(int level)   // 레벨업에 필요한 경험치
         {
@@ -175,5 +195,14 @@ namespace rtanRPG
             }
         }
 
+        // 플레이어 회복 메서드 (amount로 회복량 조절)
+        public void Heal(float amount)
+        {
+            HP += amount;
+            if (HP > maxHP)
+            {
+                HP = maxHP; 
+            }
+        }
     }
 }

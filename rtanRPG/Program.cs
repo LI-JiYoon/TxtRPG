@@ -23,7 +23,6 @@ namespace rtanRPG
             breaktime breaktime = new breaktime(player);
             dungeon dungeon = new dungeon(player);
             MiniGame minigame = new MiniGame(player);
-            Recoverytime recoverytime = new Recoverytime(player);
 
             // 내 위치 초기화
             Location.preLocation = STATE.시작;
@@ -72,21 +71,21 @@ namespace rtanRPG
 
                                 switch (roleInput)
                                 {
+                                    // selectedRole 인자에 직업 할당
                                     case "1":
-                                        player.role = "수강생";
-
+                                        player.SetPlayerStats("수강생");
                                         break;
                                     case "2":
-                                        player.role = "튜터";
+                                        player.SetPlayerStats("튜터");
                                         break;
                                     case "3":
-                                        player.role = "매니저";
+                                        player.SetPlayerStats("매니저");
                                         break;
                                     default:
                                         Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
                                         return;  
                                 }
-
+                                                                
                                 Console.WriteLine($"선택한 직업은 {player.role} 입니다.\r\n");
                                 Console.ReadKey();
 
@@ -161,11 +160,6 @@ namespace rtanRPG
                                 Location.SetLocation(STATE.미니게임);
                                 break;
                             }
-                            else if (inputText == "7")
-                            {
-                                Location.SetLocation(STATE.회복하기);
-                                break;
-                            }
                             else
                             {
                                 Console.WriteLine("정확한 값을 입력하세요");
@@ -200,9 +194,6 @@ namespace rtanRPG
                         break;
                     case STATE.미니게임:
                         minigame.Displaying();
-                        break;
-                    case STATE.회복하기:
-                        recoverytime.Displaying();
                         break;
                 }
             }

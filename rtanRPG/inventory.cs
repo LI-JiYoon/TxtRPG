@@ -29,7 +29,7 @@ namespace rtanRPG
            { new AtkItem("뿅망치", 1, "뿅망치에 맞으면 삐용삐용.", 300), 0 },
            { new HealthPotion("체력포션", 50, "물배를 채워 허기감을 약간 채워줍니다.", 500), 0},
            { new HealthPotion("고급 체력포션", 80, "물배를 채워 허기감을 많이 채워줍니다.", 800), 0},
-           { new ManaPotion("마나포션", 100, "용기를 얻어 부탁할 수 있습니..", 800), 0 }
+           { new ManaPotion("마나포션", 100, "용기를 얻어 부탁할 수 있습니다.", 800), 0 }
         };
         public List<Item> equipList = new List<Item>();
 

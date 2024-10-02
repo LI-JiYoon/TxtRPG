@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\2gueu\\.nuget\\packages\\": {}
+    "C:\\Users\\조윤진\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\2gueu\\OneDrive\\문서\\GitHub\\TxtRPG\\rtanRPG\\rtanRPG.csproj",
+      "projectUniqueName": "C:\\Users\\조윤진\\Documents\\GitHub\\TxtRPG\\rtanRPG\\rtanRPG.csproj",
       "projectName": "rtanRPG",
-      "projectPath": "C:\\Users\\2gueu\\OneDrive\\문서\\GitHub\\TxtRPG\\rtanRPG\\rtanRPG.csproj",
-      "packagesPath": "C:\\Users\\2gueu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\2gueu\\OneDrive\\문서\\GitHub\\TxtRPG\\rtanRPG\\obj\\",
+      "projectPath": "C:\\Users\\조윤진\\Documents\\GitHub\\TxtRPG\\rtanRPG\\rtanRPG.csproj",
+      "packagesPath": "C:\\Users\\조윤진\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\조윤진\\Documents\\GitHub\\TxtRPG\\rtanRPG\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\2gueu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\조윤진\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
