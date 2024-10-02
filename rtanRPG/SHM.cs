@@ -146,7 +146,7 @@
 //        {
 //            if (monster.isDead)
 //            {
-//                onDead?.Invoke(monster);
+//                player.QuestUI.quest04.HandleDead(monster);
 //}
 //        }
 

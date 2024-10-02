@@ -30,6 +30,8 @@ namespace rtanRPG
         public virtual void Reward(Player player) { }
 
         public virtual void CheckComplete(Player player) { }
+        public virtual void HandleDead(Monster monster) { }
+
     }
 
     public class DungeonClearQuest : Quest
@@ -63,6 +65,7 @@ namespace rtanRPG
         {
             player.gold += 1000;
         }
+
 
     }
 
@@ -138,7 +141,7 @@ namespace rtanRPG
             player.gold += 10000;
         }
 
-        public void HandleDead(Monster monster)
+        public override void HandleDead(Monster monster)
         {
             if (MonsterPreset.HardMonster.Contains(monster))
             {
