@@ -104,7 +104,7 @@ namespace rtanRPG
                 {
                     if(player.gold >=500)
                     {
-                        player.HP = 100;
+                        player.HP = player.maxHP;
                         player.gold -= price;
                         Console.WriteLine("휴식을 완료했습니다.");
                     }
@@ -131,9 +131,10 @@ namespace rtanRPG
 
             string text =
 
+                "         wWWWw               wWWWw\r\n   vVVVv (___) wWWWw         (___)  vVVVv\r\n   (___)  ~Y~  (___)  vVVVv   ~Y~   (___)\r\n    ~Y~   \\|    ~Y~   (___)    |/    ~Y~\r\n    \\|   \\ |/   \\| /  \\~Y~/   \\|    \\ |/\r\n   \\\\|// \\\\|// \\\\|/// \\\\|//  \\\\|// \\\\\\|///\r\njgs^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" +
+
                 "\r\n\r\n" +
-                "나들이\r\n" +
-                "플레이어의 HP와 MP를 랜덤으로 회복합니다.\r\n\r\n " +
+                "플레이어의 HP와 MP를 랜덤으로 회복합니다.\r\n " +
 
                 "1. 회복하기\r\n" +
                 "0. 나가기\r\n\r\n" +

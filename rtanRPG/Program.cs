@@ -69,25 +69,38 @@ namespace rtanRPG
                                 "원하시는 직업을 입력해주세요.\r\n" +
                                 ">>");
 
-                                string roleInput = Console.ReadLine();
-
-                                switch (roleInput)
+                                while (true)
                                 {
-                                    // selectedRole 인자에 직업 할당
-                                    case "1":
+                                    string roleInput = Console.ReadLine();
+
+                                    if (!int.TryParse(inputText, out int inputIDX))
+                                    { Console.WriteLine("잘못된 입력입니다."); continue; }
+                                    inputIDX -= 1;
+
+                                    if (roleInput == "1")
+                                    {
                                         player.SetPlayerStats("수강생");
                                         break;
-                                    case "2":
+                                    }
+                                    else if (roleInput == "2")
+                                    {
+
                                         player.SetPlayerStats("튜터");
                                         break;
-                                    case "3":
+                                    }
+                                    else if (roleInput == "3")
+                                    {
+
                                         player.SetPlayerStats("매니저");
                                         break;
-                                    default:
-                                        Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
-                                        return;  
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("잘못된 입력입니다.");
+                                    }
+
                                 }
-                                                                
+
                                 Console.WriteLine($"선택한 직업은 {player.role} 입니다.\r\n");
                                 Console.ReadKey();
 
