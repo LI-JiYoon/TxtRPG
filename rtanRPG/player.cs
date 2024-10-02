@@ -196,12 +196,26 @@ namespace rtanRPG
         }
 
         // 플레이어 회복 메서드 (amount로 회복량 조절)
-        public void Heal(float amount)
+        public void Heal(float hpAmount, float mpAmount)
         {
-            HP += amount;
-            if (HP > maxHP)
+            if (hpAmount > 0)
             {
-                HP = maxHP; 
+                HP += hpAmount;
+
+                if (HP > maxHP)
+                {
+                    HP = maxHP;
+                }
+            }
+
+            if (mpAmount > 0)
+            {
+                MP += mpAmount;
+
+                if (MP > maxMP)
+                {
+                    MP = maxMP;
+                }
             }
         }
     }
