@@ -145,7 +145,7 @@ namespace rtanRPG
             // 회피 기능 (10% 확률로 회피)
             if (rand.Next(0, 101) <= 10)
             {
-                Console.WriteLine($"Lv.{Monsterlevel} {MonsterName} 매니저님을(를) 공략했지만 아무일도 일어나지 않았다...");
+                Console.WriteLine($"Lv.{Monsterlevel} {MonsterName} 매니저님을(를) 공략했지만 아무일도 일어나지 않았다...ㅠ");
                 return 0;
             }
             else

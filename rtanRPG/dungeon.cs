@@ -255,7 +255,7 @@ namespace rtanRPG
             {
                 if (MonsterQueue[i] != null)
                 {
-                    string monsterHp = MonsterQueue[i].isDead ? "Dead" : MonsterQueue[i].hP.ToString();
+                    string monsterHp = MonsterQueue[i].isDead ? "폴인럽" : MonsterQueue[i].hP.ToString();
 
                     if (MonsterQueue[i].isDead) // 회색으로 
                     {

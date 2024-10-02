@@ -56,7 +56,7 @@ namespace rtanRPG
 
             Console.WriteLine($"Lv.{level} {name}의 철벽!\r\n" +
 
-                $"{Playername} 은 마상을 입었다! [데미지 : {atkPower}]\r\n\r\n");
+                $"{Playername} 은 마상을 입었다! 아파라! [데미지 : {atkPower}]\r\n\r\n");
 
             return atkPower;
         }
