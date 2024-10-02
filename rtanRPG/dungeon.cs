@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using static rtanRPG.dungeon;
 namespace rtanRPG
 {
     internal class dungeon
@@ -32,13 +33,16 @@ namespace rtanRPG
         /// </summary>
         List<Monster> MonstersQueue = new List<Monster>();
 
-
+        //보상아이템
+        Item[] items;
+        private Dictionary<Item, int> inventory;
 
         //생성자
         public dungeon(Player player)
         {
             this.player = player;
-
+            this.inventory = player.inventory.inventory;
+            this.items = player.inventory.InitalInventoryArray(player.inventory.inventory);
         }
 
 
@@ -123,8 +127,7 @@ namespace rtanRPG
             //int reward = CalculateReward(player.ATK, baseReward);
             //player.gold += reward;
             //Console.WriteLine($"Gold {player.gold - reward} G -> {player.gold} G");
-            player.dungeonClearCount++;
-            player.checkLevelUp();
+
 
         }
 
@@ -166,6 +169,7 @@ namespace rtanRPG
 
         public void DisplayBattleUI(List<Monster> MonsterQueue, Player player)
         {
+
             Console.Clear();
             Console.WriteLine("Battle!!");
             Console.WriteLine();
@@ -188,7 +192,7 @@ namespace rtanRPG
             Console.WriteLine($"[내정보]]\r\nLv.{player.level}  {player.name} ({player.role})");
             Console.WriteLine($"HP 100/{player.HP}");
 
-            Console.WriteLine($"\n1. 공격\n0. 도망치기\n\n원하시는 행동을 입력해주세요.");
+            Console.WriteLine($"\n1. 공격\n2. 스킬\n3. 포션 사용\n0. 도망치기\n\n원하시는 행동을 입력해주세요.");
 
             Console.Write(">>");
 
@@ -204,6 +208,17 @@ namespace rtanRPG
                     DisplaySelectEnemy(MonsterQueue, player);
                     break;
                 }
+                if (input == "2")
+                {
+                    //스킬사용
+                    break;
+                }
+                if (input == "3")
+                {
+                    //포션사용
+                    UsePotionDuringBattle(player);
+                    continue;
+                }
                 if (input == "0")
                 {
                     //도망치기 선택시
@@ -211,7 +226,6 @@ namespace rtanRPG
                     break;
 
                 }
-
                 else { Console.WriteLine("잘못된 입력입니다."); }
 
             }
@@ -280,6 +294,10 @@ namespace rtanRPG
         }
         public void DisplayBattleResult(List<Monster> monsterQueue, Player player)
         {
+            int baseReward = 0;
+            int extraReward = 0;
+            List<Item> rewardItems = new List<Item>();//부상 아이템을 받아줄 리스트
+            int numberOfItems = rand.Next(1, 3); //보상 아이템개수 (1개 또는 2개)
 
             Console.WriteLine("Battle!! - Result");
             Console.WriteLine();
@@ -289,6 +307,24 @@ namespace rtanRPG
                 Console.WriteLine("Vicotry!");
                 Console.WriteLine();
                 Console.ResetColor();
+
+                baseReward = GetBaseReward(DungeonDifficulty(dungeongClearCount));
+                extraReward = CalculateReward(player.ATK, baseReward);
+                // 아이템 보상 난이도에 따른 분배
+
+                GetItemReward(DungeonDifficulty(dungeongClearCount), ref rewardItems, numberOfItems);
+                Console.WriteLine("던전에서 몬스터 {0}마리를 잡았다!", monsterQueue.Count);           //이게 몇마리가 아니라 무조건 4가 나오지
+                Console.WriteLine();
+                Console.WriteLine("던전에서 다음과 같은 보상을 얻었다.");
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine($"골드 획득! {player.gold}g -> {player.gold += extraReward}g");
+                if (rewardItems != null)
+                {
+                    foreach (Item item in rewardItems) { player.inventory.AddItem(item); Console.WriteLine($"아이템 획득: {item.name}"); }
+
+                }
+                Console.WriteLine();
                 player.checkLevelUp();
                 dungeongClearCount += 1;
             }
@@ -303,11 +339,24 @@ namespace rtanRPG
                 Console.ResetColor();
             }
             Console.WriteLine();
-            if (player.isDead == false)
-            {
-                Console.WriteLine("던전에서 몬스터 {0}마리를 잡았습니다.", monsterQueue.Count);           //이게 몇마리가 아니라 무조건 4가 나오지
-                Console.WriteLine();
-            }
+            //if (player.isDead == false)
+            //{
+
+            //    Console.WriteLine("던전에서 몬스터 {0}마리를 잡았다!", monsterQueue.Count);           //이게 몇마리가 아니라 무조건 4가 나오지
+            //    Console.WriteLine();
+            //    Console.WriteLine("던전에서 다음과 같은 보상을 얻었다.");
+            //    Console.WriteLine();
+            //    Console.WriteLine();
+            //    Console.WriteLine($"골드 획득! {player.gold}g -> {player.gold += extraReward}g");
+            //    if (rewardItems != null)
+            //    {
+            //        foreach (Item item in rewardItems) { player.inventory.AddItem(item); Console.WriteLine($"아이템 획득: {item.name}"); }
+
+            //    }
+            //    Console.WriteLine();
+
+
+            //}
             Console.WriteLine($"Lv.{player.level} {player.name}\nHP 100 -> {player.HP}");           //데미지 계산에서 HP가 음수가되면 0이되게하던가 여기서 분기를 나눠도 OK
             Console.WriteLine();
             Console.WriteLine("0. 다음");
@@ -315,6 +364,9 @@ namespace rtanRPG
             Console.Write(">> ");
 
             //전투 보상(경험치, 골드, 아이템)
+
+
+
 
             while (true)
             {
@@ -420,30 +472,72 @@ namespace rtanRPG
         }
 
 
-        private int GetRecommendedDEF(Difficulty difficulty)//난이도 별 권장 방어력
+        public void UsePotionDuringBattle(Player player)
         {
-            switch (difficulty)
+            // 사용 가능한 포션 목록을 출력
+            var potions = player.inventory.inventory
+                             .Where(i => (i.Key is HealthPotion || i.Key is ManaPotion) && i.Value > 0)
+                             .ToList();
+
+            if (potions.Count == 0)
             {
-                case Difficulty.Easy:
-                    return 5;
-                case Difficulty.Normal:
-                    return 10;
-                case Difficulty.Hard:
-                    return 15;
-                default:
-                    return 0;
+                Console.WriteLine("사용할 수 있는 포션이 없습니다.");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine("\n사용 가능한 포션 목록:");
+            for (int i = 0; i < potions.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {potions[i].Key.name} ({potions[i].Value}개)");
+            }
+
+            Console.Write("포션 선택: ");
+            string input = Console.ReadLine();
+
+            if (int.TryParse(input, out int selectedPotion) && selectedPotion > 0 && selectedPotion <= potions.Count)
+            {
+                var potion = potions[selectedPotion - 1].Key;
+
+                if (potion is HealthPotion healthPotion)
+                {
+                    player.inventory.UsePotion(healthPotion);
+                }
+                else if (potion is ManaPotion manaPotion)
+                {
+                    player.inventory.UsePotion(manaPotion);
+                }
+            }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다.");
             }
         }
-        private int GetBaseReward(Difficulty difficulty)//난이도별 기본 보상
+
+        //private int GetRecommendedDEF(string difficulty)//난이도 별 권장 방어력
+        //{
+        //    switch (difficulty)
+        //    {
+        //        case "Easy":
+        //            return 5;
+        //        case "Normal":
+        //            return 15;
+        //        case "Hard":
+        //            return 30;
+        //        default:
+        //            return 0;
+        //    }
+        //}
+        private int GetBaseReward(string difficulty)//난이도별 기본 보상
         {
             switch (difficulty)
             {
-                case Difficulty.Easy:
+                case "Easy":
+                    return 10;
+                case "Normal":
+                    return 100;
+                case "Hard":
                     return 1000;
-                case Difficulty.Normal:
-                    return 1700;
-                case Difficulty.Hard:
-                    return 2500;
                 default:
                     return 0;
             }
@@ -457,6 +551,34 @@ namespace rtanRPG
             int bonusReward = (int)(baseReward * (playerATK / 100) * bonusMultiplier);
             return baseReward + bonusReward;
         }
+
+        private void GetItemReward(string difficulty, ref List<Item> rewardItems, int numberOfItems)
+        {
+            switch (difficulty)
+            {
+                case "Easy":
+                    rewardItems = items.Where(item => item.price <= 1000)
+                                   .OrderBy(x => rand.Next())
+                                   .Take(numberOfItems)
+                                   .ToList();
+                    break;
+                case "Normal":
+                    rewardItems = items.Where(item => item.price <= 1000)
+                                   .OrderBy(x => rand.Next())
+                                   .Take(numberOfItems)
+                                   .ToList();
+                    break;
+                case "Hard":
+                    rewardItems = items.Where(item => item.price <= 1000)
+                                   .OrderBy(x => rand.Next())
+                                   .Take(numberOfItems)
+                                   .ToList();
+                    break;
+            }
+        }
+
+
+
     }
 }
 
