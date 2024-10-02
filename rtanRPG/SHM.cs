@@ -2,6 +2,8 @@
 //using System.Collections.Generic;
 //using System.Diagnostics;
 //using System.Linq;
+//using System.Numerics;
+//using System.Security.Cryptography.X509Certificates;
 //using System.Text;
 //using System.Threading.Tasks;
 //using static rtanRPG.dungeon;
@@ -100,67 +102,74 @@
 //            }
 //            return PrintPotionWithNum;
 //        }
+
+
+
+
+
+
+
 //    }
+//    //델리게이트 만들고
+//    public delegate void EnemyDeadHandler(Monster monster);
 
-
-
-//    //Location에 퀘스트장소 추가 + 퀘스트는 퀘스트 클래스를 상속받는 것으로 (추상화? 인터페이스? 클래스?, 제일 익숙치 않은 추상화?)
-//    public abstract class Quest
+//    public void EnterDungeon(string difficulty)
 //    {
-//        string QuestName;
-//        string QuestProgress;
-//        bool isAccepted;
-//        bool isCleared;
+//        //도망치기 변수 초기화
+//        isFleeing = false;
 
-//        void QuestContents() { }
-//        void QuestRewards() { }
+//        // MonsterQueue 초기화
+//        MonstersQueue = new List<Monster>();
+
+
+//        // 몬스터 생성
+//        MonstersQueue = makeMonster(ref MonstersQueue, difficulty);
+
+//        //int numberOfDraws = rand.Next(1, 5); // 뽑고 싶은 몬스터의 수를 설정 (1~4사이)
+//        //for (int i = 0; i < numberOfDraws; i++)
+//        //{
+//        //    int monsterIndex = rand.Next(MonsterPreset.baseMonster.Count);
+//        //    Monster tempMonster = MonsterPreset.baseMonster[monsterIndex].Clone();
+//        //    MonstersQueue.Add(tempMonster); // MonstersQueue에 새로운 몬스터 추가
+//        //}
+
+//        //전투구현
+//        if (player.isDead) Console.WriteLine("체력을 회복하고 오세요");
+//        else PlayBattle();
+
+
+
+//        //추가할 내용
+//        public event EnemyDeadHandler onDead;
+
+//        foreach(Monster monster in MonstersQueue)
+//        {
+//            if (monster.isDead)
+//            {
+//                player.QuestUI.quest04.HandleDead(monster);
+//}
+//        }
+
+        
+
+
+
+
+//        //int baseReward = GetBaseReward(difficulty);
+
+//        //// 보상 계산
+//        //int reward = CalculateReward(player.ATK, baseReward);
+//        //player.gold += reward;
+//        //Console.WriteLine($"Gold {player.gold - reward} G -> {player.gold} G");
+//        player.dungeonClearCount++;
+//player.checkLevelUp();
+
 //    }
 
-//    public void QuestUI()
-//    {
-//        //퀘스트 이름들 보여주는데 이미 완료된(isCleared)는 회색처리 및 선택불가, 뒤에 (완료)
-//        //진행중인 퀘스트(isAccepted, !isCleared)는 뒤에 (진행중)
-//        string text =
-//            "QuestName" +
-//            "원하시는 퀘스트를 선택해주세요.";
-//    }
 
-//    //처음 선택했을 때, isAccepted == false
-//    public void DisplaySelectedQuest()
-//    {
-//        //퀘스트 이름, 설명, 내용, 보상등
 
-//        //수락 또는 거절 이후 메인메뉴 혹은 QuestUI로
-//    }
 
-//    //선택 이후, isAccepted == true
-//    public void DisplayRunningQuest()
-//    {
-//        //퀘스트 이름, 설명, 내용, 보상등
 
-//        //퀘스트 중이라면 다음
-//        //퀘스트가 완료되었다면 보상받기 또는 돌아가기 이후 메인메뉴 혹은 QuestUI로
-//    }
-
-//    public void Accept(Quest quest)
-//    {
-//        //해당 퀘스트의 isAccepted = true로 변경
-//    }
-//    public void GetRewards(Quest quest)
-//    {
-//        //해당 퀘스트의 isCleared = true로 변경
-//        //해당 퀘스트의 Rewards를 인벤토리에 추가
-//    }
-
-//    //Dungeon에 이 함수
-//    public void QuestManage()
-//    {
-//        //퀘스트들의 isAccepted와 isCleared를 보고
-//        //isAccepted && !isCleared인 퀘스트의 내용에 해당하는 Count변수 생성
-//        //몬스터 잡기라면 EnterDungeon에 MonsterQueue가 초기화 되기 전에
-//        //몬스터 카운트를 반환하게 하는 함수로, 몬스터 종류와 마릿수를 같이 반환해야 하니까.. Dictionary?
-//        //반환한 값은 isAccepted && !isCleared인 퀘스트만을 수정해야함
-//    }
 
 
 //}
