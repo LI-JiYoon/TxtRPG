@@ -60,8 +60,6 @@ namespace rtanRPG
                     i.Value.CheckComplete(player);
                 }
                 Console.Clear();
-                //퀘스트 이름들 보여주는데 이미 완료된(isCleared)는 회색처리 및 선택불가, 뒤에 (완료)
-                //진행중인 퀘스트(isAccepted, !isCleared)는 뒤에 (진행중)
                 string text =
                    $"{ShowQuests()}\r\n" +
                    "0. 나가기 \r\n\r\n" +
