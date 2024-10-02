@@ -35,6 +35,10 @@ namespace rtanRPG
         /// </summary>
         List<Monster> MonstersQueue = new List<Monster>();
 
+        //스킬 리스트
+        List<Skill> SkillList = new List<Skill>();
+
+
         //보상아이템
         Item[] items;
         private Dictionary<Item, int> inventory;
@@ -45,6 +49,8 @@ namespace rtanRPG
             this.player = player;
             this.inventory = player.inventory.inventory;
             this.items = player.inventory.InitalInventoryArray(player.inventory.inventory);
+            
+
         }
 
 
@@ -104,6 +110,10 @@ namespace rtanRPG
 
             // MonsterQueue 초기화
             MonstersQueue = new List<Monster>();
+
+
+            //스킬 생성
+            SkillList = addSkills(player.role, ref SkillList);
 
 
             // 몬스터 생성
@@ -176,6 +186,7 @@ namespace rtanRPG
             Console.WriteLine("Battle!!");
             Console.WriteLine();
 
+           
             // 몬스터 정보 출력
             for (int i = 0; i < MonsterQueue.Count; i++)
             {
@@ -194,7 +205,7 @@ namespace rtanRPG
             Console.WriteLine($"[내정보]]\r\nLv.{player.level}  {player.name} ({player.role})");
             Console.WriteLine($"HP 100/{player.HP}");
 
-            Console.WriteLine($"\n1. 공격\n2. 스킬\n3. 포션 사용\n0. 도망치기\n\n원하시는 행동을 입력해주세요.");
+            Console.WriteLine($"\n1. 공략\n2. 매력발산\n3. 포션 사용\n0. 도망치기\n\n원하시는 행동을 입력해주세요.");
 
             Console.Write(">>");
 
@@ -213,6 +224,7 @@ namespace rtanRPG
                 if (input == "2")
                 {
                     //스킬사용
+                    UsingSkill(MonsterQueue, player);
                     break;
                 }
                 if (input == "3")
@@ -226,6 +238,7 @@ namespace rtanRPG
                     //도망치기 선택시
                     isFleeing = true;
                     break;
+                    continue;
 
                 }
                 else { Console.WriteLine("잘못된 입력입니다."); }
@@ -257,8 +270,8 @@ namespace rtanRPG
 
             Console.WriteLine("\n");
             Console.WriteLine($"[내정보]\nLv.{player.level}  {player.name} ({player.role})");
-            Console.WriteLine($"HP 100/{player.HP}");
-            Console.WriteLine($"\n0. 취소\n\n대상을 선택해주세요.");
+            Console.WriteLine($"HP {player.HP}/ {player.maxHP}");
+            Console.WriteLine($"\n0. 취소\n\n공략 대상을 선택해주세요!");
             Console.Write(">>");
 
             int inputIDX;
@@ -279,7 +292,7 @@ namespace rtanRPG
                 }
                 else if (MonstersQueue[inputIDX - 1].isDead)
                 {
-                    Console.WriteLine("이미 처치한 몬스터입니다.");
+                    Console.WriteLine("이미 꼬신 대상입니다!");
                     Thread.Sleep(1000);
 
                 }
@@ -297,7 +310,7 @@ namespace rtanRPG
         public event MonsterDeadHandler onDead;
         public void DisplayBattleResult(List<Monster> monsterQueue, Player player)
         {
-            foreach(Monster monster in monsterQueue)
+            foreach (Monster monster in monsterQueue)
             {
                 if (monster.isDead)
                 {
@@ -323,7 +336,7 @@ namespace rtanRPG
                 // 아이템 보상 난이도에 따른 분배
 
                 GetItemReward(DungeonDifficulty(dungeongClearCount), ref rewardItems, numberOfItems);
-                Console.WriteLine("던전에서 몬스터 {0}마리를 잡았다!", monsterQueue.Count);           //이게 몇마리가 아니라 무조건 4가 나오지
+                Console.WriteLine("던전에서 매니저님 {0}명을 매료시켰다!", monsterQueue.Count);           //이게 몇마리가 아니라 무조건 4가 나오지
                 Console.WriteLine();
                 Console.WriteLine("던전에서 다음과 같은 보상을 얻었다.");
                 Console.WriteLine();
@@ -340,7 +353,7 @@ namespace rtanRPG
 
                 dungeongClearCount += 1;
                 player.quest.ClearDungeon(player);
-                if(Dif == "Hard")
+                if (Dif == "Hard")
                 {
                     player.quest.DifClear();
                 }
@@ -490,6 +503,131 @@ namespace rtanRPG
         }
 
 
+        public List<Skill> addSkills(string role, ref List<Skill> Skills)
+        {
+            Skills.Clear();
+
+            switch (role)
+            {
+                case "수강생":
+                    foreach (Skill skill in SkillSet.StudentSkills) Skills.Add(skill);
+                    return Skills;
+                case "튜터":
+                    foreach (Skill skill in SkillSet.TutorSkills) Skills.Add(skill);
+                    return Skills;
+                case "매니저":
+                    foreach (Skill skill in SkillSet.ManagerSkills) Skills.Add(skill);
+                    return Skills;
+                default:
+                    foreach (Skill skill in SkillSet.StudentSkills) Skills.Add(skill);
+                    return Skills;
+
+            }
+        }
+
+        public void UsingSkill(List<Monster> MonsterQueue, Player player)
+        {
+            Console.Clear();
+            Console.WriteLine("Battle!!");
+            Console.WriteLine();
+
+
+
+
+            Console.WriteLine("\n");
+            Console.WriteLine($"[내정보]\nLv.{player.level}  {player.name} ({player.role})");
+            Console.WriteLine($"HP {player.HP}/ {player.maxHP}");
+            Console.WriteLine($"MP {player.MP}/{player.maxMP}\r\n");
+            for(int i =0; i<SkillList.Count; i++)
+            {
+                Console.WriteLine(
+                   $"{i+1}. {SkillList[i].Name} - MP {SkillList[i].ConsumeMP}\r\n" +
+                   $"  {SkillList[i].Description}\r\n\r\n");
+
+            }
+           
+            Console.WriteLine($"\n0. 취소\n\n행동을 선택해주세요!");
+            Console.Write(">>");
+
+            int inputIDX;
+            while (true)
+            {
+                string input = Console.ReadLine();
+                if (!int.TryParse(input, out inputIDX))
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    continue;
+                }
+                else if (inputIDX > SkillList.Count)
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    continue;
+                }
+                else if (input == "0")
+                {
+                    break;
+                }
+                
+                var selectedSkill = SkillList[inputIDX - 1];
+
+                // 마나 체크
+                if (player.MP < selectedSkill.ConsumeMP)
+                {
+                    Console.WriteLine("마나가 부족합니다.");
+                    return;
+                }
+
+                // 광역 스킬 처리
+                if (selectedSkill.IsAoE)
+                {
+                    selectedSkill.UseSkill(player, MonsterQueue);  // 모든 몬스터에게 데미지
+                    Console.ReadKey();
+                }
+                else
+                {
+                    // 단일 타겟 스킬일 경우, 몬스터를 선택해야 함
+                    Console.WriteLine("공격할 몬스터를 선택해주세요.");
+                    for (int i = 0; i < MonsterQueue.Count; i++)
+                    {
+                        var monster = MonsterQueue[i];
+                        if (!monster.isDead)
+                        {
+                            Console.WriteLine($"{i + 1}. Lv.{monster.level} {monster.name} (HP: {monster.hP})");
+                        }
+                    }
+
+                    Console.Write(">> ");
+                    int targetIDX;
+                    while (true)
+                    {
+                        string targetInput = Console.ReadLine();
+                        if (!int.TryParse(targetInput, out targetIDX) || targetIDX < 1 || targetIDX > MonsterQueue.Count)
+                        {
+                            Console.WriteLine("잘못된 입력입니다.");
+                            continue;
+                        }
+
+                        var targetMonster = MonsterQueue[targetIDX - 1];
+                        if (targetMonster.isDead)
+                        {
+                            Console.WriteLine("이미 처치된 몬스터입니다. 다른 대상을 선택해주세요.");
+
+                        }
+                        else
+                        {
+                            selectedSkill.UseSkill(player, MonsterQueue, targetMonster);  // 특정 몬스터에게 데미지
+                            Console.ReadKey();
+                            break;
+                        }
+                    }
+                }
+
+                break;
+
+
+            }
+
+        }
         public void UsePotionDuringBattle(Player player)
         {
             // 사용 가능한 포션 목록을 출력

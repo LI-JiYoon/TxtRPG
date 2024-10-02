@@ -145,7 +145,7 @@ namespace rtanRPG
             // 회피 기능 (10% 확률로 회피)
             if (rand.Next(0, 101) <= 10)
             {
-                Console.WriteLine($"Lv.{Monsterlevel} {MonsterName} 을(를) 공격했지만 아무일도 일어나지 않았습니다.");
+                Console.WriteLine($"Lv.{Monsterlevel} {MonsterName} 매니저님을(를) 공략했지만 아무일도 일어나지 않았다...");
                 return 0;
             }
             else
@@ -157,7 +157,7 @@ namespace rtanRPG
                 {
                     Console.Clear();
                     damage = (int)(damage * 1.6);
-                    Console.WriteLine($"Lv.{Monsterlevel} {MonsterName} 을(를) 맞췄습니다. [데미지 : {damage}] - 치명타 공격!!");
+                    Console.WriteLine($"Lv.{Monsterlevel} {MonsterName} 매니저님께 적극적으로 어필했다! [데미지 : {damage}] - 하트 뿜뿜!!");
                     return damage;
 
                 }
@@ -174,7 +174,7 @@ namespace rtanRPG
                     // 랜덤 공격력 생성
 
                     int finalDamage = rand.Next((int)minDamage, (int)(maxDamage + 1));
-                    Console.WriteLine($"Lv.{Monsterlevel} {MonsterName} 을(를) 맞췄습니다. [데미지 : {finalDamage}]");
+                    Console.WriteLine($"Lv.{Monsterlevel} {MonsterName} 매니저님께 조르기를 시전했다! [데미지 : {finalDamage}]");
                     return finalDamage;
                 }
 
