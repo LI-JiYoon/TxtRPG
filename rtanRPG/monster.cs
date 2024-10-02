@@ -54,9 +54,9 @@ namespace rtanRPG
         public virtual int Attack(string Playername)
         {
 
-            Console.WriteLine($"Lv.{level} {name}의 공격!\r\n" +
+            Console.WriteLine($"Lv.{level} {name}의 철벽!\r\n" +
 
-                $"{Playername} 을 맞췄습니다  [데미지 : {atkPower}]\r\n\r\n");
+                $"{Playername} 은 마상을 입었다! 아파라! [데미지 : {atkPower}]\r\n\r\n");
 
             return atkPower;
         }
