@@ -546,7 +546,7 @@ namespace rtanRPG
 
             }
            
-            Console.WriteLine($"\n0. 취소\n\n행동을 선택해주세요!");
+            Console.WriteLine($"\n0. 취소\n\n 어필할 행동을 선택해주세요!");
             Console.Write(">>");
 
             int inputIDX;
