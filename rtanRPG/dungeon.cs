@@ -60,6 +60,7 @@ namespace rtanRPG
         public void Displaying()
         {
             Console.Clear();
+            music.bgmPlay("dungeon.wav");
             string text =
 
                 "                                  |>>>\r\n                                  |\r\n                    |>>>      _  _|_  _         |>>>\r\n                    |        |;| |;| |;|        |\r\n                _  _|_  _    \\\\.    .  /    _  _|_  _\r\n               |;|_|;|_|;|    \\\\:. ,  /    |;|_|;|_|;|\r\n               \\\\..      /    ||;   . |    \\\\.    .  /\r\n                \\\\.  ,  /     ||:  .  |     \\\\:  .  /\r\n                 ||:   |_   _ ||_ . _ | _   _||:   |\r\n                 ||:  .|||_|;|_|;|_|;|_|;|_|;||:.  |\r\n                 ||:   ||.    .     .      . ||:  .|\r\n                 ||: . || .     . .   .  ,   ||:   |       \\,/\r\n                 ||:   ||:  ,  _______   .   ||: , |            /`\\\r\n                 ||:   || .   /+++++++\\    . ||:   |\r\n                 ||:   ||.    |+++++++| .    ||: . |\r\n              __ ||: . ||: ,  |+++++++|.  . _||_   |\r\n     ____--`~    '--~~__|.    |+++++__|----~    ~`---,              ___\r\n-~--~                   ~---__|,--~'                  ~~----_____-~'   `~----~~"
@@ -78,6 +79,7 @@ namespace rtanRPG
             while (true)
             {
                 string inputText = Console.ReadLine();
+                music.soundEffectPlay("select.wav");
                 if (!int.TryParse(inputText, out int inputIDX))
                 { Console.WriteLine("잘못된 입력입니다."); continue; }
                 if (inputText == "0")
@@ -223,6 +225,7 @@ namespace rtanRPG
                 Console.Write(">>");
 
                 string input = Console.ReadLine();
+                music.soundEffectPlay("select.wav");
                 if (!int.TryParse(input, out int inputIDX))
                 { Console.WriteLine("잘못된 입력입니다."); continue; }
 
@@ -289,6 +292,7 @@ namespace rtanRPG
             while (true)
             {
                 string input = Console.ReadLine();
+                music.soundEffectPlay("select.wav");
                 if (!int.TryParse(input, out inputIDX))
                 {
                     Console.WriteLine("잘못된 입력입니다.");
@@ -344,6 +348,7 @@ namespace rtanRPG
             Console.WriteLine();
             if (player.isDead == false)
             {
+                music.bgmPlay("clear.wav");
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Vicotry!");
                 Console.WriteLine();
@@ -379,7 +384,7 @@ namespace rtanRPG
             }
             else if (player.isDead == true)
             {
-
+                music.bgmPlay("lose.wav");
                 player.HP += 10;
                 player.EXP -= 10;
                 Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -570,6 +575,7 @@ namespace rtanRPG
             while (true)
             {
                 string input = Console.ReadLine();
+                music.soundEffectPlay("select.wav");
                 if (!int.TryParse(input, out inputIDX))
                 {
                     Console.WriteLine("잘못된 입력입니다.");

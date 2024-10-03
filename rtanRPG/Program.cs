@@ -56,7 +56,7 @@ namespace rtanRPG
                         while (true)
                         {
                             inputText = Console.ReadLine();
-
+                            music.soundEffectPlay("select.wav");
                             Console.Clear();
                             if (inputText == "1")
                             {
@@ -103,8 +103,10 @@ namespace rtanRPG
 
                                 Console.WriteLine($"선택한 직업은 {player.role} 입니다.\r\n");
                                 Console.ReadKey();
+                                music.soundEffectPlay("select.wav");
 
                                 Location.SetLocation(STATE.마을);
+                                
                                 break; // 위치를 강제로 마을로 변경
                             }
                             else if (inputText == "2")
@@ -120,7 +122,10 @@ namespace rtanRPG
                         break;
 
                     case STATE.마을:
+                        
                         Console.Clear();
+                       
+                        music.bgmPlay("village.wav");
 
                         Console.WriteLine(
 
@@ -144,8 +149,11 @@ namespace rtanRPG
                         while (true)
                         {
                             inputText = Console.ReadLine();
+                            music.soundEffectPlay("select.wav");
+
                             if (inputText == "1")
                             {
+
                                 Location.SetLocation(STATE.상태보기);
                                 break;
                             }
@@ -183,6 +191,7 @@ namespace rtanRPG
 
                             else
                             {
+                                music.soundEffectPlay("wrong.wav");
                                 Console.WriteLine("정확한 값을 입력하세요");
 
                             }
