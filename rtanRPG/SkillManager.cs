@@ -28,6 +28,7 @@ namespace rtanRPG
         // 스킬 사용 메서드
         public virtual void UseSkill(Player player, List<Monster> monsters, Monster target = null)
         {
+            Console.Clear();
             if (IsAoE)
             {
                 Console.WriteLine($"{Name} 시전! 모든 매니저님(들)에게 {Damage} 만큼 어필합니다.");
@@ -36,6 +37,10 @@ namespace rtanRPG
                     if (monster.isDead) continue;
                     monster.TakeDamage(Damage);  // 각 몬스터에게 광역 데미지
                     player.MP -= ConsumeMP;
+                    if(player.MP < 0)
+                    {
+                        player.MP = 0;
+                    }
                 }
             }
             else
@@ -45,6 +50,10 @@ namespace rtanRPG
                     Console.WriteLine($"{Name} 시전! {target.name} 매니저님에게 {Damage} 만큼 어필합니다.");
                     target.TakeDamage(Damage);  // 특정 몬스터에게 단일 데미지
                     player.MP -= ConsumeMP;
+                    if (player.MP < 0)
+                    {
+                        player.MP = 0;
+                    }
                 }
             }
         }

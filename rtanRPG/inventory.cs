@@ -120,15 +120,14 @@ namespace rtanRPG
             player.Heal(potion.ability, 0);
             RemoveItem(potion);
             Console.WriteLine($"{potion.name}사용!\n플레이어의 {potion.type}을 {(int)potion.ability} 회복했습니다");
-            Console.ReadKey();
+            Thread.Sleep(500);
         }
         public void UsePotion(ManaPotion potion) // mp
         {
             player.Heal(0, potion.ability);
             RemoveItem(potion);
             Console.WriteLine($"{potion.name}사용!\n플레이어의 {potion.type}을 {(int)potion.ability} 회복했습니다");
-            Console.ReadKey();
-
+            Thread.Sleep(500);
         }
 
         /// <summary>

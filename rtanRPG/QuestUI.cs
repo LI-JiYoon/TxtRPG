@@ -256,10 +256,10 @@ namespace rtanRPG
                     //완료버튼 누르면 Ok인 상태
                 }
                 else if (i.Value.isAccepted && i.Value.readyToClear && i.Value.isCleared)
-                {
-                    isRunning += "(완료)";
+                { 
                     //이미 완료한 상태
                     Console.ForegroundColor = ConsoleColor.Red;
+                    isRunning += "(완료)";
                 }
                 ShowAllQuest += number +"- " + i.Value.QuestName + isRunning + "\r\n";
                 number++;

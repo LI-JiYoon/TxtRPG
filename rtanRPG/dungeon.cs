@@ -310,6 +310,7 @@ namespace rtanRPG
         public event MonsterDeadHandler onDead;
         public void DisplayBattleResult(List<Monster> monsterQueue, Player player)
         {
+            Console.Clear();
             foreach (Monster monster in monsterQueue)
             {
                 if (monster.isDead)
