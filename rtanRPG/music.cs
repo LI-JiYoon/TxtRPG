@@ -23,7 +23,7 @@ namespace rtanRPG
         { if (bgmPlayer == null)
             {
                 bgmPlayer = new WaveOutEvent();
-                bgm = new AudioFileReader(@"" + filename); // 배경음악 파일 경로
+                bgm = new AudioFileReader(@"\music\" + filename); // 배경음악 파일 경로
                 bgmPlayer.Init(bgm);
             }
           bgmPlayer.Play();
@@ -31,7 +31,7 @@ namespace rtanRPG
         public static void soundEffectPlay(string filename)
         {
             soundEffectPlayer = new WaveOutEvent(); // 효과음을 위한 별도 플레이어
-            soundEffect = new AudioFileReader(filename); // 효과음 파일 경로
+            soundEffect = new AudioFileReader(@"\music\" + filename); // 효과음 파일 경로
             soundEffectPlayer.Init(soundEffect);
             soundEffectPlayer.Play();
         }
