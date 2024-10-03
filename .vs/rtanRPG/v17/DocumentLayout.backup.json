@@ -79,8 +79,7 @@
               "ViewState": "AgIAAEcAAAAAAAAAAAAUwFsAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-02T06:56:58.373Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -90,7 +89,7 @@
               "RelativeDocumentMoniker": "rtanRPG\\SkillManager.cs",
               "ToolTip": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\SkillManager.cs",
               "RelativeToolTip": "rtanRPG\\SkillManager.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAowFAAAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAswFAAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-01T10:41:27.313Z",
               "IsPinned": true,
@@ -106,8 +105,7 @@
               "RelativeToolTip": "rtanRPG\\inventory.cs",
               "ViewState": "AgIAAOoAAAAAAAAAAAAAwIEAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-01T10:18:55.557Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-01T10:18:55.557Z"
             },
             {
               "$type": "Document",
@@ -117,7 +115,7 @@
               "RelativeDocumentMoniker": "rtanRPG\\dungeon.cs",
               "ToolTip": "D:\\zzondy\\Git\\TxtRPG\\rtanRPG\\dungeon.cs",
               "RelativeToolTip": "rtanRPG\\dungeon.cs",
-              "ViewState": "AgIAAI4AAAAAAAAAAAAlwLUAAABAAAAAAAAAAA==",
+              "ViewState": "AgIAADcAAAAAAAAAAAAAABACAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-01T10:18:55.616Z",
               "EditorCaption": ""
@@ -144,8 +142,7 @@
               "RelativeToolTip": "rtanRPG\\player.cs",
               "ViewState": "AgIAAMsAAAAAAAAAAAAtwN0AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-01T10:18:55.539Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-01T10:18:55.539Z"
             },
             {
               "$type": "Document",
@@ -229,8 +226,7 @@
               "RelativeToolTip": "rtanRPG\\QuestUI.cs",
               "ViewState": "AgIAAKAAAAAAAAAAAAAkwAUBAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-02T06:56:59.017Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-02T06:56:59.017Z"
             },
             {
               "$type": "Document",

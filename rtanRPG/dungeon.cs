@@ -586,6 +586,7 @@ namespace rtanRPG
                 }
                 else
                 {
+                    Console.Clear();
                     // 단일 타겟 스킬일 경우, 몬스터를 선택해야 함
                     Console.WriteLine("공격할 몬스터를 선택해주세요.");
                     for (int i = 0; i < MonsterQueue.Count; i++)
