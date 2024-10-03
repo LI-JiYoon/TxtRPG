@@ -349,11 +349,13 @@ namespace rtanRPG
             if (player.isDead == false)
             {
                 music.bgmPlay("clear.wav");
+                art.vidtory();
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Vicotry!");
                 Console.WriteLine();
                 Console.ResetColor();
-
+                
+                Console.WriteLine("\r\n");
                 baseReward = GetBaseReward(DungeonDifficulty(dungeongClearCount));
                 extraReward = CalculateReward(player.ATK, baseReward);
                 // 아이템 보상 난이도에 따른 분배
