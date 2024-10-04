@@ -62,9 +62,9 @@
 
 
 ## 📚 프로젝트 결과물
-[시연 영상](https://github.com/LI-JiYoon/TxtRPG/blob/main/PPT/%EC%98%81%EC%83%81/textrpg.mp4)
+- [시연 영상](https://github.com/LI-JiYoon/TxtRPG/blob/main/PPT/%EC%98%81%EC%83%81/textrpg.mp4)
 
 
 ## ✨ 프로젝트 산출물
 
-- [발표자료]("./TxtRPG/PPT/한끼줍쇼v3.pptx")
+- [발표자료](https://github.com/LI-JiYoon/TxtRPG/blob/main/PPT/%ED%95%9C%EB%81%BC%EC%A4%8D%EC%87%BC_%EC%B5%9C%EC%A2%85.pdf)
