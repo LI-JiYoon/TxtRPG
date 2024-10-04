@@ -62,7 +62,7 @@
 
 
 ## 📚 프로젝트 결과물
-[![매니저님밥4조]("./docs/banner.png")](".TxtRPG\PPT\영상\textrpg.mp4")
+[![매니저님밥4조]("./docs/banner.png")](".TxtRPG/PPT/영상/textrpg.mp4")
 * 해당 이미지 클릭 시 시연 영상으로 이동합니다.
 
 ## ✨ 프로젝트 산출물
