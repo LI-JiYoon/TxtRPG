@@ -62,7 +62,7 @@
 
 
 ## 📚 프로젝트 결과물
-[시연 영상]("https://github.com/LI-JiYoon/TxtRPG/blob/main/PPT/%EC%98%81%EC%83%81/textrpg.mp4")
+[시연 영상](https://github.com/LI-JiYoon/TxtRPG/blob/main/PPT/%EC%98%81%EC%83%81/textrpg.mp4)
 
 
 ## ✨ 프로젝트 산출물
