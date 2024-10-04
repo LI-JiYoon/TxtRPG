@@ -19,7 +19,8 @@
       <li>승리/패배</li>
     </ul>
   </div>
-  <details>
+  </details>
+   <details>
   <summary><b>전투기능</b></summary>
   <div markdown="1">
     <ul>
@@ -35,7 +36,8 @@
       <li>승리/패배</li>
     </ul>
   </div>
-</details>
+  <details>
+ 
 
 ## 📅 프로젝트 수행 기간
 
