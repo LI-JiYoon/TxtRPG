@@ -27,7 +27,7 @@
   <div markdown="1">
     <ul>
        <li>퀘스트</li>
-      <img src="./docs/퀘스트기능/퀘스트/1.gif" width=70%>
+      <img src="./docs/퀘스트기능/퀘스트.gif" width=70%>
     </ul>
   </div>
   <details>
