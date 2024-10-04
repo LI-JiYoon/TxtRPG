@@ -2,7 +2,7 @@
 
 ## 📌 프로젝트 소개
 
-- 콘솔창으로 진행하는 TEXT RPG 게임
+- 콘솔창으로 진행하는 TEXT RPG 게임! 매니저님~ 밥사주세요❤️
   <details>
   <summary><b>전투기능</b></summary>
   <div markdown="1">
