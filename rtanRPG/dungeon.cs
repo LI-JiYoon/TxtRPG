@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Media;
 using static rtanRPG.dungeon;
 namespace rtanRPG
 {
@@ -59,6 +60,7 @@ namespace rtanRPG
         public void Displaying()
         {
             Console.Clear();
+            music.bgmPlay("dungeon.wav");
             string text =
 
                 "                                  |>>>\r\n                                  |\r\n                    |>>>      _  _|_  _         |>>>\r\n                    |        |;| |;| |;|        |\r\n                _  _|_  _    \\\\.    .  /    _  _|_  _\r\n               |;|_|;|_|;|    \\\\:. ,  /    |;|_|;|_|;|\r\n               \\\\..      /    ||;   . |    \\\\.    .  /\r\n                \\\\.  ,  /     ||:  .  |     \\\\:  .  /\r\n                 ||:   |_   _ ||_ . _ | _   _||:   |\r\n                 ||:  .|||_|;|_|;|_|;|_|;|_|;||:.  |\r\n                 ||:   ||.    .     .      . ||:  .|\r\n                 ||: . || .     . .   .  ,   ||:   |       \\,/\r\n                 ||:   ||:  ,  _______   .   ||: , |            /`\\\r\n                 ||:   || .   /+++++++\\    . ||:   |\r\n                 ||:   ||.    |+++++++| .    ||: . |\r\n              __ ||: . ||: ,  |+++++++|.  . _||_   |\r\n     ____--`~    '--~~__|.    |+++++__|----~    ~`---,              ___\r\n-~--~                   ~---__|,--~'                  ~~----_____-~'   `~----~~"
@@ -77,6 +79,7 @@ namespace rtanRPG
             while (true)
             {
                 string inputText = Console.ReadLine();
+                music.soundEffectPlay("select.wav");
                 if (!int.TryParse(inputText, out int inputIDX))
                 { Console.WriteLine("잘못된 입력입니다."); continue; }
                 if (inputText == "0")
@@ -145,6 +148,7 @@ namespace rtanRPG
 
         public void PlayBattle()
         {
+            isFleeing = false ;
             // 플레이어 혹은 몬스터집단 중 한 쪽이 전멸할때까지 반복
             while (!MonstersQueue.All(x => x.isDead) && !player.isDead)
             {
@@ -164,88 +168,98 @@ namespace rtanRPG
                 if (MonstersQueue.All(x => x.isDead))
                 {
                     DisplayBattleResult(MonstersQueue, player);
+                    break;
                 }
 
                 // 연속된 몬스터 공격 Ui 띄우기
-                DisplayEnemyAttack();
+                if (!isFleeing)
+                    DisplayEnemyAttack();
 
                 // 플레이어 사망일 경우
                 if (player.isDead)
                 {
                     DisplayBattleResult(MonstersQueue, player);
+                    break;
                 }
             }
         }
 
 
-
+        /// <summary>
+        /// 1.공략
+        /// 2. 매력발산
+        /// 3. 포션 사용
+        /// 0. 도망가기
+        /// </summary>
+        /// <param name="MonsterQueue"></param>
+        /// <param name="player"></param>
         public void DisplayBattleUI(List<Monster> MonsterQueue, Player player)
         {
-
-            Console.Clear();
-            Console.WriteLine("Battle!!");
-            Console.WriteLine();
-
-           
-            // 몬스터 정보 출력
-            for (int i = 0; i < MonsterQueue.Count; i++)
-            {
-                if (MonsterQueue[i] != null)
-                {
-                    if (MonsterQueue[i].isDead)
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkGray;                        //죽은 몬스터들 회색으로
-                    }
-                    Console.WriteLine($"Lv.{MonsterQueue[i].level} {MonsterQueue[i].name}  HP {MonsterQueue[i].hP}");
-                    Console.ResetColor();
-                }
-            }
-
-            Console.WriteLine("\n");
-            Console.WriteLine($"[내정보]]\r\nLv.{player.level}  {player.name} ({player.role})");
-            Console.WriteLine($"HP 100/{player.HP}");
-
-            Console.WriteLine($"\n1. 공략\n2. 매력발산\n3. 포션 사용\n0. 도망치기\n\n원하시는 행동을 입력해주세요.");
-
-            Console.Write(">>");
-
             while (true)
             {
+                Console.Clear();
+                Console.WriteLine("Battle!!");
+                Console.WriteLine();
+
+
+                // 몬스터 정보 출력
+                for (int i = 0; i < MonsterQueue.Count; i++)
+                {
+                    if (MonsterQueue[i] != null)
+                    {
+                        if (MonsterQueue[i].isDead)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkGray;                        //죽은 몬스터들 회색으로
+                        }
+                        Console.WriteLine($"Lv.{MonsterQueue[i].level} {MonsterQueue[i].name}  HP {MonsterQueue[i].hP}");
+                        Console.ResetColor();
+                    }
+                }
+
+                Console.WriteLine("\n");
+                Console.WriteLine($"[내정보]]\r\nLv.{player.level}  {player.name} ({player.role})");
+                Console.WriteLine($"HP 100/{player.HP}");
+
+                Console.WriteLine($"\n1. 공략\n2. 매력발산\n3. 포션 사용\n0. 도망치기\n\n원하시는 행동을 입력해주세요.");
+
+                Console.Write(">>");
+
                 string input = Console.ReadLine();
+                music.soundEffectPlay("select.wav");
                 if (!int.TryParse(input, out int inputIDX))
                 { Console.WriteLine("잘못된 입력입니다."); continue; }
 
-
+                int num = -1;
                 if (input == "1")
                 {
-                    DisplaySelectEnemy(MonsterQueue, player);
-                    break;
+                    DisplaySelectEnemy(MonsterQueue, player, ref num);
+                    if (num == 0) continue;
+                    else break;
                 }
-                if (input == "2")
+                else if (input == "2")
                 {
                     //스킬사용
-                    UsingSkill(MonsterQueue, player);
-                    break;
+                    UsingSkill(MonsterQueue, player, ref num);
+                    if (num == 0) continue;
+                    else break;
                 }
-                if (input == "3")
+                else if (input == "3")
                 {
                     //포션사용
                     UsePotionDuringBattle(player);
                     continue;
                 }
-                if (input == "0")
+                else if (input == "0")
                 {
                     //도망치기 선택시
                     isFleeing = true;
                     break;
-                    continue;
-
                 }
                 else { Console.WriteLine("잘못된 입력입니다."); }
 
             }
         }
-        public void DisplaySelectEnemy(List<Monster> MonsterQueue, Player player)
+        public void DisplaySelectEnemy(List<Monster> MonsterQueue, Player player, ref int num)
         {
             Console.Clear();
             Console.WriteLine("Battle!!");
@@ -278,6 +292,7 @@ namespace rtanRPG
             while (true)
             {
                 string input = Console.ReadLine();
+                music.soundEffectPlay("select.wav");
                 if (!int.TryParse(input, out inputIDX))
                 {
                     Console.WriteLine("잘못된 입력입니다.");
@@ -288,7 +303,8 @@ namespace rtanRPG
                 }
                 else if (input == "0")
                 {
-                    DisplayBattleUI(MonstersQueue, player);
+                    num = 0;
+                    break;
                 }
                 else if (MonstersQueue[inputIDX - 1].isDead)
                 {
@@ -296,16 +312,21 @@ namespace rtanRPG
                     Thread.Sleep(1000);
 
                 }
-                else break;
+                else
+                {
+                    Console.Clear();
+                    MonstersQueue[inputIDX - 1].TakeDamage((int)player.Attack(MonstersQueue[inputIDX - 1].name, MonstersQueue[inputIDX - 1].level));
+                    //경험치
+                    if (MonstersQueue[inputIDX - 1].isDead) player.EXP += MonstersQueue[inputIDX - 1].level * 1;
+                    
+                    Console.ReadKey();
+                    break;
+                }
+              
             }
 ;
             //공격  
-            Console.Clear();
-            MonstersQueue[inputIDX - 1].TakeDamage((int)player.Attack(MonstersQueue[inputIDX - 1].name, MonstersQueue[inputIDX - 1].level));
-            //경험치
-            if (MonstersQueue[inputIDX - 1].isDead) player.EXP += MonstersQueue[inputIDX - 1].level * 1;
-
-            Console.ReadKey();
+           
         }
         public event MonsterDeadHandler onDead;
         public void DisplayBattleResult(List<Monster> monsterQueue, Player player)
@@ -327,11 +348,14 @@ namespace rtanRPG
             Console.WriteLine();
             if (player.isDead == false)
             {
+                music.bgmPlay("clear.wav");
+                art.vidtory();
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Vicotry!");
                 Console.WriteLine();
                 Console.ResetColor();
-
+                
+                Console.WriteLine("\r\n");
                 baseReward = GetBaseReward(DungeonDifficulty(dungeongClearCount));
                 extraReward = CalculateReward(player.ATK, baseReward);
                 // 아이템 보상 난이도에 따른 분배
@@ -362,7 +386,7 @@ namespace rtanRPG
             }
             else if (player.isDead == true)
             {
-
+                music.bgmPlay("lose.wav");
                 player.HP += 10;
                 player.EXP -= 10;
                 Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -409,7 +433,6 @@ namespace rtanRPG
 
                 if (input == "0")
                 {
-                    Displaying();       //던전선택창
                     break;
                 }
                 else { Console.WriteLine("잘못된 입력입니다."); }
@@ -526,7 +549,7 @@ namespace rtanRPG
             }
         }
 
-        public void UsingSkill(List<Monster> MonsterQueue, Player player)
+        public void UsingSkill(List<Monster> MonsterQueue, Player player, ref int num)
         {
             Console.Clear();
             Console.WriteLine("Battle!!");
@@ -554,6 +577,7 @@ namespace rtanRPG
             while (true)
             {
                 string input = Console.ReadLine();
+                music.soundEffectPlay("select.wav");
                 if (!int.TryParse(input, out inputIDX))
                 {
                     Console.WriteLine("잘못된 입력입니다.");
@@ -566,6 +590,7 @@ namespace rtanRPG
                 }
                 else if (input == "0")
                 {
+                    num = 0;
                     break;
                 }
                 

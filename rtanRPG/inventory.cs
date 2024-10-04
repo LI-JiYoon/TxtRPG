@@ -73,8 +73,9 @@ namespace rtanRPG
 
             while (true)
             {
+               
                 string inputText = Console.ReadLine();
-
+                music.soundEffectPlay("select.wav");
                 if (!int.TryParse(inputText, out int inputIDX))
                 { Console.WriteLine("잘못된 입력입니다."); continue; }
                 inputIDX -= 1;
@@ -189,6 +190,7 @@ namespace rtanRPG
             while (true)
             {
                 string inputText = Console.ReadLine();
+                music.soundEffectPlay("select.wav");
                 if (!int.TryParse(inputText, out int inputIDX) || inputIDX > indexedInventory.Count)
                 {
                     Console.WriteLine("잘못된 입력입니다.");
