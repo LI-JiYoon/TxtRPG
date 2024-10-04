@@ -3,9 +3,40 @@
 ## 📌 프로젝트 소개
 
 - 콘솔창으로 진행하는 TEXT RPG 게임
-  1. 장소 이동 기능 구현
-  2. 전투 기능 구현
-
+  <details>
+  <summary><b>포토스팟 콜렉션</b></summary>
+  <div markdown="1">
+    <ul>
+      <li>전투기능</li>
+      <li>공격기</li>
+      <img src="./docs/주요_기능/포토스팟_콜렉션/1.gif" width=70%>
+      <img src="./docs/주요_기능/포토스팟_콜렉션/2.gif" width=70%>
+      <li>스킬</li>
+      <img src="./docs/주요_기능/포토스팟_콜렉션/3.gif" width=70%>
+      <li>포션사용</li>
+      <img src="./docs/주요_기능/포토스팟_콜렉션/4.gif" width=70%>
+      <li>도망치기</li>
+      <img src="./docs/주요_기능/포토스팟_콜렉션/5.gif" width=70%>
+      <li>승리/패배</li>
+      
+    </ul>
+  </div>
+</details>
+<div markdown="2">
+    <ul>
+      <li>퀘스트 기능</li>
+      <li>퀘스트 기능</li>
+      <img src="./docs/주요_기능/포토스팟_콜렉션/1.gif" width=70%>
+      <img src="./docs/주요_기능/포토스팟_콜렉션/2.gif" width=70%>
+      <li>스킬</li>
+      <img src="./docs/주요_기능/포토스팟_콜렉션/3.gif" width=70%>
+      <li>포션사용</li>
+      <img src="./docs/주요_기능/포토스팟_콜렉션/4.gif" width=70%>
+      <li>도망치기</li>
+      <img src="./docs/주요_기능/포토스팟_콜렉션/5.gif" width=70%>
+    </ul>
+  </div>
+</details>
 
 ## 📅 프로젝트 수행 기간
 
