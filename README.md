@@ -22,7 +22,7 @@
     </ul>
   </div>
   </details>
-   <details>
+  <details>
   <summary><b>퀘스트기능</b></summary>
   <div markdown="1">
     <ul>
@@ -30,7 +30,7 @@
       <img src="./docs/퀘스트기능/퀘스트.gif" width=70%>
     </ul>
   </div>
- </details>
+   </details>
   <details>
    <summary><b>상점</b></summary>
     <div markdown="1">
@@ -39,8 +39,8 @@
         <img src="./docs/상점기능/상점.gif" width=70%>
       </ul>
     </div>
-  </details>
-  <details>
+   </details>
+   <details>
    <summary><b>미니게임</b></summary>
     <div markdown="1">
       <ul>
