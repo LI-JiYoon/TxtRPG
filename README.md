@@ -1,4 +1,4 @@
-# Text RPG ⚔️
+[# Text RPG ⚔️
 
 ## 📌 프로젝트 소개
 
@@ -30,9 +30,25 @@
       <img src="./docs/퀘스트기능/퀘스트.gif" width=70%>
     </ul>
   </div>
-  <details>
- 
-
+   </details>
+   <details>
+ <summary><b>상점</b></summary>
+  <div markdown="1">
+    <ul>
+       <li>던전입장</li>
+      <img src="./docs/상점기능/상점.gif" width=70%>
+    </ul>
+  </div>
+  </details>
+   <details>
+ <summary><b>미니게임</b></summary>
+  <div markdown="1">
+    <ul>
+       <li>던전입장</li>
+      <img src="./docs/미니게임기능/미니게임.gif" width=70%>
+    </ul>
+  </div>
+  </details>
 ## 📅 프로젝트 수행 기간
 
 - 2024\. 10. 26 ~ 2024. 10. 02
@@ -53,3 +69,4 @@
 - [발표자료]("./TxtRPG/PPT/한끼줍쇼v3.pptx")
 
 
+](url)
