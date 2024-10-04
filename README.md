@@ -62,8 +62,8 @@
 
 
 ## 📚 프로젝트 결과물
-[![매니저님밥4조](<img src="./docs/banner.png" width=70%>)]("https://github.com/LI-JiYoon/TxtRPG/blob/main/PPT/%EC%98%81%EC%83%81/textrpg.mp4")
-* 해당 이미지 클릭 시 시연 영상으로 이동합니다.
+[시연 영상]("https://github.com/LI-JiYoon/TxtRPG/blob/main/PPT/%EC%98%81%EC%83%81/textrpg.mp4")
+
 
 ## ✨ 프로젝트 산출물
 
