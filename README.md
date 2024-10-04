@@ -31,7 +31,7 @@
    <summary><b>상점</b></summary>
     <div markdown="1">
       <ul>
-         <li>던전입장</li>
+         <li>아이템 구매/장착</li>
         <img src="./docs/상점기능/상점.gif" width=70%>
       </ul>
     </div>
@@ -40,7 +40,7 @@
    <summary><b>미니게임</b></summary>
     <div markdown="1">
       <ul>
-         <li>던전입장</li>
+         <li>미니게임</li>
         <img src="./docs/미니게임기능/미니게임.gif" width=70%>
       </ul>
     </div>
