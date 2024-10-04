@@ -13,10 +13,6 @@
       <img src="./docs/전투기능/공격기.gif" width=70%>
       <li>스킬</li>
       <img src="./docs/전투기능/광역스킬.gif" width=70%>
-      <li>포션사용</li>
-      <img src="./docs/전투기능/포션.gif" width=70%>
-      <li>도망치기</li>
-      <img src="./docs/전투기능/도망.gif" width=70%>
       <li>승리/패배</li>
       <img src="./docs/전투기능/승리.gif" width=70%>
     </ul>
