@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks.Dataflow;
+﻿using System.Data;
+using System.Threading.Tasks.Dataflow;
 
 namespace rtanRPG
 {
@@ -7,12 +8,12 @@ namespace rtanRPG
         static void Main(string[] args)
         {
             // 기능 정의
-
+            music.bgmPlay("intro.wav");
             string startMessage =
-                " ____                   _                ____  ____   ____ \r\n/ ___| _ __   __ _ _ __| |_ __ _ _ __   |  _ \\|  _ \\ / ___|\r\n\\___ \\| '_ \\ / _` | '__| __/ _` | '_ \\  | |_) | |_) | |  _ \r\n ___) | |_) | (_| | |  | || (_| | | | | |  _ <|  __/| |_| |\r\n|____/| .__/ \\__,_|_|   \\__\\__,_|_| |_| |_| \\_\\_|    \\____|\r\n      |_|                                                  "
+                 " ____                   _                ____  ____   ____ \r\n/ ___| _ __   __ _ _ __| |_ __ _ _ __   |  _ \\|  _ \\ / ___|\r\n\\___ \\| '_ \\ / _` | '__| __/ _` | '_ \\  | |_) | |_) | |  _ \r\n ___) | |_) | (_| | |  | || (_| | | | | |  _ <|  __/| |_| |\r\n|____/| .__/ \\__,_|_|   \\__\\__,_|_| |_| |_| \\_\\_|    \\____|\r\n      |_|                                                  "
 
 
-                + "\r\n\r\n" +
+                 + "\r\n\r\n" +
 
                 "스파르타 마을에 오신 여러분 환영합니다.\r\n" +
                 "원하시는 이름을 결정해주세요.";
@@ -21,6 +22,9 @@ namespace rtanRPG
             Shop shop = new Shop(player);
             breaktime breaktime = new breaktime(player);
             dungeon dungeon = new dungeon(player);
+            MiniGame minigame = new MiniGame(player);
+            QuestUI questUI = new QuestUI(player);
+            //dungeon.onDead += quest4.HandleDead;
 
             // 내 위치 초기화
             Location.preLocation = STATE.시작;
@@ -33,7 +37,7 @@ namespace rtanRPG
                 switch (Location.currentLocation)
                 {
                     case STATE.시작:
-                        // 이름입력 코드
+                        // 이름입력 코드dd
                         string inputText;
                         while (true)
                         {
@@ -52,9 +56,57 @@ namespace rtanRPG
                         while (true)
                         {
                             inputText = Console.ReadLine();
+                            music.soundEffectPlay("select.wav");
+                            Console.Clear();
                             if (inputText == "1")
                             {
+                                Console.WriteLine(
+
+                                    "1. 수강생\r\n" +
+                                    "2. 튜터\r\n" +
+                                    "3. 매니저\r\n\r\n" +
+
+                                "원하시는 직업을 입력해주세요.\r\n" +
+                                ">>");
+
+                                while (true)
+                                {
+                                    string roleInput = Console.ReadLine();
+
+                                    if (!int.TryParse(inputText, out int inputIDX))
+                                    { Console.WriteLine("잘못된 입력입니다."); continue; }
+                                    inputIDX -= 1;
+
+                                    if (roleInput == "1")
+                                    {
+                                        player.SetPlayerStats("수강생");
+                                        break;
+                                    }
+                                    else if (roleInput == "2")
+                                    {
+
+                                        player.SetPlayerStats("튜터");
+                                        break;
+                                    }
+                                    else if (roleInput == "3")
+                                    {
+
+                                        player.SetPlayerStats("매니저");
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("잘못된 입력입니다.");
+                                    }
+
+                                }
+
+                                Console.WriteLine($"선택한 직업은 {player.role} 입니다.\r\n");
+                                Console.ReadKey();
+                                music.soundEffectPlay("select.wav");
+
                                 Location.SetLocation(STATE.마을);
+                                
                                 break; // 위치를 강제로 마을로 변경
                             }
                             else if (inputText == "2")
@@ -70,6 +122,10 @@ namespace rtanRPG
                         break;
 
                     case STATE.마을:
+                        
+                        Console.Clear();
+                       
+                        music.bgmPlay("village.wav");
 
                         Console.WriteLine(
 
@@ -84,17 +140,21 @@ namespace rtanRPG
                             "2. 인벤토리\r\n" +
                             "3. 상점\r\n" +
                             "4. 던전\r\n" +
-                            "5. 휴식하기\r\n\r\n" +
-
+                            "5. 휴식하기\r\n" +
+                            "6. 미니게임\r\n" +
+                            "7. 퀘스트\r\n\r\n" +
 
                             "원하시는 행동을 입력해주세요.");
                 
                         while (true)
                         {
                             inputText = Console.ReadLine();
+                            music.soundEffectPlay("select.wav");
+
                             if (inputText == "1")
                             {
-                                Location.SetLocation(STATE.상태보기);                                 
+
+                                Location.SetLocation(STATE.상태보기);
                                 break;
                             }
                             else if (inputText == "2")
@@ -108,7 +168,7 @@ namespace rtanRPG
                                 break;
 
                             }
-                            else if( inputText == "4")
+                            else if (inputText == "4")
                             {
                                 Location.SetLocation(STATE.던전);
                                 break;
@@ -118,13 +178,25 @@ namespace rtanRPG
                                 Location.SetLocation(STATE.휴식하기);
                                 break;
                             }
-                            else
+                            else if (inputText == "6")
                             {
-                                Console.WriteLine("정확한 값을 입력하세요");
-                                
+                                Location.SetLocation(STATE.미니게임);
+                                break;
+                            }
+                            else if (inputText == "7")
+                            {
+                                Location.SetLocation(STATE.퀘스트);
+                                break;
                             }
 
-                        }
+                            else
+                            {
+                                music.soundEffectPlay("wrong.wav");
+                                Console.WriteLine("정확한 값을 입력하세요");
+
+                            }
+
+                            }
                         MyLog.절취선();
                         break;
 
@@ -138,7 +210,6 @@ namespace rtanRPG
                         break;
                         // 0.뒤로가기
                         // 뒤로가기란 location.preLocation 의 위치로 이동
-                        break;
                     case STATE.휴식하기:
                         breaktime.Displaying();
                         break;
@@ -151,11 +222,17 @@ namespace rtanRPG
                     case STATE.상태보기:
                         player.DisplayStatus();
                         break;
+                    case STATE.미니게임:
+                        minigame.Displaying();
+                        break;
+                    case STATE.퀘스트:
+                        questUI.DisplayQuestUI();
+                        break;
+
                 }
             }
         }
 
-        
     }
 }
 
