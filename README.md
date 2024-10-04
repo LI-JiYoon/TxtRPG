@@ -7,33 +7,27 @@
   <summary><b>전투기능</b></summary>
   <div markdown="1">
     <ul>
-       <li>공격기</li>
-      <img src="./docs/주요_기능/포토스팟_콜렉션/1.gif" width=70%>
-      <img src="./docs/주요_기능/포토스팟_콜렉션/2.gif" width=70%>
+       <li>던전입장</li>
+      <img src="./docs/전투기능/던전입장.gif" width=70%>
+      <li>일반 공격기</li>
+      <img src="./docs/전투기능/공격기.gif" width=70%>
       <li>스킬</li>
-      <img src="./docs/주요_기능/포토스팟_콜렉션/3.gif" width=70%>
+      <img src="./docs/전투기능/광역스킬.gif" width=70%>
       <li>포션사용</li>
-      <img src="./docs/주요_기능/포토스팟_콜렉션/4.gif" width=70%>
+      <img src="./docs/전투기능/포션.gif" width=70%>
       <li>도망치기</li>
-      <img src="./docs/주요_기능/포토스팟_콜렉션/5.gif" width=70%>
+      <img src="./docs/전투기능/도망.gif" width=70%>
       <li>승리/패배</li>
+      <img src="./docs/전투기능/승리.gif" width=70%>
     </ul>
   </div>
   </details>
    <details>
-  <summary><b>전투기능</b></summary>
+  <summary><b>퀘스트기능</b></summary>
   <div markdown="1">
     <ul>
-       <li>공격기</li>
-      <img src="./docs/주요_기능/포토스팟_콜렉션/1.gif" width=70%>
-      <img src="./docs/주요_기능/포토스팟_콜렉션/2.gif" width=70%>
-      <li>스킬</li>
-      <img src="./docs/주요_기능/포토스팟_콜렉션/3.gif" width=70%>
-      <li>포션사용</li>
-      <img src="./docs/주요_기능/포토스팟_콜렉션/4.gif" width=70%>
-      <li>도망치기</li>
-      <img src="./docs/주요_기능/포토스팟_콜렉션/5.gif" width=70%>
-      <li>승리/패배</li>
+       <li>퀘스트</li>
+      <img src="./docs/퀘스트기능/퀘스트/1.gif" width=70%>
     </ul>
   </div>
   <details>
