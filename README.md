@@ -8,7 +8,7 @@
 ```
 install-package naudio
 ```
-
+- 기능 모음
 
   <details>
   <summary><b>전투기능</b></summary>
